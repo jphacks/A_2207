@@ -1,0 +1,14 @@
+version: '3'
+services:
+  app:
+    build:
+     context: .
+     dockerfile: Dockerfile
+    tty: true
+    ports:
+      - 3000:3000
+    volumes:
+      - node_modules:/app/node_modules
+      - ./:/app:cached
+volumes:
+  node_modules: {}
