@@ -1,4 +1,4 @@
-import { ActionIcon, Modal, Select, Center, FileInput } from '@mantine/core'
+import { ActionIcon, Modal, Select, Center, FileInput, Grid, Slider, Text, Title, Stack } from '@mantine/core'
 import { IconSettings, IconUpload } from '@tabler/icons'
 import { Dispatch, SetStateAction, useState } from 'react'
 import shallow from 'zustand/shallow'
@@ -10,13 +10,21 @@ interface IconConfigProps {
 }
 
 export function IconConfig({ opened, setOpened }: IconConfigProps) {
-  const { modelName, setModelName } = useSettingsStore(
+  const { modelName, setModelName, positionX, setPositionX, positionY, setPositionY, positionZ, setPositionZ } = useSettingsStore(
     (state) => ({
       modelName: state.modelName,
       setModelName: state.setModelName,
+      positionX: state.positionX,
+      setPositionX: state.setPositionX,
+      positionY: state.positionY,
+      setPositionY: state.setPositionY,
+      positionZ: state.positionZ,
+      setPositionZ: state.setPositionZ,
     }),
     shallow,
   )
+
+  const [value, setValue] = useState<number | undefined>(2200);
 
   const [modelFile, setModelFile] = useState<File | null>(null)
   const [excercise, setExcercise] = useState<string | null>('squat') // TODO: 終了後にやりたいエクササイズ
@@ -24,39 +32,98 @@ export function IconConfig({ opened, setOpened }: IconConfigProps) {
   return (
     <div>
       <Modal
+        centered
         opened={opened}
         onClose={() => setOpened(false)}
-        title="ここに設定を置く"
+        title=<Title>設定</Title>
+        
       >
-        <Select
-          label="好きな3Dモデルを選択してください"
-          value={modelName}
-          onChange={setModelName}
-          data={[
-            { value: 'AliciaSolid', label: 'アリシア・ソリッド' },
-            { value: 'Tsukuyomi', label: 'つくよみちゃん' },
-          ]}
-        />
-
-        <FileInput
-          label="または"
-          placeholder="vrmファイルをアップロード"
-          value={modelFile}
-          onChange={setModelFile}
-          icon={<IconUpload size={14} />}
-        />
-
-        <Select
-          label="終了後のエクササイズ"
-          value={excercise}
-          onChange={setExcercise}
-          data={[
-            { value: 'squat', label: 'スクワット' },
-            { value: 'deepBreath', label: '深呼吸' },
-          ]}
-        />
 
         {/* Modal content */}
+        <Stack spacing='xl'>
+          <Select
+            label="好きな3Dモデルを選択してください"
+            value={modelName}
+            onChange={setModelName}
+            data={[
+              { value: 'AliciaSolid', label: 'アリシア・ソリッド' },
+              { value: 'Tsukuyomi', label: 'つくよみちゃん' },
+            ]}
+          />
+
+          {/* TODO */}
+          {/* <FileInput
+            label="または"
+            placeholder="vrmファイルをアップロード"
+            value={modelFile}
+            onChange={setModelFile}
+            icon={<IconUpload size={14} />}
+          /> */}
+
+          <Stack spacing='xs'>
+            <Text size='sm'>3Dモデルの位置を調整してください</Text>
+            <Grid>
+              <Grid.Col span={1}>
+                <Text>x:</Text>
+              </Grid.Col>
+              <Grid.Col span={11}>
+                <Slider
+                  defaultValue={positionX}
+                  onChangeEnd={setPositionX}
+                  min={-5}
+                  max={5}
+                  label={(value) => value.toFixed(1)}
+                  step={0.1}
+                  styles={{ markLabel: { display: 'none' } }}
+                />
+              </Grid.Col>
+            </Grid>
+            <Grid>
+              <Grid.Col span={1}>
+                <Text>y:</Text>
+              </Grid.Col>
+              <Grid.Col span={11}>
+                <Slider
+                  defaultValue={positionY}
+                  onChangeEnd={setPositionY}
+                  min={-5}
+                  max={5}
+                  label={(value) => value.toFixed(1)}
+                  step={0.1}
+                  styles={{ markLabel: { display: 'none' } }}
+                />
+              </Grid.Col>
+            </Grid>
+            <Grid>
+              <Grid.Col span={1}>
+                <Text>z:</Text>
+              </Grid.Col>
+              <Grid.Col span={11}>
+                <Slider
+                  defaultValue={positionZ}
+                  onChangeEnd={setPositionZ}
+                  min={-5}
+                  max={5}
+                  label={(value) => value.toFixed(1)}
+                  step={0.1}
+                  styles={{ markLabel: { display: 'none' } }}
+                />
+              </Grid.Col>
+            </Grid>
+          </Stack>
+
+          
+          <Select
+            label="25分ごとのメニューを選んでください"
+            value={excercise}
+            onChange={setExcercise}
+            data={[
+              { value: 'squat', label: 'スクワット' },
+              { value: 'deepBreath', label: '深呼吸' },
+            ]}
+          />
+
+        </Stack>
       </Modal>
       <Center>
         <ActionIcon variant="transparent">
