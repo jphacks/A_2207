@@ -1,5 +1,6 @@
 import {
   createStyles,
+  //Image,
   Container,
   Title,
   Button,
@@ -9,6 +10,7 @@ import {
   ThemeIcon,
 } from '@mantine/core'
 import { IconCheck } from '@tabler/icons'
+import { Image } from '@mantine/core';
 
 const useStyles = createStyles((theme) => ({
   inner: {
@@ -73,8 +75,7 @@ export function Description() {
         <div className={classes.inner}>
           <div className={classes.content}>
             <Title className={classes.title}>
-              A <span className={classes.highlight}>modern</span> React <br />{' '}
-              components library
+              V<span className={classes.highlight}>RooM</span><br />{''}
             </Title>
             <Text color="dimmed" mt="md">
               Build fully functional accessible web applications faster than
@@ -93,33 +94,23 @@ export function Description() {
               }
             >
               <List.Item>
-                <b>TypeScript based</b> – build type safe applications, all
+                <b>いつでも来てくれる Zoom 友達</b> – build type safe applications, all
                 components and hooks export types
               </List.Item>
               <List.Item>
-                <b>Free and open source</b> – all packages have MIT license, you
+                <b>時間管理で 集中力アップ</b> – all packages have MIT license, you
                 can use Mantine in any project
               </List.Item>
               <List.Item>
-                <b>No annoying focus ring</b> – focus ring will appear only when
+                <b>カメラ機能を使った スクワットゲーム</b> – focus ring will appear only when
                 user navigates with keyboard
               </List.Item>
             </List>
-
-            <Group mt={30}>
-              <Button radius="xl" size="md" className={classes.control}>
-                Get started
-              </Button>
-              <Button
-                variant="default"
-                radius="xl"
-                size="md"
-                className={classes.control}
-              >
-                Source code
-              </Button>
-            </Group>
           </div>
+          <Image
+            src="https://images.unsplash.com/photo-1511216335778-7cb8f49fa7a3?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=720&q=80"
+            className={classes.image}
+          />
         </div>
       </Container>
     </div>
