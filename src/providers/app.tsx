@@ -4,7 +4,6 @@ import {
   ColorScheme,
 } from '@mantine/core'
 import { useState } from 'react'
-import Layout from 'src/components/layout/mainLayout'
 
 type AppProviderProps = {
   children: React.ReactNode
@@ -27,7 +26,7 @@ const AppProvider = ({ children }: AppProviderProps) => {
         withGlobalStyles
         withNormalizeCSS
       >
-        <Layout>{children}</Layout>
+        {children}
       </MantineProvider>
     </ColorSchemeProvider>
   )
