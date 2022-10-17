@@ -42,12 +42,20 @@ const Home: NextPage = () => {
           >
             <StudyCounter />
           </div>
-        }
-        {mode === 'fitness' &&
-          <div style={{ position: 'absolute', zIndex: 10, top: '50%', left: '70%', transform: 'translate(-50%, -50%)' }}>
+        )}
+        {mode === 'fitness' && (
+          <div
+            style={{
+              position: 'absolute',
+              zIndex: 10,
+              top: '50%',
+              left: '70%',
+              transform: 'translate(-50%, -50%)',
+            }}
+          >
             <SquatCounter />
           </div>
-        }
+        )}
         {mode === 'bress' && <div>bress</div>}
 
         <VRMCanvas />

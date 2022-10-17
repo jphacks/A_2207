@@ -2,6 +2,7 @@ import { Results } from "@mediapipe/pose";
 
 function checkPosition(leftNow: number, rightNow: number, leftRef: number, rightRef: number) {
     let isClear = false;
+    // console.log("checkPosition", leftNow, rightNow, leftRef, rightRef)
     if (leftRef <= leftNow && rightRef <= rightNow) {
         isClear = true
     }
@@ -22,10 +23,10 @@ const updateCounter = (
 
     const leftShoulder = landmarks[11].y;
     const rightShoulder = landmarks[12].y;
-    const isClear = checkPosition(leftShoulder, rightShoulder, leftElbow, rightElbow)
+    let isClear = checkPosition(leftShoulder, rightShoulder, leftElbow, rightElbow)
 
     let newStage: string = stage;
-    let countChange = 0;
+    let countChange: number = 0;
 
     if (!isClear) {
         newStage = "UP";

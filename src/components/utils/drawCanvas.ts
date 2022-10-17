@@ -6,7 +6,7 @@ import { POSE_CONNECTIONS, POSE_LANDMARKS_LEFT, POSE_LANDMARKS_RIGHT, POSE_LANDM
  * @param ctx canvas context
  * @param results 手の検出結果
  */
-export const drawCanvas = (ctx: CanvasRenderingContext2D, results: Results) => {
+export const drawCanvas = (ctx: CanvasRenderingContext2D, results: Results, elbow: any) => {
     const width = ctx.canvas.width
     const height = ctx.canvas.height
 
@@ -17,6 +17,17 @@ export const drawCanvas = (ctx: CanvasRenderingContext2D, results: Results) => {
     ctx.translate(-width, 0)
     // capture image の描画
     ctx.drawImage(results.image, 0, 0, width, height)
+
+    // console.log(elbow)
+
+    if (elbow[0] !== 0 && elbow[1] !== 0) {
+        ctx.lineWidth = 4;
+        ctx.strokeStyle = "red";
+        ctx.moveTo(0, elbow[0]*height);
+        ctx.lineTo(width, elbow[0]*height);
+        ctx.stroke();
+    }
+
     // 手の描画
     if (results.poseLandmarks) {
         drawConnectors(ctx, results.poseLandmarks, POSE_CONNECTIONS, {visibilityMin: 0.65, color: 'white'});
@@ -35,6 +46,7 @@ export const drawCanvas = (ctx: CanvasRenderingContext2D, results: Results) => {
             Object.values(POSE_LANDMARKS_NEUTRAL)
                 .map(index => results.poseLandmarks[index]),
             {visibilityMin: 0.65, color: 'white', fillColor: 'white'});
+        
     }
     ctx.restore()
 }

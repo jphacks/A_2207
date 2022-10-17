@@ -23,6 +23,8 @@ const styles = {
     `
 }
 
+
+
 const SquatCounter = () => {
     const webcamRef = useRef<Webcam>(null);
     const canvasRef = useRef<HTMLCanvasElement>(null);
@@ -31,6 +33,7 @@ const SquatCounter = () => {
     const [stage, setStage] = useState("");
     const prevStageRef = useRef("");
     const { time, isStart } = useTimer();
+    const elbowRef = useRef([0, 0])
 
     /**
      * 検出結果（フレーム毎に呼び出される）
@@ -39,7 +42,7 @@ const SquatCounter = () => {
     const onResults = useCallback((results: Results) => {
         resultsRef.current = results;
         const canvasCtx = canvasRef.current!.getContext("2d")!;
-        drawCanvas(canvasCtx, results);
+        drawCanvas(canvasCtx, results, elbowRef.current);
     }, []);
 
     // 初期設定
@@ -77,18 +80,22 @@ const SquatCounter = () => {
     }, [onResults]);
 
     useEffect(() => {
-        if (isStart) {
-            console.log("start!!");
+        if (isStart && time > 0) {
+            // console.log("start!!");
             const landmarks = resultsRef.current.poseLandmarks;
-            const leftElbow = landmarks[13].y;
-            const rightElbow = landmarks[14].y;
+            // if (landmarks[13] && landmarks[14]) {
+                const leftElbow = landmarks[13].y;
+                const rightElbow = landmarks[14].y;
+                elbowRef.current = [leftElbow, rightElbow];
+            // }
+
 
             const timerId = setInterval(() => {
                 const updateResult = updateCounter(
                     resultsRef.current,
                     prevStageRef.current,
-                    leftElbow,
-                    rightElbow
+                    elbowRef.current[0],
+                    elbowRef.current[1],
                 );
                 if (updateResult) {
                     setStage(updateResult.newStage);
@@ -128,14 +135,14 @@ const SquatCounter = () => {
 
                 {/* output */}
                 {/* <div className={styles.buttonContainer}> */}
-                <div>
+                <div style={{position: "relative"}} >
                     <p>Count : {count}</p>
                     <p>Stage : {stage}</p>
-                    {/* <Title>
-                    {(time <= 9 && time >= 1) ? time :
-                        (time===0 && time)
-                    }
-                    </Title> */}
+                    <Title color="blue" style={{ fontSize: "300px", position: "absolute" , top: "50%", left: "50%", transform: 'translate(-50%, -50%)'}} >
+                        {(time <= 9 && time >= 1) ? time :
+                            (time===0 && time)
+                        }
+                    </Title>
 
                     {/* <div className={styles.pictures}> */}
                     {/* <div style={{ zIndex : "10px" }}> */}
@@ -146,9 +153,10 @@ const SquatCounter = () => {
                         {time == 0 && <img src={`/start.png`} alt="start" />} */}
                     {/* </div> */}
                     {/* <ColoredLine /> */}
+                    {/* draw */}
+                    <canvas ref={canvasRef} style={{ minWidth: '300px', width: "30vw" }} />
                 </div>
-                {/* draw */}
-                <canvas ref={canvasRef} style={{ minWidth: '300px', width: "30vw" }} />
+                
             </Stack>
 
         </div>
