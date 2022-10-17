@@ -57,13 +57,21 @@ export const VRMAvatar = () => {
         console.log('An error happened', error)
       },
     )
-  }, [modelName, mode, positionX, positionY, positionZ])
+  }, [modelName])
 
   useEffect(() => {
     if (gltf) {
       VRMUtils.removeUnnecessaryJoints(gltf.userData.vrm.scene)
     }
   }, [gltf])
+
+  useEffect(() => {
+    if (gltf) {
+      gltf.userData.vrm.scene.position.setX(positionX)
+      gltf.userData.vrm.scene.position.setY(positionY)
+      gltf.userData.vrm.scene.position.setZ(positionZ)
+    }
+  }, [gltf, positionX, positionY, positionZ, mode])
 
   useFrame(({ clock }, delta) => {
     if (gltf?.userData.vrm) {
