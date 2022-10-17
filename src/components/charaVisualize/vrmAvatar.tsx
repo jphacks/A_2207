@@ -18,10 +18,13 @@ const modelNameToUrl = {
 } as modelNameToUrl
 
 export const VRMAvatar = () => {
-  const { modelName } = useSettingsStore(
+  const { mode, modelName, positionX, positionY, positionZ } = useSettingsStore(
     (state) => ({
       mode: state.mode,
       modelName: state.modelName,
+      positionX: state.positionX,
+      positionY: state.positionY,
+      positionZ: state.positionZ,
     }),
     shallow,
   )
@@ -39,7 +42,11 @@ export const VRMAvatar = () => {
       modelNameToUrl[modelName as keyof modelNameToUrl],
       (gltf) => {
         gltf.userData.vrm.scene.rotation.y = Math.PI
-        gltf.userData.vrm.scene.position.setY(-0.8)
+        // 3Dモデルの位置調整
+        gltf.userData.vrm.scene.position.setX(positionX)
+        gltf.userData.vrm.scene.position.setY(positionY)
+        gltf.userData.vrm.scene.position.setZ(positionZ)
+
         gltf.userData.vrm.lookAt.target = camera
         setGltf(gltf)
       },
@@ -57,6 +64,14 @@ export const VRMAvatar = () => {
       VRMUtils.removeUnnecessaryJoints(gltf.userData.vrm.scene)
     }
   }, [gltf])
+
+  useEffect(() => {
+    if (gltf) {
+      gltf.userData.vrm.scene.position.setX(positionX)
+      gltf.userData.vrm.scene.position.setY(positionY)
+      gltf.userData.vrm.scene.position.setZ(positionZ)
+    }
+  }, [gltf, positionX, positionY, positionZ, mode])
 
   useFrame(({ clock }, delta) => {
     if (gltf?.userData.vrm) {

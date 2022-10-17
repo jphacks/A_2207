@@ -6,12 +6,12 @@ import {
   Stack,
   Center,
 } from '@mantine/core'
-import { TablerIcon, IconHome2 } from '@tabler/icons'
-import Link from 'next/link'
-import { useRouter } from 'next/router'
+import { TablerIcon, IconHome2, IconRun, IconBook } from '@tabler/icons'
 import { useState } from 'react'
 import { IconInfo } from './mainIconInfo'
 import { IconConfig } from './mainIconConfig'
+import { useSettingsStore } from 'src/stores/settingsStore'
+import shallow from 'zustand/shallow'
 
 const useStyles = createStyles((theme) => ({
   link: {
@@ -49,32 +49,46 @@ const useStyles = createStyles((theme) => ({
 interface NavbarLinkProps {
   icon: TablerIcon
   label: string
-  href: string
+  modeTitle: string
   onClick?(): void
 }
 
-function NavbarLink({ icon: Icon, label, href, onClick }: NavbarLinkProps) {
+function NavbarLink({
+  icon: Icon,
+  label,
+  modeTitle,
+  onClick,
+}: NavbarLinkProps) {
+  const { mode } = useSettingsStore(
+    (state) => ({
+      mode: state.mode,
+    }),
+    shallow,
+  )
   const { classes, cx } = useStyles()
-  const router = useRouter()
 
   return (
     <Tooltip label={label} position="right" transitionDuration={0}>
-      <Link href={href} passHref>
-        <UnstyledButton
-          component="a"
-          onClick={onClick}
-          className={cx(classes.link, {
-            [classes.active]: router.pathname === href,
-          })}
-        >
-          <Icon stroke={1.5} />
-        </UnstyledButton>
-      </Link>
+      <UnstyledButton
+        component="a"
+        onClick={onClick}
+        className={cx(classes.link, {
+          [classes.active]: mode === modeTitle,
+        })}
+      >
+        <Icon stroke={1.5} />
+      </UnstyledButton>
     </Tooltip>
   )
 }
 
 export function MainNavbar() {
+  const { setMode } = useSettingsStore(
+    (state) => ({
+      setMode: state.setMode,
+    }),
+    shallow,
+  )
   const [infoOpened, setInfoOpened] = useState(false)
   const [configOpened, setConfigOpened] = useState(false)
 
@@ -84,12 +98,29 @@ export function MainNavbar() {
       {/* <Navbar.Section grow mt={50}> */}
       <Navbar.Section grow mt={50}>
         <Stack justify="center" spacing={0}>
-          <NavbarLink icon={IconHome2} href="/" label="Home" />
-          <IconConfig opened={configOpened} setOpened={setConfigOpened} />
+          <NavbarLink
+            icon={IconHome2}
+            modeTitle="initial"
+            label="Home"
+            onClick={() => setMode('initial')}
+          />
+          <NavbarLink
+            icon={IconBook}
+            modeTitle="study"
+            label="study"
+            onClick={() => setMode('study')}
+          />
+          <NavbarLink
+            icon={IconRun}
+            modeTitle="fitness"
+            label="fitness"
+            onClick={() => setMode('fitness')}
+          />
         </Stack>
       </Navbar.Section>
       <Navbar.Section>
-        <Stack justify="center" spacing={0}>
+        <Stack justify="center" spacing={10}>
+          <IconConfig opened={configOpened} setOpened={setConfigOpened} />
           <IconInfo opened={infoOpened} setOpened={setInfoOpened} />
         </Stack>
       </Navbar.Section>

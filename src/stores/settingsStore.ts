@@ -5,9 +5,15 @@ interface SettingsState {
   modelName: string
   mode: string
   goal: string
+  positionX: number
+  positionY: number
+  positionZ: number 
   setModelName: (name: string) => void
   setMode: (name: string) => void
   setGoal: (goal: string) => void
+  setPositionX: (x: number) => void
+  setPositionY: (y: number) => void
+  setPositionZ: (z: number) => void
 }
 
 export const useSettingsStore = create<SettingsState>()(
@@ -15,6 +21,9 @@ export const useSettingsStore = create<SettingsState>()(
     modelName: 'AliciaSolid',
     mode: 'initial',
     goal: '',
+    positionX: 0,
+    positionY: -0.8,
+    positionZ: 0,
     setModelName: (name: string) =>
       set(
         (state) => ({
@@ -41,6 +50,33 @@ export const useSettingsStore = create<SettingsState>()(
         }),
         false,
         'setGoal',
+      ),
+    setPositionX: (x: number) =>
+      set(
+        (state) => ({
+          ...state,
+          positionX: x,
+        }),
+        false,
+        'setPositionX',
+      ),
+      setPositionY: (y: number) =>
+      set(
+        (state) => ({
+          ...state,
+          positionY: y,
+        }),
+        false,
+        'setPositionY',
+      ),
+      setPositionZ: (z: number) =>
+      set(
+        (state) => ({
+          ...state,
+          positionZ: z,
+        }),
+        false,
+        'setPositionZ',
       ),
   })),
 )
