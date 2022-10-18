@@ -3,17 +3,22 @@ import VRMCanvas from 'src/components/charaVisualize/vrmCanvas'
 import StartButton from 'src/components/main/startButton'
 import StudyCounter from 'src/components/main/studyCounter'
 import SquatCounter from 'src/components/main/squatCounter'
+import FinaleMenu from 'src/components/main/finaleMenu'
+import GoalView from 'src/components/main/goalViewer'
 import shallow from 'zustand/shallow'
 import { useSettingsStore } from 'src/stores/settingsStore'
 import Layout from 'src/components/layout/mainLayout'
+import GoalViewer from 'src/components/main/goalViewer'
 import Signin from 'src/components/firebase/Signin'
 import { useAuthState } from "react-firebase-hooks/auth"
 import { auth } from "../components/firebase/firebase"
 
+
 const Home: NextPage = () => {
-  const { mode } = useSettingsStore(
+  const { mode, studied } = useSettingsStore(
     (state) => ({
       mode: state.mode,
+      studied: state.studied,
     }),
     shallow,
   )
@@ -48,6 +53,18 @@ const Home: NextPage = () => {
             <StudyCounter />
           </div>
         )}
+        {mode === 'study' && (
+          <div
+            style={{
+              position: 'absolute',
+              zIndex: 10,
+              top: '5%',
+              right: '5%',
+            }}
+          >
+            <GoalViewer />
+          </div>
+        )}
         {mode === 'fitness' && (
           <div
             style={{
@@ -61,7 +78,18 @@ const Home: NextPage = () => {
             <SquatCounter />
           </div>
         )}
-        {mode === 'bress' && <div>bress</div>}
+        {mode === 'finish' &&
+          <div
+            style={{
+              position: 'absolute',
+              zIndex: 10,
+              top: '50%',
+              left: '50%',
+              transform: 'translate(-50%, -50%)',
+            }}
+          >
+            <FinaleMenu />
+          </div>}
 
         <VRMCanvas />
       </div>
