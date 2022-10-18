@@ -7,7 +7,7 @@ interface AnimationState {
 }
 
 export const useAnimationStore = create<AnimationState>((set) => ({
-  animation: 'dancing',
+  animation: 'GangnamStyle',
   isPaused: false,
   pauseToggle: () =>
     set((state) => ({
