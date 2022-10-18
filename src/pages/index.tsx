@@ -22,7 +22,7 @@ const Home: NextPage = () => {
     }),
     shallow,
   )
-  const [user] = useAuthState(auth);
+  const [user] = useAuthState(auth as any);
   return (
     <Layout>
       <div className="container">

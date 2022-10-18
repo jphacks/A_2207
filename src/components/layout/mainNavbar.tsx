@@ -14,7 +14,7 @@ import { IconConfig } from './mainIconConfig'
 import { useSettingsStore } from 'src/stores/settingsStore'
 import shallow from 'zustand/shallow'
 import Signin from '../firebase/Signin'
-import SignOut from '../firebase/SignOut'
+import SignOut from '../firebase/Signout'
 import { auth } from "../firebase/firebase"
 import { useAuthState } from "react-firebase-hooks/auth"
 
@@ -97,7 +97,7 @@ export function MainNavbar() {
   const [infoOpened, setInfoOpened] = useState(false)
   const [configOpened, setConfigOpened] = useState(false)
 
-  const [user] = useAuthState(auth);
+  const [user] = useAuthState(auth as any);
 
   return (
     <Navbar width={{ base: 80 }} p="md">

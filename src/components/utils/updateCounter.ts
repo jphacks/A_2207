@@ -23,10 +23,10 @@ const updateCounter = (
 
     const leftShoulder = landmarks[11].y;
     const rightShoulder = landmarks[12].y;
-    let isClear = checkPosition(leftShoulder, rightShoulder, leftElbow, rightElbow)
+    const isClear = checkPosition(leftShoulder, rightShoulder, leftElbow, rightElbow)
 
     let newStage: string = stage;
-    let countChange: number = 0;
+    let countChange = 0;
 
     if (!isClear) {
         newStage = "UP";
