@@ -5,6 +5,7 @@ import {
   createStyles,
   Stack,
   Center,
+  Text,
 } from '@mantine/core'
 import { TablerIcon, IconHome2, IconRun, IconBook } from '@tabler/icons'
 import { useState } from 'react'
@@ -94,7 +95,19 @@ export function MainNavbar() {
 
   return (
     <Navbar width={{ base: 80 }} p="md">
-      <Center>Logo</Center>
+      <Center>
+        <Text
+          component="span"
+          align="center"
+          variant="gradient"
+          gradient={{ from: 'indigo', to: 'cyan', deg: 45 }}
+          size="xl"
+          weight={700}
+          style={{ fontFamily: 'Greycliff CF, sans-serif' }}
+        >
+          VRoom
+        </Text>
+      </Center>
       {/* <Navbar.Section grow mt={50}> */}
       <Navbar.Section grow mt={50}>
         <Stack justify="center" spacing={0}>

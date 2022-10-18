@@ -1,29 +1,51 @@
 import create from 'zustand'
 import { devtools } from 'zustand/middleware'
 
-interface SettingsState {
+type SettingsState =  {
   modelName: string
   mode: string
   goal: string
+  studied: boolean
   positionX: number
   positionY: number
-  positionZ: number 
+  positionZ: number
+  countRemain: number 
+}
+type SettingsStoreState = {
+  setDefaultState: () => void
   setModelName: (name: string) => void
   setMode: (name: string) => void
   setGoal: (goal: string) => void
+  setStudied: (bool: boolean) => void
   setPositionX: (x: number) => void
   setPositionY: (y: number) => void
   setPositionZ: (z: number) => void
+  setCountRemain: (count: number) => void
+} & SettingsState
+
+export const initialState: SettingsState = {
+  modelName: 'AliciaSolid',
+  mode: 'initial',
+  goal: '',
+  studied: false,
+  positionX: 0,
+  positionY: -0.8,
+  positionZ: 0,
+  countRemain: 60,
 }
 
-export const useSettingsStore = create<SettingsState>()(
+export const useSettingsStore = create<SettingsStoreState>()(
   devtools((set) => ({
-    modelName: 'AliciaSolid',
-    mode: 'initial',
-    goal: '',
-    positionX: 0,
-    positionY: -0.8,
-    positionZ: 0,
+    ...initialState,
+    setDefaultState: () =>
+      set(
+        (state) => ({
+          ...state,
+          ...initialState
+        }),
+        false,
+        'setDefaultState',
+      ),
     setModelName: (name: string) =>
       set(
         (state) => ({
@@ -51,6 +73,15 @@ export const useSettingsStore = create<SettingsState>()(
         false,
         'setGoal',
       ),
+    setStudied: (bool: boolean) =>
+    set(
+      (state) => ({
+        ...state,
+        studied: bool,
+      }),
+      false,
+      'setStudied',
+    ),
     setPositionX: (x: number) =>
       set(
         (state) => ({
@@ -78,5 +109,14 @@ export const useSettingsStore = create<SettingsState>()(
         false,
         'setPositionZ',
       ),
+      setCountRemain: (count: number) =>
+      set(
+        (state) => ({
+          ...state,
+          countRemain: count,
+        }),
+        false,
+        'setCountRemain',
+      )
   })),
 )

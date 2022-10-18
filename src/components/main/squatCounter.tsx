@@ -6,7 +6,9 @@ import { Pose, Results } from "@mediapipe/pose";
 import { drawCanvas } from "../utils/drawCanvas";
 import updateCounter from "../utils/updateCounter";
 import { useTimer } from "../hooks/useTimer";
-import { Title, Stack } from '@mantine/core'
+import { Title, Stack, Text } from '@mantine/core'
+import shallow from 'zustand/shallow'
+import { useSettingsStore } from 'src/stores/settingsStore'
 
 const videoConstraints = {
     width: 1280,
@@ -23,8 +25,6 @@ const styles = {
     `
 }
 
-
-
 const SquatCounter = () => {
     const webcamRef = useRef<Webcam>(null);
     const canvasRef = useRef<HTMLCanvasElement>(null);
@@ -34,6 +34,16 @@ const SquatCounter = () => {
     const prevStageRef = useRef("");
     const { time, isStart } = useTimer();
     const elbowRef = useRef([0, 0])
+    const { setMode, setPositionX, setPositionY, setPositionZ, studied } = useSettingsStore(
+        (state) => ({
+          setMode: state.setMode,
+          setPositionX: state.setPositionX,
+          setPositionY: state.setPositionY,
+          setPositionZ: state.setPositionZ,
+          studied: state.studied,
+        }),
+        shallow,
+    )
 
     /**
      * 検出結果（フレーム毎に呼び出される）
@@ -70,7 +80,9 @@ const SquatCounter = () => {
         ) {
             const camera = new Camera(webcamRef.current.video!, {
                 onFrame: async () => {
-                    await pose.send({ image: webcamRef.current!.video! });
+                    if (webcamRef.current !== null) {
+                        await pose.send({ image: webcamRef.current!.video! });
+                    }
                 },
                 width: 1280,
                 height: 720,
@@ -81,13 +93,12 @@ const SquatCounter = () => {
 
     useEffect(() => {
         if (isStart && time > 0) {
-            // console.log("start!!");
             const landmarks = resultsRef.current.poseLandmarks;
-            // if (landmarks[13] && landmarks[14]) {
+            if (landmarks[13] && landmarks[14]) {
                 const leftElbow = landmarks[13].y;
                 const rightElbow = landmarks[14].y;
                 elbowRef.current = [leftElbow, rightElbow];
-            // }
+            }
 
 
             const timerId = setInterval(() => {
@@ -114,6 +125,19 @@ const SquatCounter = () => {
         }
     }, [isStart]);
 
+    useEffect(() => {
+        if (count === 5) {
+            if (studied) {
+                setMode('finish')
+            } else {
+                setMode('study')
+            }
+            setPositionX(0)
+            setPositionY(-0.8)
+            setPositionZ(0)
+        }
+    }, [count]);
+
 
     return (
         // <div className={styles.container}>
@@ -130,14 +154,12 @@ const SquatCounter = () => {
                 className={styles.webcam}
             />
             <Stack sx={() => ({ backgroundColor: 'transparent' })}>
-                
-
 
                 {/* output */}
                 {/* <div className={styles.buttonContainer}> */}
                 <div style={{position: "relative"}} >
-                    <p>Count : {count}</p>
-                    <p>Stage : {stage}</p>
+                    <Text>カウント : {count}</Text>
+                    <Text>Stage : {stage}</Text>
                     <Title color="blue" style={{ fontSize: "300px", position: "absolute" , top: "50%", left: "50%", transform: 'translate(-50%, -50%)'}} >
                         {(time <= 9 && time >= 1) ? time :
                             (time===0 && time)
