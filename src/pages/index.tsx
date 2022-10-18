@@ -9,6 +9,10 @@ import shallow from 'zustand/shallow'
 import { useSettingsStore } from 'src/stores/settingsStore'
 import Layout from 'src/components/layout/mainLayout'
 import GoalViewer from 'src/components/main/goalViewer'
+import Signin from 'src/components/firebase/Signin'
+import { useAuthState } from "react-firebase-hooks/auth"
+import { auth } from "../components/firebase/firebase"
+
 
 const Home: NextPage = () => {
   const { mode, studied } = useSettingsStore(
@@ -18,6 +22,7 @@ const Home: NextPage = () => {
     }),
     shallow,
   )
+  const [user] = useAuthState(auth);
   return (
     <Layout>
       <div className="container">
@@ -31,6 +36,7 @@ const Home: NextPage = () => {
               transform: 'translate(-50%, -50%)',
             }}
           >
+            {user ? <p>ログインしてます</p> : <p>ログインしてない</p>}
             <StartButton />
           </div>
         )}

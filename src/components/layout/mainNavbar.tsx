@@ -13,6 +13,10 @@ import { IconInfo } from './mainIconInfo'
 import { IconConfig } from './mainIconConfig'
 import { useSettingsStore } from 'src/stores/settingsStore'
 import shallow from 'zustand/shallow'
+import Signin from '../firebase/Signin'
+import SignOut from '../firebase/SignOut'
+import { auth } from "../firebase/firebase"
+import { useAuthState } from "react-firebase-hooks/auth"
 
 const useStyles = createStyles((theme) => ({
   link: {
@@ -93,6 +97,8 @@ export function MainNavbar() {
   const [infoOpened, setInfoOpened] = useState(false)
   const [configOpened, setConfigOpened] = useState(false)
 
+  const [user] = useAuthState(auth);
+
   return (
     <Navbar width={{ base: 80 }} p="md">
       <Center>
@@ -133,6 +139,7 @@ export function MainNavbar() {
       </Navbar.Section>
       <Navbar.Section>
         <Stack justify="center" spacing={10}>
+          {user ? <SignOut /> : <Signin />}
           <IconConfig opened={configOpened} setOpened={setConfigOpened} />
           <IconInfo opened={infoOpened} setOpened={setInfoOpened} />
         </Stack>
