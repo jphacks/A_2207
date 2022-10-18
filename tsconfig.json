@@ -19,5 +19,5 @@
     "jsxImportSource": "@emotion/react"
   },
   "exclude": ["node_modules", "deployments", ".next", "out"],
-  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx"]
+  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", "src/components/landingPage/HighestGrossingMovies"]
 }
