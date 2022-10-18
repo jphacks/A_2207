@@ -1,5 +1,5 @@
 import { drawConnectors, drawLandmarks } from '@mediapipe/drawing_utils';
-import { POSE_CONNECTIONS, POSE_LANDMARKS_LEFT, POSE_LANDMARKS_RIGHT, POSE_LANDMARKS_NEUTRAL, Results } from '@mediapipe/pose';
+import { POSE_CONNECTIONS, POSE_LANDMARKS_LEFT, POSE_LANDMARKS_RIGHT, Results } from '@mediapipe/pose';
 
 /**
  * cnavasに描画する
@@ -30,22 +30,21 @@ export const drawCanvas = (ctx: CanvasRenderingContext2D, results: Results, elbo
 
     // 手の描画
     if (results.poseLandmarks) {
-        drawConnectors(ctx, results.poseLandmarks, POSE_CONNECTIONS, {visibilityMin: 0.65, color: 'white'});
+        drawConnectors(ctx, 
+            [results.poseLandmarks[11], results.poseLandmarks[12]],
+            POSE_CONNECTIONS,
+            {visibilityMin: 0.65, color: 'white'});
         drawLandmarks(
             ctx,
-            Object.values(POSE_LANDMARKS_LEFT)
-                .map(index => results.poseLandmarks[index]),
-            {visibilityMin: 0.65, color: 'white', fillColor: 'rgb(255,138,0)'});
-        drawLandmarks(
-            ctx,
-            Object.values(POSE_LANDMARKS_RIGHT)
-                .map(index => results.poseLandmarks[index]),
+            [results.poseLandmarks[11], results.poseLandmarks[12]],
+            // Object.values(POSE_LANDMARKS_RIGHT)
+            //     .map(index => results.poseLandmarks[index]),
             {visibilityMin: 0.65, color: 'white', fillColor: 'rgb(0,217,231)'});
-        drawLandmarks(
-            ctx,
-            Object.values(POSE_LANDMARKS_NEUTRAL)
-                .map(index => results.poseLandmarks[index]),
-            {visibilityMin: 0.65, color: 'white', fillColor: 'white'});
+        // drawLandmarks(
+        //     ctx,
+        //     Object.values(POSE_LANDMARKS_NEUTRAL)
+        //         .map(index => results.poseLandmarks[index]),
+        //     {visibilityMin: 0.65, color: 'white', fillColor: 'white'});
         
     }
     ctx.restore()
