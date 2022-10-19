@@ -1,1 +1,5 @@
-export const AnimationNames = ['GangnamStyle'] as const
+export const AnimationNames = [
+  'GangnamStyle',
+  'BreakdanceEnding1',
+  'standing',
+] as const

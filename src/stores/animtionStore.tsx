@@ -1,17 +1,22 @@
 import create from 'zustand'
+import { devtools } from 'zustand/middleware'
 
 interface AnimationState {
   animation: string
-  isPaused: boolean
-  pauseToggle: () => void
+  setAnimation: (animation: string) => void
 }
 
-export const useAnimationStore = create<AnimationState>((set) => ({
-  animation: 'GangnamStyle',
-  isPaused: false,
-  pauseToggle: () =>
-    set((state) => ({
-      ...state,
-      isPaused: !state.isPaused,
-    })),
-}))
+export const useAnimationStore = create<AnimationState>()(
+  devtools((set) => ({
+    animation: 'standing',
+    setAnimation: (animation) =>
+      set(
+        (state) => ({
+          ...state,
+          animation,
+        }),
+        false,
+        'setAnimation',
+      ),
+  })),
+)
