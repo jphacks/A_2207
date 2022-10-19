@@ -18,6 +18,8 @@ import {
 } from 'react-chartjs-2';
 import { Data } from './data';
 
+
+
 ChartJS.register(
   LinearScale,
   CategoryScale,
