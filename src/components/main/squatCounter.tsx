@@ -107,9 +107,6 @@ const SquatCounter = () => {
 
   useEffect(() => {
     if (isStart && time > 0) {
-      // if (elbowRef.current[0] === 0 && elbowRef.current[1] === 0) {
-      //     elbowRef.current = [2/3, 2/3];
-      // }
 
       const timerId = setInterval(() => {
         const updateResult = updateCounter(
@@ -136,7 +133,20 @@ const SquatCounter = () => {
   }, [isStart])
 
   useEffect(() => {
-    if (count === 5) {
+    const countGoal = 5
+    if (count === countGoal-10) {
+      const audio = new Audio("/voices/7.wav")
+      audio.play()
+    } else if (countGoal >= 10 && count === Math.floor(countGoal/2)) {
+      const audio = new Audio("/voices/8.wav")
+      audio.play()
+    } else if (count === countGoal-3) {
+      const audio = new Audio("/voices/9.wav")
+      audio.play()
+    } else if (count === countGoal-1) {
+      const audio = new Audio("/voices/10.wav")
+      audio.play()
+    } else if (count === 15) {
       if (studied) {
         setMode('finish')
       } else {
@@ -208,17 +218,6 @@ const SquatCounter = () => {
               START
             </Title>
           )}
-
-          {/* <div className={styles.pictures}> */}
-          {/* <div style={{ zIndex : "10px" }}> */}
-          {/* {(time <= 9 && time >= 1) ? <Title>{time}</Title> :
-                            (time===0 && <Title>{time}</Title>)
-                        }   */}
-          {/* {time <= 9 && time >= 1 && <img src={`/number_${time}.png`} alt="countdown" />}
-                        {time == 0 && <img src={`/start.png`} alt="start" />} */}
-          {/* </div> */}
-          {/* <ColoredLine /> */}
-          {/* draw */}
           <canvas
             ref={canvasRef}
             style={{ minWidth: '300px', width: '30vw' }}

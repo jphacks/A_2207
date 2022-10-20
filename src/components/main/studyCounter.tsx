@@ -4,6 +4,10 @@ import shallow from 'zustand/shallow'
 import { useSettingsStore } from 'src/stores/settingsStore'
 import { useEffect, useRef, useState } from 'react'
 
+const getRandomInt = (max: number) => {
+  return Math.floor(Math.random() * max);
+}
+
 const useStyles = createStyles((theme) => ({
   card: {
     backgroundColor: theme.fn.primaryColor(),
@@ -51,6 +55,8 @@ const StudyCounter = () => {
 
   useEffect(() => {
     start()
+    const audio = new Audio("/voices/1.wav")
+    audio.play()
   }, [])
 
   useEffect(() => {
@@ -59,39 +65,24 @@ const StudyCounter = () => {
       setPositionY(-0.8)
       setPositionZ(0)
       setStudied(true)
-      setMode('fitness')
+      setMode('choice')
     }
     setCountRemain(countdown/1000)
     percentage.current = countdown * 100 / (timerSeconds * 1000)
   }, [isRunning, countdown])
 
+  const timerClick = () => {
+    setCircle(!circle)
+    const fileNumbers = [2, 3]
+    const audio = new Audio(`voices/${fileNumbers[getRandomInt(fileNumbers.length)]}.wav`)
+    audio.play()
+  }
+
   return (
     <div>
       <Stack sx={() => ({ backgroundColor: 'transparent' })}>
-        <Center onClick={() => setCircle(!circle)}>
+        <Center onClick={() => timerClick()}>
           {circle ?     
-            <RingProgress
-              label={
-                <div>
-                  <Text size="xs" weight={700} align="center">
-                    REMAINING
-                  </Text>
-                  <Title weight={500} align="center">
-                    {new Date(countdown).toISOString().slice(14, 19)}
-                  </Title>
-                  <Text size="xs" color="gray" align="center">
-                    あと {Math.trunc(percentage.current)}%
-                  </Text>
-                </div>
-              }
-              size={240}
-              thickness={16}
-              roundCaps
-              sections={[
-                { value: percentage.current, color: 'blue' },
-              ]}
-            />
-            :
             <Card withBorder radius="md" p="xl" className={classes.card}>
               <Text size="xs" weight={700} className={classes.title}>
                 REMAINING
@@ -116,6 +107,28 @@ const StudyCounter = () => {
                 </Text>
               </Group>
             </Card>
+            :
+            <RingProgress
+            label={
+              <div>
+                <Text size="xs" weight={700} align="center">
+                  REMAINING
+                </Text>
+                <Title weight={500} align="center">
+                  {new Date(countdown).toISOString().slice(14, 19)}
+                </Title>
+                <Text size="xs" color="gray" align="center">
+                  あと {Math.trunc(percentage.current)}%
+                </Text>
+              </div>
+            }
+            size={240}
+            thickness={16}
+            roundCaps
+            sections={[
+              { value: percentage.current, color: 'blue' },
+            ]}
+          />
           }
         </Center>
         <Grid>
