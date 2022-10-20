@@ -1,5 +1,5 @@
 import { createStyles, Text, SimpleGrid, Container } from '@mantine/core'
-import { IconTruck, IconCertificate, IconCoin, TablerIcon } from '@tabler/icons'
+import { IconHeart, IconClock, IconCamera, IconCoin, TablerIcon } from '@tabler/icons'
 
 const useStyles = createStyles((theme) => ({
   feature: {
@@ -70,20 +70,20 @@ function Feature({
 
 const mockdata = [
   {
-    icon: IconTruck,
-    title: 'Free Worldwide shipping',
+    icon: IconHeart,
+    title: 'いつでも来てくれる Zoom 友達',
     description:
       'As electricity builds up inside its body, it becomes more aggressive. One theory is that the electricity.',
   },
   {
-    icon: IconCertificate,
-    title: 'Best Quality Product',
+    icon: IconClock,
+    title: '時間管理で集中力アップ',
     description:
       'Slakoth’s heart beats just once a minute. Whatever happens, it is content to loaf around motionless.',
   },
   {
-    icon: IconCoin,
-    title: 'Very Affordable Pricing',
+    icon: IconCamera,
+    title: 'カメラ機能を使ったスクワットゲーム',
     description:
       'Thought to have gone extinct, Relicanth was given a name that is a variation of the name of the person who discovered.',
   },
