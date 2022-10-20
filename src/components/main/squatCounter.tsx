@@ -33,7 +33,7 @@ const SquatCounter = () => {
     const [stage, setStage] = useState("");
     const prevStageRef = useRef("");
     const { time, isStart } = useTimer();
-    const elbowRef = useRef([0, 0])
+    const elbowRef = useRef([2/3, 2/3])
     const { setMode, setPositionX, setPositionY, setPositionZ, studied } = useSettingsStore(
         (state) => ({
           setMode: state.setMode,
@@ -97,7 +97,10 @@ const SquatCounter = () => {
             if (landmarks && landmarks[13] && landmarks[14]) {
                 const leftElbow = landmarks[13].y;
                 const rightElbow = landmarks[14].y;
-                elbowRef.current = [leftElbow, rightElbow];
+                if (0.2 <= leftElbow && leftElbow <= 0.8) {
+                    elbowRef.current = [leftElbow, leftElbow];
+                }
+
             }
         }
     }, [time])
