@@ -1,14 +1,11 @@
 import React from 'react'
-import { Button } from '@mantine/core';
-import firebase from "firebase/compat/app";
-import { auth } from "./firebase"
+import { Button } from '@mantine/core'
+import { auth } from './firebase'
 
 function Signout() {
   return (
     <div>
-      <Button onClick={() => auth.signOut()}>
-        サインアウト
-      </Button>
+      <Button onClick={() => auth.signOut()}>サインアウト</Button>
     </div>
   )
 }

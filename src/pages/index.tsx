@@ -1,28 +1,24 @@
 import type { NextPage } from 'next'
-import VRMCanvas from 'src/components/charaVisualize/vrmCanvas'
+import VRMCanvas from 'src/components/vrm/vrmCanvas'
 import StartButton from 'src/components/main/startButton'
 import StudyCounter from 'src/components/main/studyCounter'
 import SquatCounter from 'src/components/main/squatCounter'
 import FinaleMenu from 'src/components/main/finaleMenu'
-import GoalView from 'src/components/main/goalViewer'
 import shallow from 'zustand/shallow'
 import { useSettingsStore } from 'src/stores/settingsStore'
 import Layout from 'src/components/layout/mainLayout'
 import GoalViewer from 'src/components/main/goalViewer'
-import Signin from 'src/components/firebase/Signin'
-import { useAuthState } from "react-firebase-hooks/auth"
-import { auth } from "../components/firebase/firebase"
-
+import { useAuthState } from 'react-firebase-hooks/auth'
+import { auth } from '../components/firebase/firebase'
 
 const Home: NextPage = () => {
-  const { mode, studied } = useSettingsStore(
+  const { mode } = useSettingsStore(
     (state) => ({
       mode: state.mode,
-      studied: state.studied,
     }),
     shallow,
   )
-  const [user] = useAuthState(auth as any);
+  const [user] = useAuthState(auth as any)
   return (
     <Layout>
       <div className="container">
@@ -78,7 +74,7 @@ const Home: NextPage = () => {
             <SquatCounter />
           </div>
         )}
-        {mode === 'finish' &&
+        {mode === 'finish' && (
           <div
             style={{
               position: 'absolute',
@@ -89,7 +85,8 @@ const Home: NextPage = () => {
             }}
           >
             <FinaleMenu />
-          </div>}
+          </div>
+        )}
 
         <VRMCanvas />
       </div>
