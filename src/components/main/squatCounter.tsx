@@ -92,14 +92,22 @@ const SquatCounter = () => {
     }, [onResults]);
 
     useEffect(() => {
-        if (isStart && time > 0) {
+        if (time > 0 && resultsRef.current !== null) {
             const landmarks = resultsRef.current.poseLandmarks;
-            if (landmarks[13] && landmarks[14]) {
+            if (landmarks && landmarks[13] && landmarks[14]) {
                 const leftElbow = landmarks[13].y;
                 const rightElbow = landmarks[14].y;
                 elbowRef.current = [leftElbow, rightElbow];
             }
+        }
+    }, [time])
 
+    useEffect(() => {
+        if (isStart && time > 0) {
+
+            if (elbowRef.current[0] === 0 && elbowRef.current[1] === 0) {
+                elbowRef.current = [2/3, 2/3];
+            }
 
             const timerId = setInterval(() => {
                 const updateResult = updateCounter(
@@ -160,11 +168,17 @@ const SquatCounter = () => {
                 <div style={{position: "relative"}} >
                     <Text>カウント : {count}</Text>
                     <Text>Stage : {stage}</Text>
-                    <Title color="blue" style={{ fontSize: "300px", position: "absolute" , top: "50%", left: "50%", transform: 'translate(-50%, -50%)'}} >
-                        {(time <= 9 && time >= 1) ? time :
-                            (time===0 && time)
-                        }
-                    </Title>
+                    {(time <= 9 && time >= 1) &&
+                        <Title color="blue" style={{ fontSize: "300px", position: "absolute" , top: "50%", left: "50%", transform: 'translate(-50%, -50%)'}} >
+                            {time}
+                        </Title>
+                    }
+                    {(time===0) &&
+                        <Title color="blue" style={{ fontSize: "150px", position: "absolute" , top: "50%", left: "50%", transform: 'translate(-50%, -50%)'}} >
+                            START
+                        </Title>
+                    }
+
 
                     {/* <div className={styles.pictures}> */}
                     {/* <div style={{ zIndex : "10px" }}> */}
