@@ -108,9 +108,9 @@ const SquatCounter = () => {
     useEffect(() => {
         if (isStart && time > 0) {
 
-            if (elbowRef.current[0] === 0 && elbowRef.current[1] === 0) {
-                elbowRef.current = [2/3, 2/3];
-            }
+            // if (elbowRef.current[0] === 0 && elbowRef.current[1] === 0) {
+            //     elbowRef.current = [2/3, 2/3];
+            // }
 
             const timerId = setInterval(() => {
                 const updateResult = updateCounter(
