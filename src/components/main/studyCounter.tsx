@@ -43,9 +43,10 @@ const StudyCounter = () => {
     }),
     shallow,
   )
+  const countRemainRef = useRef(countRemain);
   const timerSeconds = 60 // ユーザーが設定した値（変更可にする）
   const { countdown, start, reset, pause, isRunning } = useCountdownTimer({
-    timer: 1000 * countRemain,
+    timer: 1000 * countRemainRef.current,
   });
 
   useEffect(() => {
@@ -116,7 +117,6 @@ const StudyCounter = () => {
               </Group>
             </Card>
           }
-          {/* <Title>{new Date(countdown).toISOString().slice(14, 19)}</Title> */}
         </Center>
         <Grid>
           <Grid.Col span={6}>

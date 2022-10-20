@@ -6,7 +6,7 @@ import { Pose, Results } from '@mediapipe/pose'
 import { drawCanvas } from '../../utils/drawCanvas'
 import updateCounter from '../../utils/updateCounter'
 import { useTimer } from '../../hooks/useTimer'
-import { Title, Stack, Text } from '@mantine/core'
+import { Title, Stack, Text, SimpleGrid } from '@mantine/core'
 import shallow from 'zustand/shallow'
 import { useSettingsStore } from 'src/stores/settingsStore'
 
@@ -33,7 +33,7 @@ const SquatCounter = () => {
   const [stage, setStage] = useState('')
   const prevStageRef = useRef('')
   const { time, isStart } = useTimer()
-  const elbowRef = useRef([0, 0])
+  const elbowRef = useRef([2 / 3, 2 / 3])
   const { setMode, setPositionX, setPositionY, setPositionZ, studied } =
     useSettingsStore(
       (state) => ({
@@ -93,13 +93,23 @@ const SquatCounter = () => {
   }, [onResults])
 
   useEffect(() => {
-    if (isStart && time > 0) {
+    if (time > 0 && resultsRef.current !== null) {
       const landmarks = resultsRef.current.poseLandmarks
-      if (landmarks[13] && landmarks[14]) {
+      if (landmarks && landmarks[13] && landmarks[14]) {
         const leftElbow = landmarks[13].y
         const rightElbow = landmarks[14].y
-        elbowRef.current = [leftElbow, rightElbow]
+        if (0.2 <= leftElbow && leftElbow <= 0.8) {
+          elbowRef.current = [leftElbow, leftElbow]
+        }
       }
+    }
+  }, [time])
+
+  useEffect(() => {
+    if (isStart && time > 0) {
+      // if (elbowRef.current[0] === 0 && elbowRef.current[1] === 0) {
+      //     elbowRef.current = [2/3, 2/3];
+      // }
 
       const timerId = setInterval(() => {
         const updateResult = updateCounter(
@@ -156,20 +166,48 @@ const SquatCounter = () => {
         {/* output */}
         {/* <div className={styles.buttonContainer}> */}
         <div style={{ position: 'relative' }}>
-          <Text>カウント : {count}</Text>
-          <Text>Stage : {stage}</Text>
-          <Title
-            color="blue"
-            style={{
-              fontSize: '300px',
-              position: 'absolute',
-              top: '50%',
-              left: '50%',
-              transform: 'translate(-50%, -50%)',
-            }}
-          >
-            {time <= 9 && time >= 1 ? time : time === 0 && time}
-          </Title>
+          <SimpleGrid cols={2}>
+            <Text>カウント :</Text>
+            <Text color="red" weight={700}>
+              {' '}
+              {count}
+            </Text>
+          </SimpleGrid>
+          <SimpleGrid cols={2}>
+            <Text>状態 : </Text>
+            <Text color="red" weight={700}>
+              {stage}
+            </Text>
+          </SimpleGrid>
+
+          {time <= 9 && time >= 1 && (
+            <Title
+              color="blue"
+              style={{
+                fontSize: '300px',
+                position: 'absolute',
+                top: '50%',
+                left: '50%',
+                transform: 'translate(-50%, -50%)',
+              }}
+            >
+              {time}
+            </Title>
+          )}
+          {time === 0 && (
+            <Title
+              color="blue"
+              style={{
+                fontSize: '150px',
+                position: 'absolute',
+                top: '50%',
+                left: '50%',
+                transform: 'translate(-50%, -50%)',
+              }}
+            >
+              START
+            </Title>
+          )}
 
           {/* <div className={styles.pictures}> */}
           {/* <div style={{ zIndex : "10px" }}> */}
