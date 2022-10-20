@@ -6,7 +6,7 @@ import { Pose, Results } from "@mediapipe/pose";
 import { drawCanvas } from "../utils/drawCanvas";
 import updateCounter from "../utils/updateCounter";
 import { useTimer } from "../hooks/useTimer";
-import { Title, Stack, Text } from '@mantine/core'
+import { Title, Stack, Text, SimpleGrid } from '@mantine/core'
 import shallow from 'zustand/shallow'
 import { useSettingsStore } from 'src/stores/settingsStore'
 
@@ -166,8 +166,15 @@ const SquatCounter = () => {
                 {/* output */}
                 {/* <div className={styles.buttonContainer}> */}
                 <div style={{position: "relative"}} >
-                    <Text>カウント : {count}</Text>
-                    <Text>Stage : {stage}</Text>
+                    <SimpleGrid cols={2}>
+                        <Text>カウント :</Text>
+                        <Text color="red" weight={700}> {count}</Text>
+                    </SimpleGrid>
+                    <SimpleGrid cols={2}>
+                        <Text>状態 : </Text>
+                        <Text color="red" weight={700}>{stage}</Text>
+                    </SimpleGrid>
+                    
                     {(time <= 9 && time >= 1) &&
                         <Title color="blue" style={{ fontSize: "300px", position: "absolute" , top: "50%", left: "50%", transform: 'translate(-50%, -50%)'}} >
                             {time}
