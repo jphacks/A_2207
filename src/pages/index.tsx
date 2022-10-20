@@ -1,10 +1,15 @@
 import type { NextPage } from 'next'
-import VRMCanvas from 'src/components/charaVisualize/vrmCanvas'
+import VRMCanvas from 'src/components/vrm/vrmCanvas'
 import StartButton from 'src/components/main/startButton'
 import StudyCounter from 'src/components/main/studyCounter'
+import SquatCounter from 'src/components/main/squatCounter'
+import FinaleMenu from 'src/components/main/finaleMenu'
 import shallow from 'zustand/shallow'
 import { useSettingsStore } from 'src/stores/settingsStore'
 import Layout from 'src/components/layout/mainLayout'
+import GoalViewer from 'src/components/main/goalViewer'
+import { useAuthState } from 'react-firebase-hooks/auth'
+import { auth } from '../components/firebase/firebase'
 
 const Home: NextPage = () => {
   const { mode } = useSettingsStore(
@@ -13,6 +18,7 @@ const Home: NextPage = () => {
     }),
     shallow,
   )
+  const [user] = useAuthState(auth as any)
   return (
     <Layout>
       <div className="container">
@@ -26,6 +32,7 @@ const Home: NextPage = () => {
               transform: 'translate(-50%, -50%)',
             }}
           >
+            {user ? <p>ログインしてます</p> : <p>ログインしてない</p>}
             <StartButton />
           </div>
         )}
@@ -42,7 +49,32 @@ const Home: NextPage = () => {
             <StudyCounter />
           </div>
         )}
+        {mode === 'study' && (
+          <div
+            style={{
+              position: 'absolute',
+              zIndex: 10,
+              top: '5%',
+              right: '5%',
+            }}
+          >
+            <GoalViewer />
+          </div>
+        )}
         {mode === 'fitness' && (
+          <div
+            style={{
+              position: 'absolute',
+              zIndex: 10,
+              top: '50%',
+              left: '70%',
+              transform: 'translate(-50%, -50%)',
+            }}
+          >
+            <SquatCounter />
+          </div>
+        )}
+        {mode === 'finish' && (
           <div
             style={{
               position: 'absolute',
@@ -52,10 +84,9 @@ const Home: NextPage = () => {
               transform: 'translate(-50%, -50%)',
             }}
           >
-            <h1>Fitness Mode</h1>
+            <FinaleMenu />
           </div>
         )}
-        {mode === 'bress' && <div>bress</div>}
 
         <VRMCanvas />
       </div>

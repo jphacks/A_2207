@@ -1,8 +1,9 @@
-import { ActionIcon, Modal, Select, Center, FileInput, Grid, Slider, Text, Title, Stack } from '@mantine/core'
-import { IconSettings, IconUpload } from '@tabler/icons'
+import { ActionIcon, Modal, Select, Center, Grid, Slider, Text, Title, Stack } from '@mantine/core'
+import { IconSettings } from '@tabler/icons'
 import { Dispatch, SetStateAction, useState } from 'react'
 import shallow from 'zustand/shallow'
 import { useSettingsStore } from 'src/stores/settingsStore'
+import { useVrmStore } from 'src/stores/vrmStore'
 
 interface IconConfigProps {
   opened: boolean
@@ -23,10 +24,14 @@ export function IconConfig({ opened, setOpened }: IconConfigProps) {
     }),
     shallow,
   )
+  const { animation, setAnimation } = useVrmStore(
+    (state) => ({
+      animation: state.animation,
+      setAnimation: state.setAnimation,
+    }),
+    shallow,
+  )
 
-  const [value, setValue] = useState<number | undefined>(2200);
-
-  const [modelFile, setModelFile] = useState<File | null>(null)
   const [excercise, setExcercise] = useState<string | null>('squat') // TODO: 終了後にやりたいエクササイズ
 
   return (
@@ -112,7 +117,6 @@ export function IconConfig({ opened, setOpened }: IconConfigProps) {
             </Grid>
           </Stack>
 
-          
           <Select
             label="25分ごとのメニューを選んでください"
             value={excercise}
@@ -120,6 +124,16 @@ export function IconConfig({ opened, setOpened }: IconConfigProps) {
             data={[
               { value: 'squat', label: 'スクワット' },
               { value: 'deepBreath', label: '深呼吸' },
+            ]}
+          />
+          <Select
+            label="animationを選んでください"
+            value={animation}
+            onChange={setAnimation}
+            data={[
+              { value: 'idle', label: '立ち姿' },
+              { value: 'BreakdanceEnding1', label: 'ブレイクダンス' },
+              { value: 'StandingGreeting', label: '手を振る' },
             ]}
           />
 

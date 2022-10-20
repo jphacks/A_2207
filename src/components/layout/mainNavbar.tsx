@@ -5,6 +5,7 @@ import {
   createStyles,
   Stack,
   Center,
+  Text,
 } from '@mantine/core'
 import { TablerIcon, IconHome2, IconRun, IconBook } from '@tabler/icons'
 import { useState } from 'react'
@@ -12,6 +13,10 @@ import { IconInfo } from './mainIconInfo'
 import { IconConfig } from './mainIconConfig'
 import { useSettingsStore } from 'src/stores/settingsStore'
 import shallow from 'zustand/shallow'
+import Signin from '../firebase/Signin'
+import SignOut from '../firebase/Signout'
+import { auth } from "../firebase/firebase"
+import { useAuthState } from "react-firebase-hooks/auth"
 
 const useStyles = createStyles((theme) => ({
   link: {
@@ -92,9 +97,23 @@ export function MainNavbar() {
   const [infoOpened, setInfoOpened] = useState(false)
   const [configOpened, setConfigOpened] = useState(false)
 
+  const [user] = useAuthState(auth as any);
+
   return (
     <Navbar width={{ base: 80 }} p="md">
-      <Center>Logo</Center>
+      <Center>
+        <Text
+          component="span"
+          align="center"
+          variant="gradient"
+          gradient={{ from: 'indigo', to: 'cyan', deg: 45 }}
+          size="xl"
+          weight={700}
+          style={{ fontFamily: 'Greycliff CF, sans-serif' }}
+        >
+          VRoom
+        </Text>
+      </Center>
       {/* <Navbar.Section grow mt={50}> */}
       <Navbar.Section grow mt={50}>
         <Stack justify="center" spacing={0}>
@@ -120,6 +139,7 @@ export function MainNavbar() {
       </Navbar.Section>
       <Navbar.Section>
         <Stack justify="center" spacing={10}>
+          {user ? <SignOut /> : <Signin />}
           <IconConfig opened={configOpened} setOpened={setConfigOpened} />
           <IconInfo opened={infoOpened} setOpened={setInfoOpened} />
         </Stack>
