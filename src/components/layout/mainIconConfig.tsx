@@ -3,7 +3,7 @@ import { IconSettings } from '@tabler/icons'
 import { Dispatch, SetStateAction, useState } from 'react'
 import shallow from 'zustand/shallow'
 import { useSettingsStore } from 'src/stores/settingsStore'
-import { useAnimationStore } from 'src/stores/animtionStore'
+import { useVrmStore } from 'src/stores/vrmStore'
 
 interface IconConfigProps {
   opened: boolean
@@ -24,7 +24,7 @@ export function IconConfig({ opened, setOpened }: IconConfigProps) {
     }),
     shallow,
   )
-  const { animation, setAnimation } = useAnimationStore(
+  const { animation, setAnimation } = useVrmStore(
     (state) => ({
       animation: state.animation,
       setAnimation: state.setAnimation,
@@ -127,12 +127,13 @@ export function IconConfig({ opened, setOpened }: IconConfigProps) {
             ]}
           />
           <Select
-            label="25分ごとのメニューを選んでください"
+            label="animationを選んでください"
             value={animation}
             onChange={setAnimation}
             data={[
-              { value: 'squat', label: 'スクワット' },
-              { value: 'deepBreath', label: '深呼吸' },
+              { value: 'idle', label: '立ち姿' },
+              { value: 'BreakdanceEnding1', label: 'ブレイクダンス' },
+              { value: 'StandingGreeting', label: '手を振る' },
             ]}
           />
 

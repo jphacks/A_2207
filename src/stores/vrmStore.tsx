@@ -1,14 +1,14 @@
 import create from 'zustand'
 import { devtools } from 'zustand/middleware'
 
-interface AnimationState {
+interface VrmState {
   animation: string
   setAnimation: (animation: string) => void
 }
 
-export const useAnimationStore = create<AnimationState>()(
+export const useVrmStore = create<VrmState>()(
   devtools((set) => ({
-    animation: 'standing',
+    animation: 'idle',
     setAnimation: (animation) =>
       set(
         (state) => ({
