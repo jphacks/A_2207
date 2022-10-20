@@ -1,15 +1,24 @@
 import type { NextPage } from 'next'
-import { Description } from 'src/components/landingPage/description'
-import { Description2 } from 'src/components/landingPage/description2'
-import { Description_camera } from 'src/components/landingPage/description_camera'
-import { Features } from 'src/components/landingPage/features'
 import { DataGraph } from 'src/components/analytics/datagraph';
 import { HeatMap } from 'src/components/analytics/heatmap';
-import LandingPageLayout from 'src/components/layout/landingPage/mainLayout'
+import { UserInfo } from 'src/components/analytics/userinfo';
+import { SimpleGrid } from '@mantine/core';
 
 const Home: NextPage = () => {
   return (
-    <LandingPageLayout>
+    <div>
+      <UserInfo
+        avatar = ""
+        name = "Tohoku Taro"
+      />
+    <SimpleGrid
+      cols={2}
+      spacing="lg"
+      breakpoints={[
+        { maxWidth: 800, cols: 1, spacing: 'md' },
+      ]}
+    >
+    <div>
       <HeatMap values={[
             { date: "2022-07-03", count: 1 },
             { date: "2022-08-22", count: 2 },
@@ -25,12 +34,10 @@ const Home: NextPage = () => {
             { date: '2022-10-15', count: 8 },
             { date: '2022-10-19', count: 10 },
           ]}/>
-      <Description />
-      <Features />
-      <Description2 />
-      <Description_camera />
-      <DataGraph />
-    </LandingPageLayout>
+    </div>
+    <div><DataGraph /></div>
+    </SimpleGrid>
+    </div>
   )
 }
 

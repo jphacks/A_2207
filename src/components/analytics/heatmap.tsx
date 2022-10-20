@@ -20,7 +20,7 @@ export const HeatMap = ({values}: {values:Array<{ date: string; count: number; }
   startDate.setMonth(startDate.getMonth() - 4)
   return (
     <Container>
-      <h1>react-calendar-heatmap</h1>
+      <h1 style={{textAlign: "center"}}>Heatmap</h1>
       <div css={heatmap}>
         <CalendarHeatmap
           // 表示させる月
@@ -46,6 +46,7 @@ export const HeatMap = ({values}: {values:Array<{ date: string; count: number; }
             };
           }}
         />
+        <div className="react-calendar-heatmap-week"> <rect width={10} height={10} className="color-empty"/></div>
       </div>
       <ReactTooltip />
     </Container>
