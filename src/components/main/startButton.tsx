@@ -76,7 +76,10 @@ const StartButton = () => {
           gradient={{ from: 'indigo', to: 'cyan' }}
           radius="xl"
           size="xl"
-          onClick={() => setMode('study')}
+          onClick={() => {
+            setCountRemain(workTime * 60)
+            setMode('study')
+          }}
         >
           START
         </Button>
