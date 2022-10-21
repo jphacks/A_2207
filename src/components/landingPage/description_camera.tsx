@@ -94,7 +94,7 @@ export function Description_camera() {
                 </Title>
 
                 <Text className={classes.description} mt={30}>
-                
+                PCのカメラがあなたの体の位置を認識し, スクワットの回数を正しく計測してくれます.
                 </Text>
             </div>
             </div>
