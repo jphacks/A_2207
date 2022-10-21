@@ -7,7 +7,13 @@ import {
   Center,
   Image,
 } from '@mantine/core'
-import { TablerIcon, IconHome2, IconRun, IconBook } from '@tabler/icons'
+import {
+  TablerIcon,
+  IconHome2,
+  IconRun,
+  IconBook,
+  IconCoffee,
+} from '@tabler/icons'
 import { useState } from 'react'
 import { IconInfo } from './mainIconInfo'
 import { IconConfig } from './mainIconConfig'
@@ -115,20 +121,26 @@ export function MainNavbar() {
           <NavbarLink
             icon={IconHome2}
             modeTitle="initial"
-            label="HOME"
+            label="スタート"
             onClick={() => setMode('initial')}
           />
           <NavbarLink
             icon={IconBook}
             modeTitle="study"
-            label="STUDY"
+            label="勉強"
             onClick={() => setMode('study')}
           />
           <NavbarLink
             icon={IconRun}
             modeTitle="fitness"
-            label="FITNESS"
+            label="運動"
             onClick={() => setMode('fitness')}
+          />
+          <NavbarLink
+            icon={IconCoffee}
+            modeTitle="break"
+            label="休憩"
+            onClick={() => setMode('break')}
           />
         </Stack>
       </Navbar.Section>

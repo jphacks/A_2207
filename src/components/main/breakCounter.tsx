@@ -14,6 +14,7 @@ import { useCountdownTimer } from 'use-countdown-timer'
 import shallow from 'zustand/shallow'
 import { useSettingsStore } from 'src/stores/settingsStore'
 import { useEffect, useRef, useState } from 'react'
+import { useVrmStore } from 'src/stores/vrmStore'
 
 const useStyles = createStyles((theme) => ({
   card: {
@@ -54,9 +55,15 @@ const BreakCounter = () => {
     }),
     shallow,
   )
+  const { setAnimation } = useVrmStore(
+    (state) => ({
+      setAnimation: state.setAnimation,
+    }),
+    shallow,
+  )
   const timerSeconds = breakTime * 60
   const { countdown, start, isRunning } = useCountdownTimer({
-    timer: 1000 * 60,
+    timer: 1000 * timerSeconds,
   })
 
   useEffect(() => {
@@ -68,7 +75,7 @@ const BreakCounter = () => {
   useEffect(() => {
     if (countdown === 0 && isRunning === true) {
       setStudied(true)
-      setMode('finish')
+      setMode('initial')
     }
     setCountRemain(countdown / 1000)
     percentage.current = (countdown * 100) / (timerSeconds * 1000)
@@ -76,18 +83,35 @@ const BreakCounter = () => {
 
   const timerClick = () => {
     setCircle(!circle)
-    // const fileNumbers = [2, 3]
-    // const audio = new Audio(`voices/${fileNumbers[getRandomInt(fileNumbers.length)]}.wav`)
-    // audio.play()
   }
 
+  const animationList = ['ArmStretching', 'NeckStretching']
+  useEffect(() => {
+    const id = setInterval(() => {
+      // setAnimation(
+      //   animationList[Math.floor(Math.random() * animationList.length)],
+      // )
+    }, 10000)
+    return () => clearInterval(id)
+  }, [])
+
   return (
-    <div>
+    <div
+      style={{
+        padding: '1em',
+        fontWeight: 'bold',
+        background: '#FFF',
+        border: 'solid 3px #6091d3',
+        borderRadius: '10px',
+        position: 'relative',
+      }}
+    >
       <Stack sx={() => ({ backgroundColor: 'transparent' })}>
-        <Title color="blue" style={{ fontSize: '50px' }}>
-          休憩中です
-        </Title>
-        <Text color="gray">ゆっくり休んでくださいね</Text>
+        <Center>
+          <Title color="blue" style={{ fontSize: '50px' }}>
+            休憩中
+          </Title>
+        </Center>
         <Center onClick={() => timerClick()}>
           {circle ? (
             <Card withBorder radius="md" p="xl" className={classes.card}>
@@ -136,8 +160,8 @@ const BreakCounter = () => {
             />
           )}
         </Center>
-        <Stack align="flex-end">
-          <Button variant="default" onClick={() => setMode('finish')}>
+        <Stack align="center">
+          <Button variant="default" onClick={() => setMode('initial')}>
             休憩を終了する
           </Button>
         </Stack>

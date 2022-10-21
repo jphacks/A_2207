@@ -5,7 +5,6 @@ import StudyCounter from 'src/components/main/studyCounter'
 import ChoiceButton from 'src/components/main/choiceButton'
 import SquatCounter from 'src/components/main/squatCounter'
 import BreakCounter from 'src/components/main/breakCounter'
-import FinaleMenu from 'src/components/main/finaleMenu'
 import shallow from 'zustand/shallow'
 import { useSettingsStore } from 'src/stores/settingsStore'
 import Layout from 'src/components/layout/mainLayout'
@@ -76,24 +75,10 @@ const Home: NextPage = () => {
           </OverlayWrapper>
         )}
         {mode === 'break' && (
-          <div
-            style={{
-              position: 'absolute',
-              zIndex: 10,
-              top: '50%',
-              left: '70%',
-              transform: 'translate(-50%, -50%)',
-            }}
-          >
+          <OverlayWrapper top={md ? '50%' : '70%'} left={md ? '70%' : '50%'}>
             <BreakCounter />
-          </div>
-        )}
-        {mode === 'finish' && (
-          <OverlayWrapper top="50%" left="50%">
-            <FinaleMenu />
           </OverlayWrapper>
         )}
-
         <VRMCanvas />
       </div>
     </Layout>

@@ -148,6 +148,8 @@ type panelSettingsProps = {
   BreakdanceEnding1?: () => void
   StandingGreeting?: () => void
   AirSquatBentArms?: () => void
+  ArmStretching?: () => void
+  NeckStretching?: () => void
 }
 let panelSettings: panelSettingsProps
 type baseActionsItemProps = {
@@ -160,6 +162,8 @@ type baseActionsProps = {
   BreakdanceEnding1: baseActionsItemProps
   StandingGreeting: baseActionsItemProps
   AirSquatBentArms: baseActionsItemProps
+  ArmStretching: baseActionsItemProps
+  NeckStretching: baseActionsItemProps
 }
 const baseActions: baseActionsProps = {
   idle: { weight: 1 },
@@ -167,6 +171,8 @@ const baseActions: baseActionsProps = {
   BreakdanceEnding1: { weight: 0 },
   StandingGreeting: { weight: 0 },
   AirSquatBentArms: { weight: 0 },
+  ArmStretching: { weight: 0 },
+  NeckStretching: { weight: 0 },
 }
 function setWeight(action: THREE.AnimationAction, weight: number) {
   action.enabled = true

@@ -1,10 +1,10 @@
-import { Button, Center, TextInput, Stack, Text } from '@mantine/core'
+import { Button, Center, Stack, Text } from '@mantine/core'
 import shallow from 'zustand/shallow'
 import { useSettingsStore } from 'src/stores/settingsStore'
 import { useEffect } from 'react'
 
 const ChoiceButton = () => {
-  const { setMode, goal, setGoal } = useSettingsStore(
+  const { setMode } = useSettingsStore(
     (state) => ({
       setMode: state.setMode,
       goal: state.goal,
@@ -12,8 +12,6 @@ const ChoiceButton = () => {
     }),
     shallow,
   )
-
-  const sleep = (second: number) => new Promise(resolve => setTimeout(resolve, second * 1000))
 
   useEffect(() => {
     // (async() => {
@@ -31,10 +29,9 @@ const ChoiceButton = () => {
     //     });
     //   }
     // })()
-    const audio = new Audio("/voices/11.wav")
+    const audio = new Audio('/voices/11.wav')
     audio.play()
   }, [])
-
 
   return (
     <Center style={{ width: '100%', height: '100%' }}>
@@ -57,7 +54,9 @@ const ChoiceButton = () => {
         >
           <Stack spacing={0}>
             <Text color="gray.5">深呼吸モード</Text>
-            <Text size="xs" color="gray.4">Comming Soon</Text>
+            <Text size="xs" color="gray.4">
+              Comming Soon
+            </Text>
           </Stack>
         </Button>
         <Button
@@ -65,7 +64,7 @@ const ChoiceButton = () => {
           gradient={{ from: 'indigo', to: 'cyan' }}
           radius="xl"
           size="xl"
-          onClick={() => setMode('finish')}
+          onClick={() => setMode('initial')}
         >
           終了する
         </Button>

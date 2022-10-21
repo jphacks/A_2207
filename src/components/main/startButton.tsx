@@ -1,10 +1,26 @@
-import { Button, Center, TextInput, Stack, SimpleGrid, NumberInput } from '@mantine/core'
+import {
+  Button,
+  Center,
+  TextInput,
+  Stack,
+  SimpleGrid,
+  NumberInput,
+} from '@mantine/core'
 import shallow from 'zustand/shallow'
 import { useSettingsStore } from 'src/stores/settingsStore'
 import { useEffect } from 'react'
 
 const StartButton = () => {
-  const { setMode, goal, setGoal, workTime, setWorkTime, breakTime, setBreakTime, setCountRemain } = useSettingsStore(
+  const {
+    setMode,
+    goal,
+    setGoal,
+    workTime,
+    setWorkTime,
+    breakTime,
+    setBreakTime,
+    setCountRemain,
+  } = useSettingsStore(
     (state) => ({
       setMode: state.setMode,
       goal: state.goal,
@@ -28,32 +44,32 @@ const StartButton = () => {
           value={goal}
           size="md"
           onChange={(event) => setGoal(event.currentTarget.value)}
-          placeholder="ゴールを入力"
+          placeholder="目標を入力"
         />
 
-      <SimpleGrid
-        cols={2}
-        spacing="lg"
-      >
-      <NumberInput
-        mt="md"
-        label="作業時間"
-        // description="From 0 to Infinity, step is 5"
-        value={workTime}
-        step={5}
-        min={1}
-        onChange={(val) => {setWorkTime(val!); setCountRemain(val!*60);}}
-      />
-      <NumberInput
-        mt="md"
-        label="休憩時間"
-        // description="From 0 to Infinity, step is 5"
-        value={breakTime}
-        step={1}
-        min={1}
-        onChange={(val) => setBreakTime(val!)}
-      />
-      </SimpleGrid>
+        <SimpleGrid cols={2} spacing="lg">
+          <NumberInput
+            mt="md"
+            label="作業時間"
+            // description="From 0 to Infinity, step is 5"
+            value={workTime}
+            step={5}
+            min={1}
+            onChange={(val) => {
+              setWorkTime(val!)
+              setCountRemain(val! * 60)
+            }}
+          />
+          <NumberInput
+            mt="md"
+            label="休憩時間"
+            // description="From 0 to Infinity, step is 5"
+            value={breakTime}
+            step={1}
+            min={1}
+            onChange={(val) => setBreakTime(val!)}
+          />
+        </SimpleGrid>
 
         <Button
           variant="gradient"

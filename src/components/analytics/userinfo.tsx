@@ -1,5 +1,4 @@
 import { Avatar, Text, Paper, Center } from '@mantine/core'
-import { auth } from '../firebase/firebase'
 
 interface UserInfoProps {
   avatar: string
@@ -18,19 +17,10 @@ export function UserInfo({ avatar, name }: UserInfoProps) {
       })}
     >
       <Center>
-        {auth.currentUser ? (
-          <Avatar
-            radius="xl"
-            variant="outline"
-            src={auth.currentUser.photoURL}
-            size="lg"
-          />
-        ) : (
-          <Avatar radius="xl" variant="outline" color="blue" size="lg" />
-        )}
+        <Avatar radius="xl" variant="outline" color="blue" size="lg" />
       </Center>
       <Text align="center" size="lg" weight={500} mt="md">
-        {auth.currentUser ? auth.currentUser.displayName : name}
+        {name}
       </Text>
     </Paper>
   )

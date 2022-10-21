@@ -1,14 +1,14 @@
 import type { NextPage } from 'next'
 import { DataGraph } from 'src/components/analytics/datagraph'
 import { HeatMap } from 'src/components/analytics/heatmap'
-import { UserInfo } from 'src/components/analytics/userinfo'
 import { SimpleGrid } from '@mantine/core'
 
 const Home: NextPage = () => {
   return (
     <div>
-      <UserInfo avatar="" name="Tohoku Taro" />
+      {/* <UserInfo avatar="" name="Tohoku Taro" /> */}
       <SimpleGrid
+        py={60}
         cols={2}
         spacing="lg"
         breakpoints={[{ maxWidth: 800, cols: 1, spacing: 'md' }]}

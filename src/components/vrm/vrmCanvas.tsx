@@ -6,6 +6,7 @@ import { CameraControls } from './cameraControls'
 import { useSettingsStore } from 'src/stores/settingsStore'
 import shallow from 'zustand/shallow'
 import { useMediaQuery } from '@mantine/hooks'
+import { useVrmStore } from 'src/stores/vrmStore'
 
 const VRMCanvas = () => {
   const { mode } = useSettingsStore(
@@ -14,9 +15,16 @@ const VRMCanvas = () => {
     }),
     shallow,
   )
+  const { setAnimation } = useVrmStore(
+    (state) => ({
+      setAnimation: state.setAnimation,
+    }),
+    shallow,
+  )
   const cameraControls = useRef<CameraControls | null>(null)
   const md = useMediaQuery('(min-width: 1000px)')
   useEffect(() => {
+    setAnimation('idle')
     if (['study'].includes(mode)) {
       if (cameraControls.current) {
         cameraControls.current.reset(true)
@@ -33,6 +41,16 @@ const VRMCanvas = () => {
         cameraControls.current.enabled = true
       }
     } else if (['fitness'].includes(mode)) {
+      if (cameraControls.current) {
+        cameraControls.current.reset(true)
+        if (md) {
+          cameraControls.current.moveTo(0.6, 0, 0, true)
+        } else {
+          cameraControls.current.moveTo(0, 0, 0, true)
+        }
+        cameraControls.current.enabled = false
+      }
+    } else if (['break'].includes(mode)) {
       if (cameraControls.current) {
         cameraControls.current.reset(true)
         if (md) {
