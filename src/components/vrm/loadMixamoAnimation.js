@@ -2,16 +2,12 @@ import { FBXLoader } from 'three/examples/jsm/loaders/FBXLoader'
 import * as THREE_VRM from '@pixiv/three-vrm'
 import * as THREE from 'three'
 
-export function loadMixamoAnimation(
-  name: string,
-  url: string,
-  vrm: THREE_VRM.VRM,
-) {
+export function loadMixamoAnimation(name, url, vrm) {
   const loader = new FBXLoader() // A loader which loads FBX
   return loader.loadAsync(url).then((asset) => {
     const clip = THREE.AnimationClip.findByName(asset.animations, 'mixamo.com') // extract the AnimationClip
 
-    const tracks: any[] | undefined = [] // KeyframeTracks compatible with VRM will be added here
+    const tracks = [] // KeyframeTracks compatible with VRM will be added here
 
     const restRotationInverse = new THREE.Quaternion()
     const parentRestWorldRotation = new THREE.Quaternion()
@@ -33,9 +29,9 @@ export function loadMixamoAnimation(
       const trackSplitted = track.name.split('.')
       const mixamoRigName = trackSplitted[0]
       const vrmBoneName =
-        mixamoVRMRigMap[mixamoRigName as keyof mixamoVRMRigMapProps]
+        mixamoVRMRigMap[mixamoRigName]
       const vrmNodeName = vrm.humanoid?.getNormalizedBoneNode(
-        vrmBoneName as THREE_VRM.VRMHumanBoneName,
+        vrmBoneName,
       )?.name
       const mixamoRigNode = asset.getObjectByName(mixamoRigName)
 
@@ -95,62 +91,7 @@ export function loadMixamoAnimation(
   })
 }
 
-type mixamoVRMRigMapProps = {
-  mixamorigHips: string
-  mixamorigSpine: string
-  mixamorigSpine1: string
-  mixamorigSpine2: string
-  mixamorigNeck: string
-  mixamorigHead: string
-  mixamorigLeftShoulder: string
-  mixamorigLeftArm: string
-  mixamorigLeftForeArm: string
-  mixamorigLeftHand: string
-  mixamorigLeftHandThumb1: string
-  mixamorigLeftHandThumb2: string
-  mixamorigLeftHandThumb3: string
-  mixamorigLeftHandIndex1: string
-  mixamorigLeftHandIndex2: string
-  mixamorigLeftHandIndex3: string
-  mixamorigLeftHandMiddle1: string
-  mixamorigLeftHandMiddle2: string
-  mixamorigLeftHandMiddle3: string
-  mixamorigLeftHandRing1: string
-  mixamorigLeftHandRing2: string
-  mixamorigLeftHandRing3: string
-  mixamorigLeftHandPinky1: string
-  mixamorigLeftHandPinky2: string
-  mixamorigLeftHandPinky3: string
-  mixamorigRightShoulder: string
-  mixamorigRightArm: string
-  mixamorigRightForeArm: string
-  mixamorigRightHand: string
-  mixamorigRightHandPinky1: string
-  mixamorigRightHandPinky2: string
-  mixamorigRightHandPinky3: string
-  mixamorigRightHandRing1: string
-  mixamorigRightHandRing2: string
-  mixamorigRightHandRing3: string
-  mixamorigRightHandMiddle1: string
-  mixamorigRightHandMiddle2: string
-  mixamorigRightHandMiddle3: string
-  mixamorigRightHandIndex1: string
-  mixamorigRightHandIndex2: string
-  mixamorigRightHandIndex3: string
-  mixamorigRightHandThumb1: string
-  mixamorigRightHandThumb2: string
-  mixamorigRightHandThumb3: string
-  mixamorigLeftUpLeg: string
-  mixamorigLeftLeg: string
-  mixamorigLeftFoot: string
-  mixamorigLeftToeBase: string
-  mixamorigRightUpLeg: string
-  mixamorigRightLeg: string
-  mixamorigRightFoot: string
-  mixamorigRightToeBase: string
-}
-
-const mixamoVRMRigMap: mixamoVRMRigMapProps = {
+const mixamoVRMRigMap = {
   mixamorigHips: 'hips',
   mixamorigSpine: 'spine',
   mixamorigSpine1: 'chest',

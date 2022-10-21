@@ -7,7 +7,11 @@
     "esModuleInterop": true,
     "skipLibCheck": true,
     "forceConsistentCasingInFileNames": true,
-    "lib": ["dom", "dom.iterable", "esnext"],
+    "lib": [
+      "dom",
+      "dom.iterable",
+      "esnext"
+    ],
     "allowJs": true,
     "noEmit": true,
     "moduleResolution": "node",
@@ -15,9 +19,22 @@
     "isolatedModules": true,
     "baseUrl": "./",
     "incremental": true,
-    "types": ["@emotion/react/types/css-prop"],
+    "types": [
+      "@emotion/react/types/css-prop"
+    ],
     "jsxImportSource": "@emotion/react"
   },
-  "exclude": ["node_modules", "deployments", ".next", "out"],
-  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", "src/components/landingPage/HighestGrossingMovies"]
+  "exclude": [
+    "node_modules",
+    "deployments",
+    ".next",
+    "out"
+  ],
+  "include": [
+    "next-env.d.ts",
+    "**/*.ts",
+    "**/*.tsx",
+    "src/components/landingPage/HighestGrossingMovies",
+    "src/components/vrm/loadMixamoAnimation.js"
+  ]
 }
