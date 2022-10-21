@@ -10,7 +10,7 @@ function Signin() {
     auth.signInWithPopup(provider)
   }
   return (
-    <Center py={5}>
+    <Center pb={10}>
       <Avatar
         css={hover}
         radius="xl"

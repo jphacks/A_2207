@@ -8,6 +8,7 @@ import { useTimer } from '../../hooks/useTimer'
 import { Title, Stack, Progress } from '@mantine/core'
 import shallow from 'zustand/shallow'
 import { useSettingsStore } from 'src/stores/settingsStore'
+import { useVrmStore } from 'src/stores/vrmStore'
 
 const SquatCounter = () => {
   const { setMode, studied, squatGoalCount } = useSettingsStore(
@@ -15,6 +16,12 @@ const SquatCounter = () => {
       setMode: state.setMode,
       studied: state.studied,
       squatGoalCount: state.squatGoalCount,
+    }),
+    shallow,
+  )
+  const { setAnimation } = useVrmStore(
+    (state) => ({
+      setAnimation: state.setAnimation,
     }),
     shallow,
   )
@@ -33,8 +40,10 @@ const SquatCounter = () => {
    */
   const onResults = useCallback((results: Results) => {
     resultsRef.current = results
-    const canvasCtx = canvasRef.current!.getContext('2d')!
-    drawCanvas(canvasCtx, results, elbowRef.current)
+    if (canvasRef.current?.getContext('2d')) {
+      const canvasCtx = canvasRef.current.getContext('2d')
+      if (canvasCtx !== null) drawCanvas(canvasCtx, results, elbowRef.current)
+    }
   }, [])
 
   // 初期設定
@@ -58,12 +67,13 @@ const SquatCounter = () => {
 
     if (
       typeof webcamRef.current !== 'undefined' &&
-      webcamRef.current !== null
+      webcamRef.current !== null &&
+      webcamRef.current.video !== null
     ) {
-      const camera = new Camera(webcamRef.current.video!, {
+      const camera = new Camera(webcamRef.current.video, {
         onFrame: async () => {
-          if (webcamRef.current !== null) {
-            await pose.send({ image: webcamRef.current!.video! })
+          if (webcamRef.current !== null && webcamRef.current.video !== null) {
+            await pose.send({ image: webcamRef.current.video })
           }
         },
         width: 1280,
@@ -74,7 +84,7 @@ const SquatCounter = () => {
   }, [onResults])
 
   useEffect(() => {
-    const audio = new Audio("/voices/13.wav")
+    const audio = new Audio('/voices/13.wav')
     audio.play()
   }, [])
 
@@ -87,6 +97,9 @@ const SquatCounter = () => {
           elbowRef.current = [leftElbow, leftElbow]
         }
       }
+    }
+    if (time === 0) {
+      setAnimation('AirSquatBentArms')
     }
   }, [time])
 
@@ -117,15 +130,15 @@ const SquatCounter = () => {
   }, [isStart])
 
   useEffect(() => {
+    if (squatGoalCount >= 10 && count === Math.floor(squatGoalCount / 2)) {
+      const audio = new Audio('/voices/8.wav')
+      audio.play()
+    } else if (count === 3) {
+      const audio = new Audio('/voices/14.wav')
+      audio.play()
+    } else if (count === 0) {
+      setAnimation('idle')
 
-    const countGoal = 5
-    if (countGoal >= 10 && count === Math.floor(countGoal/2)) {
-      const audio = new Audio("/voices/8.wav")
-      audio.play()
-    } else if (count === countGoal-3) {
-      const audio = new Audio("/voices/14.wav")
-      audio.play()
-    } else if (count === countGoal) {
       if (studied) {
         setMode('break')
       } else {

@@ -1,4 +1,4 @@
-import { ActionIcon, Modal, Center, Button, Title } from '@mantine/core'
+import { ActionIcon, Modal, Center, Title, Button } from '@mantine/core'
 import { IconInfoCircle } from '@tabler/icons'
 import Link from 'next/link'
 import { Dispatch, SetStateAction } from 'react'
@@ -18,10 +18,9 @@ export function IconInfo({ opened, setOpened }: IconInfoProps) {
         title={<Title>Info</Title>}
       >
         <Link href="/landingPage" passHref>
-          <Button component="a">Landing Page</Button>
-        </Link>
-        <Link href="/analytics" passHref>
-          <Button component="a">Analytics</Button>
+          <Button variant="subtle" component="a" color="dark">
+            Landing Page
+          </Button>
         </Link>
       </Modal>
       <Center>

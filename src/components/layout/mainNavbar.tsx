@@ -5,7 +5,7 @@ import {
   createStyles,
   Stack,
   Center,
-  Text,
+  Image,
 } from '@mantine/core'
 import { TablerIcon, IconHome2, IconRun, IconBook } from '@tabler/icons'
 import { useState } from 'react'
@@ -102,18 +102,14 @@ export function MainNavbar() {
   return (
     <Navbar width={{ base: 80 }} p="md">
       <Center>
-        <Text
-          component="span"
-          align="center"
-          variant="gradient"
-          gradient={{ from: 'indigo', to: 'cyan', deg: 45 }}
-          size="md"
-          weight={900}
-        >
-          VRoom
-        </Text>
+        <Image
+          radius="md"
+          src="/picture/VRooMIcon.png"
+          alt="Random unsplash image"
+          width="50px"
+          height="35px"
+        />
       </Center>
-      {/* <Navbar.Section grow mt={50}> */}
       <Navbar.Section grow mt={50}>
         <Stack justify="center" spacing={0}>
           <NavbarLink

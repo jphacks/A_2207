@@ -2,7 +2,6 @@ import create from 'zustand'
 import { devtools } from 'zustand/middleware'
 
 type SettingsState = {
-  modelName: string
   mode: string
   goal: string
   studied: boolean
@@ -13,7 +12,6 @@ type SettingsState = {
 }
 type SettingsStoreState = {
   setDefaultState: () => void
-  setModelName: (name: string) => void
   setMode: (name: string) => void
   setGoal: (goal: string) => void
   setStudied: (bool: boolean) => void
@@ -24,7 +22,6 @@ type SettingsStoreState = {
 } & SettingsState
 
 export const initialState: SettingsState = {
-  modelName: 'AliciaSolid',
   mode: 'initial',
   goal: '',
   studied: false,
@@ -45,15 +42,6 @@ export const useSettingsStore = create<SettingsStoreState>()(
         }),
         false,
         'setDefaultState',
-      ),
-    setModelName: (name: string) =>
-      set(
-        (state) => ({
-          ...state,
-          modelName: name,
-        }),
-        false,
-        'setModelName',
       ),
     setMode: (name: string) =>
       set(
