@@ -18,6 +18,7 @@ type modelNameToUrl = {
 const modelNameToUrl = {
   AliciaSolid: '/models/AliciaSolid.vrm',
   Tsukuyomi: '/models/Tsukuyomi.vrm',
+  Miraikomachi: '/models/Miraikomachi.vrm',
 } as modelNameToUrl
 
 export const VRMAvatar = () => {

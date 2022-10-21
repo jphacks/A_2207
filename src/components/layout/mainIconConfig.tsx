@@ -53,6 +53,7 @@ export function IconConfig({ opened, setOpened }: IconConfigProps) {
             data={[
               { value: 'AliciaSolid', label: 'アリシア・ソリッド' },
               { value: 'Tsukuyomi', label: 'つくよみちゃん' },
+              { value: 'Miraikomachi', label: 'ミライ小町' },
             ]}
           />
 

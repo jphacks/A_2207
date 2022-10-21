@@ -1,6 +1,5 @@
 import React, { useCallback, useEffect, useRef, useState } from 'react'
 import Webcam from 'react-webcam'
-import { css } from '@emotion/css'
 import { Camera } from '@mediapipe/camera_utils'
 import { Pose, Results } from '@mediapipe/pose'
 import { drawCanvas } from '../../utils/drawCanvas'
@@ -9,21 +8,6 @@ import { useTimer } from '../../hooks/useTimer'
 import { Title, Stack, Text, SimpleGrid } from '@mantine/core'
 import shallow from 'zustand/shallow'
 import { useSettingsStore } from 'src/stores/settingsStore'
-
-const videoConstraints = {
-  width: 1280,
-  height: 720,
-  facingMode: 'user',
-}
-
-const styles = {
-  webcam: css`
-    position: absolute;
-    top: 0px;
-    left: 0px;
-    visibility: hidden;
-  `,
-}
 
 const SquatCounter = () => {
   const webcamRef = useRef<Webcam>(null)
@@ -34,17 +18,13 @@ const SquatCounter = () => {
   const prevStageRef = useRef('')
   const { time, isStart } = useTimer()
   const elbowRef = useRef([2 / 3, 2 / 3])
-  const { setMode, setPositionX, setPositionY, setPositionZ, studied } =
-    useSettingsStore(
-      (state) => ({
-        setMode: state.setMode,
-        setPositionX: state.setPositionX,
-        setPositionY: state.setPositionY,
-        setPositionZ: state.setPositionZ,
-        studied: state.studied,
-      }),
-      shallow,
-    )
+  const { setMode, studied } = useSettingsStore(
+    (state) => ({
+      setMode: state.setMode,
+      studied: state.studied,
+    }),
+    shallow,
+  )
 
   /**
    * 検出結果（フレーム毎に呼び出される）
@@ -97,7 +77,6 @@ const SquatCounter = () => {
       const landmarks = resultsRef.current.poseLandmarks
       if (landmarks && landmarks[13] && landmarks[14]) {
         const leftElbow = landmarks[13].y
-        const rightElbow = landmarks[14].y
         if (0.2 <= leftElbow && leftElbow <= 0.8) {
           elbowRef.current = [leftElbow, leftElbow]
         }
@@ -107,10 +86,6 @@ const SquatCounter = () => {
 
   useEffect(() => {
     if (isStart && time > 0) {
-      // if (elbowRef.current[0] === 0 && elbowRef.current[1] === 0) {
-      //     elbowRef.current = [2/3, 2/3];
-      // }
-
       const timerId = setInterval(() => {
         const updateResult = updateCounter(
           resultsRef.current,
@@ -142,87 +117,77 @@ const SquatCounter = () => {
       } else {
         setMode('study')
       }
-      setPositionX(0)
-      setPositionY(-0.8)
-      setPositionZ(0)
     }
   }, [count])
 
   return (
-    // <div className={styles.container}>
     <div style={{ width: '100%', height: '100%' }}>
       {/* capture */}
       <Webcam
         audio={false}
         style={{ visibility: 'hidden' }}
-        width={128}
-        height={72}
+        width={0}
+        height={0}
         ref={webcamRef}
         screenshotFormat="image/jpeg"
-        videoConstraints={videoConstraints}
-        className={styles.webcam}
       />
       <Stack sx={() => ({ backgroundColor: 'transparent' })}>
         {/* output */}
-        {/* <div className={styles.buttonContainer}> */}
         <div style={{ position: 'relative' }}>
-          <SimpleGrid cols={2}>
-            <Text>カウント :</Text>
-            <Text color="red" weight={700}>
-              {' '}
-              {count}
-            </Text>
-          </SimpleGrid>
-          <SimpleGrid cols={2}>
-            <Text>状態 : </Text>
-            <Text color="red" weight={700}>
-              {stage}
-            </Text>
-          </SimpleGrid>
-
-          {time <= 9 && time >= 1 && (
-            <Title
-              color="blue"
+          <div
+            style={{
+              padding: '2em 2em',
+              margin: '2em 0',
+              fontWeight: 'bold',
+              background: '#FFF',
+              border: 'solid 3px #6091d3',
+              borderRadius: '10px',
+            }}
+          >
+            <SimpleGrid cols={2}>
+              <Text>残り回数 :</Text>
+              <Text>{count}</Text>
+            </SimpleGrid>
+            <SimpleGrid cols={2}>
+              <Text>状態 : </Text>
+              <Text>{stage}</Text>
+            </SimpleGrid>
+          </div>
+          <div
+            style={{
+              padding: '1em 1em',
+              margin: '2em 0',
+              fontWeight: 'bold',
+              background: '#FFF',
+              border: 'solid 3px #6091d3',
+              borderRadius: '10px',
+              minWidth: '300px',
+              width: '30vw',
+              position: 'relative',
+            }}
+          >
+            <div
               style={{
-                fontSize: '300px',
                 position: 'absolute',
-                top: '50%',
-                left: '50%',
-                transform: 'translate(-50%, -50%)',
+                backgroundColor: 'white',
               }}
             >
-              {time}
-            </Title>
-          )}
-          {time === 0 && (
-            <Title
-              color="blue"
+              {time <= 9 && time >= 1 && (
+                <Title p={3} color="blue">
+                  {time}
+                </Title>
+              )}
+              {time === 0 && <Title color="blue">START</Title>}
+            </div>
+            <canvas
               style={{
-                fontSize: '150px',
-                position: 'absolute',
-                top: '50%',
-                left: '50%',
-                transform: 'translate(-50%, -50%)',
+                borderRadius: '5px',
+                height: '100%',
+                width: '100%',
               }}
-            >
-              START
-            </Title>
-          )}
-
-          {/* <div className={styles.pictures}> */}
-          {/* <div style={{ zIndex : "10px" }}> */}
-          {/* {(time <= 9 && time >= 1) ? <Title>{time}</Title> :
-                            (time===0 && <Title>{time}</Title>)
-                        }   */}
-          {/* {time <= 9 && time >= 1 && <img src={`/number_${time}.png`} alt="countdown" />}
-                        {time == 0 && <img src={`/start.png`} alt="start" />} */}
-          {/* </div> */}
-          {/* <ColoredLine /> */}
-          {/* draw */}
-          <canvas
-            ref={canvasRef}
-            style={{ minWidth: '300px', width: '30vw' }}
-          />
+              ref={canvasRef}
+            />
+          </div>
         </div>
       </Stack>
     </div>

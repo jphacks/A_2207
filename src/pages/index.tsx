@@ -8,8 +8,6 @@ import shallow from 'zustand/shallow'
 import { useSettingsStore } from 'src/stores/settingsStore'
 import Layout from 'src/components/layout/mainLayout'
 import GoalViewer from 'src/components/main/goalViewer'
-import { useAuthState } from 'react-firebase-hooks/auth'
-import { auth } from '../components/firebase/firebase'
 
 const Home: NextPage = () => {
   const { mode } = useSettingsStore(
@@ -18,7 +16,6 @@ const Home: NextPage = () => {
     }),
     shallow,
   )
-  const [user] = useAuthState(auth as any)
   return (
     <Layout>
       <div className="container">
@@ -32,35 +29,35 @@ const Home: NextPage = () => {
               transform: 'translate(-50%, -50%)',
             }}
           >
-            {user ? <p>ログインしてます</p> : <p>ログインしてない</p>}
             <StartButton />
           </div>
         )}
         {mode === 'study' && (
-          <div
-            style={{
-              position: 'absolute',
-              zIndex: 10,
-              top: '50%',
-              left: '70%',
-              transform: 'translate(-50%, -50%)',
-            }}
-          >
-            <StudyCounter />
-          </div>
+          <>
+            <div
+              style={{
+                position: 'absolute',
+                zIndex: 10,
+                top: '5%',
+                right: '5%',
+              }}
+            >
+              <GoalViewer />
+            </div>
+            <div
+              style={{
+                position: 'absolute',
+                zIndex: 10,
+                top: '50%',
+                left: '70%',
+                transform: 'translate(-50%, -50%)',
+              }}
+            >
+              <StudyCounter />
+            </div>
+          </>
         )}
-        {mode === 'study' && (
-          <div
-            style={{
-              position: 'absolute',
-              zIndex: 10,
-              top: '5%',
-              right: '5%',
-            }}
-          >
-            <GoalViewer />
-          </div>
-        )}
+
         {mode === 'fitness' && (
           <div
             style={{
