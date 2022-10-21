@@ -136,8 +136,8 @@ export function MainNavbar() {
           />
         </Stack>
       </Navbar.Section>
-      <Navbar.Section>
-        <Stack justify="center" spacing={10}>
+      <Navbar.Section pb={14}>
+        <Stack justify="center" spacing={14}>
           {user ? <SignOut /> : <Signin />}
           <IconConfig opened={configOpened} setOpened={setConfigOpened} />
           <IconInfo opened={infoOpened} setOpened={setInfoOpened} />

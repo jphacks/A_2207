@@ -46,16 +46,18 @@ const useStyles = createStyles((theme) => ({
 const StudyCounter = () => {
   const { classes } = useStyles()
   const percentage = useRef(0)
-  const [circle, setCircle] = useState(true)
-  const { setMode, setStudied, countRemain, setCountRemain } = useSettingsStore(
-    (state) => ({
-      setMode: state.setMode,
-      setStudied: state.setStudied,
-      countRemain: state.countRemain,
-      setCountRemain: state.setCountRemain,
-    }),
-    shallow,
-  )
+  const [circle, setCircle] = useState(false)
+  const { goal, setMode, setStudied, countRemain, setCountRemain } =
+    useSettingsStore(
+      (state) => ({
+        goal: state.goal,
+        setMode: state.setMode,
+        setStudied: state.setStudied,
+        countRemain: state.countRemain,
+        setCountRemain: state.setCountRemain,
+      }),
+      shallow,
+    )
   const countRemainRef = useRef(countRemain)
   const timerSeconds = 60 // ユーザーが設定した値（変更可にする）
   const { countdown, start, reset, pause, isRunning } = useCountdownTimer({
@@ -87,8 +89,20 @@ const StudyCounter = () => {
   }
 
   return (
-    <div>
+    <div
+      style={{
+        padding: '1.5em',
+        fontWeight: 'bold',
+        background: '#FFF',
+        border: 'solid 3px #6091d3',
+        borderRadius: '10px',
+        position: 'relative',
+      }}
+    >
       <Stack sx={() => ({ backgroundColor: 'transparent' })}>
+        <Center>
+          <Title color="blue">{goal}</Title>
+        </Center>
         <Center onClick={() => timerClick()}>
           {circle ? (
             <Card withBorder radius="md" p="xl" className={classes.card}>

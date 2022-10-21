@@ -1,15 +1,13 @@
 import create from 'zustand'
 import { devtools } from 'zustand/middleware'
 
-type SettingsState =  {
+type SettingsState = {
   modelName: string
   mode: string
   goal: string
   studied: boolean
-  positionX: number
-  positionY: number
-  positionZ: number
-  countRemain: number 
+  countRemain: number
+  squatGoalCount: number
 }
 type SettingsStoreState = {
   setDefaultState: () => void
@@ -17,10 +15,8 @@ type SettingsStoreState = {
   setMode: (name: string) => void
   setGoal: (goal: string) => void
   setStudied: (bool: boolean) => void
-  setPositionX: (x: number) => void
-  setPositionY: (y: number) => void
-  setPositionZ: (z: number) => void
   setCountRemain: (count: number) => void
+  setSquatGoalCount: (squatGoalCount: number) => void
 } & SettingsState
 
 export const initialState: SettingsState = {
@@ -28,10 +24,8 @@ export const initialState: SettingsState = {
   mode: 'initial',
   goal: '',
   studied: false,
-  positionX: 0,
-  positionY: -0.8,
-  positionZ: 0,
   countRemain: 60,
+  squatGoalCount: 15,
 }
 
 export const useSettingsStore = create<SettingsStoreState>()(
@@ -41,7 +35,7 @@ export const useSettingsStore = create<SettingsStoreState>()(
       set(
         (state) => ({
           ...state,
-          ...initialState
+          ...initialState,
         }),
         false,
         'setDefaultState',
@@ -74,42 +68,15 @@ export const useSettingsStore = create<SettingsStoreState>()(
         'setGoal',
       ),
     setStudied: (bool: boolean) =>
-    set(
-      (state) => ({
-        ...state,
-        studied: bool,
-      }),
-      false,
-      'setStudied',
-    ),
-    setPositionX: (x: number) =>
       set(
         (state) => ({
           ...state,
-          positionX: x,
+          studied: bool,
         }),
         false,
-        'setPositionX',
+        'setStudied',
       ),
-      setPositionY: (y: number) =>
-      set(
-        (state) => ({
-          ...state,
-          positionY: y,
-        }),
-        false,
-        'setPositionY',
-      ),
-      setPositionZ: (z: number) =>
-      set(
-        (state) => ({
-          ...state,
-          positionZ: z,
-        }),
-        false,
-        'setPositionZ',
-      ),
-      setCountRemain: (count: number) =>
+    setCountRemain: (count: number) =>
       set(
         (state) => ({
           ...state,
@@ -117,6 +84,15 @@ export const useSettingsStore = create<SettingsStoreState>()(
         }),
         false,
         'setCountRemain',
-      )
+      ),
+    setSquatGoalCount: (squatGoalCount: number) =>
+      set(
+        (state) => ({
+          ...state,
+          squatGoalCount,
+        }),
+        false,
+        'setSquatGoalCount',
+      ),
   })),
 )
