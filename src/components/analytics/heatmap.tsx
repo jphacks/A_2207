@@ -15,12 +15,12 @@ const heatmap = css`
 `
 
 export const HeatMap = ({values}: {values:Array<{ date: string; count: number; }>}) => {
-  const startDate= new Date("2022-10-23")
-  const endDate = new Date("2022-10-23")
+  const startDate= new Date("2022-10-20")
+  const endDate = new Date("2022-10-20")
   startDate.setMonth(startDate.getMonth() - 4)
   return (
     <Container>
-      <h1>react-calendar-heatmap</h1>
+      <h1 style={{textAlign: "center"}}>Heatmap</h1>
       <div css={heatmap}>
         <CalendarHeatmap
           // 表示させる月
@@ -32,7 +32,7 @@ export const HeatMap = ({values}: {values:Array<{ date: string; count: number; }
             if (!value) {
               return "color-empty";
             }
-            return `color-scale-${Math.min(4,Math.floor(value.count/2))}`;
+            return `color-scale-${Math.min(4,Math.floor(value.count/30))}`;
           }}
           tooltipDataAttrs={(value: { date: string; count: number; }) => {
             if (!value || !value.date) {
@@ -46,6 +46,7 @@ export const HeatMap = ({values}: {values:Array<{ date: string; count: number; }
             };
           }}
         />
+        <div className="react-calendar-heatmap-week"> <rect width={10} height={10} className="color-empty"/></div>
       </div>
       <ReactTooltip />
     </Container>

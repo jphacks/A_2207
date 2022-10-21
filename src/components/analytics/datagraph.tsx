@@ -17,6 +17,7 @@ import {
   getElementsAtEvent,
 } from 'react-chartjs-2';
 import { Data } from './data';
+import { Container } from '@mantine/core';
 
 
 
@@ -46,7 +47,7 @@ export const data = {
   datasets: [
     {
       type: 'bar' as const,
-      label: '時間',
+      label: 'minutes',
       backgroundColor: 'rgba(53, 162, 235, 0.5)',
       data: tdata,
       borderColor: 'rgb(53, 162, 235)',
@@ -93,12 +94,15 @@ export function DataGraph() {
   };
 
   return (
-    <Chart
-      ref={chartRef}
-      type='bar'
-      onClick={onClick}
-      options={options}
-      data={data}
-    />
+    <Container>
+      <h1 style={{textAlign: "center"}}>Weekly Effort</h1>
+      <Chart
+        ref={chartRef}
+        type='bar'
+        onClick={onClick}
+        options={options}
+        data={data}
+      />
+    </Container>
   );
 }
