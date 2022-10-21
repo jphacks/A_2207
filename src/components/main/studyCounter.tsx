@@ -151,28 +151,17 @@ const StudyCounter = () => {
             />
           )}
         </Center>
-        <Grid>
-          <Grid.Col span={6}>
-            <Center>
-              <Button variant="default" onClick={reset}>
-                リセット
-              </Button>
-            </Center>
-          </Grid.Col>
-          <Grid.Col span={6}>
-            <Center>
-              {isRunning ? (
-                <Button variant="filled" onClick={pause}>
-                  一時停止
-                </Button>
-              ) : (
-                <Button variant="outline" onClick={start}>
-                  再開
-                </Button>
-              )}
-            </Center>
-          </Grid.Col>
-        </Grid>
+        <Center>
+          {isRunning ? (
+            <Button variant="filled" onClick={pause}>
+              一時停止
+            </Button>
+          ) : (
+            <Button variant="outline" onClick={start}>
+              再開
+            </Button>
+          )}
+        </Center>
       </Stack>
     </div>
   )
