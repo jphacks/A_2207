@@ -1,5 +1,5 @@
-import React, { MouseEvent, useRef } from 'react';
-import type { InteractionItem } from 'chart.js';
+import React, { MouseEvent, useRef } from 'react'
+import type { InteractionItem } from 'chart.js'
 import {
   Chart as ChartJS,
   LinearScale,
@@ -9,17 +9,15 @@ import {
   LineElement,
   Legend,
   Tooltip,
-} from 'chart.js';
+} from 'chart.js'
 import {
   Chart,
   getDatasetAtEvent,
   getElementAtEvent,
   getElementsAtEvent,
-} from 'react-chartjs-2';
-import { Data } from './data';
-import { Container } from '@mantine/core';
-
-
+} from 'react-chartjs-2'
+import { Data } from './data'
+import { Container } from '@mantine/core'
 
 ChartJS.register(
   LinearScale,
@@ -28,8 +26,8 @@ ChartJS.register(
   PointElement,
   LineElement,
   Legend,
-  Tooltip
-);
+  Tooltip,
+)
 
 export const options = {
   scales: {
@@ -37,10 +35,10 @@ export const options = {
       beginAtZero: true,
     },
   },
-};
+}
 
-const labels=Data.labels;
-const tdata=Data.data;
+const labels = Data.labels
+const tdata = Data.data
 
 export const data = {
   labels,
@@ -54,55 +52,55 @@ export const data = {
       borderWidth: 2,
     },
   ],
-};
+}
 
 export function DataGraph() {
   const printDatasetAtEvent = (dataset: InteractionItem[]) => {
-    if (!dataset.length) return;
+    if (!dataset.length) return
 
-    const datasetIndex = dataset[0].datasetIndex;
+    const datasetIndex = dataset[0].datasetIndex
 
-    console.log(data.datasets[datasetIndex].label);
-  };
+    console.log(data.datasets[datasetIndex].label)
+  }
 
   const printElementAtEvent = (element: InteractionItem[]) => {
-    if (!element.length) return;
+    if (!element.length) return
 
-    const { datasetIndex, index } = element[0];
+    const { datasetIndex, index } = element[0]
 
-    console.log(data.labels[index], data.datasets[datasetIndex].data[index]);
-  };
+    console.log(data.labels[index], data.datasets[datasetIndex].data[index])
+  }
 
   const printElementsAtEvent = (elements: InteractionItem[]) => {
-    if (!elements.length) return;
+    if (!elements.length) return
 
-    console.log(elements.length);
-  };
+    console.log(elements.length)
+  }
 
-  const chartRef = useRef<ChartJS>(null);
+  const chartRef = useRef<ChartJS>(null)
 
   const onClick = (event: MouseEvent<HTMLCanvasElement>) => {
-    const { current: chart } = chartRef;
+    const { current: chart } = chartRef
 
     if (!chart) {
-      return;
+      return
     }
 
-    printDatasetAtEvent(getDatasetAtEvent(chart, event));
-    printElementAtEvent(getElementAtEvent(chart, event));
-    printElementsAtEvent(getElementsAtEvent(chart, event));
-  };
+    printDatasetAtEvent(getDatasetAtEvent(chart, event))
+    printElementAtEvent(getElementAtEvent(chart, event))
+    printElementsAtEvent(getElementsAtEvent(chart, event))
+  }
 
   return (
     <Container>
-      <h1 style={{textAlign: "center"}}>Weekly Effort</h1>
+      <h1 style={{ textAlign: 'center' }}>今週の作業時間</h1>
       <Chart
         ref={chartRef}
-        type='bar'
+        type="bar"
         onClick={onClick}
         options={options}
         data={data}
       />
     </Container>
-  );
+  )
 }

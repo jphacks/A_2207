@@ -1,8 +1,9 @@
-import { Avatar, Text, Paper } from '@mantine/core';
+import { Avatar, Text, Paper, Center } from '@mantine/core'
+import { auth } from '../firebase/firebase'
 
 interface UserInfoProps {
-  avatar: string;
-  name: string;
+  avatar: string
+  name: string
 }
 
 export function UserInfo({ avatar, name }: UserInfoProps) {
@@ -12,13 +13,25 @@ export function UserInfo({ avatar, name }: UserInfoProps) {
       withBorder
       p="lg"
       sx={(theme) => ({
-        backgroundColor: theme.colorScheme === 'dark' ? theme.colors.dark[8] : theme.white,
+        backgroundColor:
+          theme.colorScheme === 'dark' ? theme.colors.dark[8] : theme.white,
       })}
     >
-      <Avatar src={avatar} size={120} radius={120} mx="auto" />
+      <Center>
+        {auth.currentUser ? (
+          <Avatar
+            radius="xl"
+            variant="outline"
+            src={auth.currentUser.photoURL}
+            size="lg"
+          />
+        ) : (
+          <Avatar radius="xl" variant="outline" color="blue" size="lg" />
+        )}
+      </Center>
       <Text align="center" size="lg" weight={500} mt="md">
-        {name}
+        {auth.currentUser ? auth.currentUser.displayName : name}
       </Text>
     </Paper>
-  );
+  )
 }

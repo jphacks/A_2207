@@ -72,18 +72,17 @@ export function Description() {
         <div className={classes.inner}>
           <div className={classes.content}>
             <Title className={classes.title}>
-                <Text
-                    component="span"
-                    inherit
-                    variant="gradient"
-                    gradient={{ from: 'blue', to: 'cyan' }}
-                >
+              <Text
+                component="span"
+                inherit
+                variant="gradient"
+                gradient={{ from: 'blue', to: 'cyan' }}
+              >
                 VRooM
-                </Text>
-              <br />{''}
+              </Text>
             </Title>
             <Text color="dimmed" mt="md">
-              君となら————
+              作業を見守るパートナー
             </Text>
             <List
               mt={30}
@@ -96,13 +95,16 @@ export function Description() {
               }
             >
               <List.Item>
-                <b>VRMモデルと一緒に作業</b> 魅力的なアバターがあなたの作業のパートナーになってくれます.
+                <b>VRMモデルと一緒に作業</b>{' '}
+                魅力的なアバターがあなたの作業のパートナーになってくれます.
               </List.Item>
               <List.Item>
-                <b>作業効率の最適化</b> 作業に集中できるような機能が実装されています.
+                <b>作業効率の最適化</b>{' '}
+                作業に集中できるような機能が実装されています.
               </List.Item>
               <List.Item>
-                <b>すぐに利用可能</b> Web アプリのため, 誰でも簡単に利用することができます. 
+                <b>すぐに利用可能</b> Web アプリのため,
+                誰でも簡単に利用することができます.
               </List.Item>
             </List>
           </div>
