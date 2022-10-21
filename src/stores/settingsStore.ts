@@ -10,6 +10,8 @@ type SettingsState =  {
   positionY: number
   positionZ: number
   countRemain: number 
+  workTime: number
+  breakTime: number
 }
 type SettingsStoreState = {
   setDefaultState: () => void
@@ -21,6 +23,8 @@ type SettingsStoreState = {
   setPositionY: (y: number) => void
   setPositionZ: (z: number) => void
   setCountRemain: (count: number) => void
+  setWorkTime: (time: number) => void
+  setBreakTime: (time: number) => void
 } & SettingsState
 
 export const initialState: SettingsState = {
@@ -32,6 +36,8 @@ export const initialState: SettingsState = {
   positionY: -0.8,
   positionZ: 0,
   countRemain: 60,
+  workTime: 25,
+  breakTime: 5,
 }
 
 export const useSettingsStore = create<SettingsStoreState>()(
@@ -117,6 +123,24 @@ export const useSettingsStore = create<SettingsStoreState>()(
         }),
         false,
         'setCountRemain',
-      )
+      ),
+      setWorkTime: (time: number) =>
+      set(
+        (state) => ({
+          ...state,
+          workTime: time,
+        }),
+        false,
+        'setWorkTime',
+      ),
+      setBreakTime: (time: number) =>
+      set(
+        (state) => ({
+          ...state,
+          breakTime: time,
+        }),
+        false,
+        'setBreakTime',
+      ),
   })),
 )
