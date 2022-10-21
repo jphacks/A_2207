@@ -1,4 +1,4 @@
 export const Data = {
     "labels" : ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"],
-    "data" : [6, 3, 4, 1, 5, 2]
+    "data" : [30, 60, 90, 120, 40, 0, 0]
 }

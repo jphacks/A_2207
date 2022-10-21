@@ -20,19 +20,19 @@ const Home: NextPage = () => {
     >
     <div>
       <HeatMap values={[
-            { date: "2022-07-03", count: 1 },
-            { date: "2022-08-22", count: 2 },
-            { date: "2022-07-29", count: 4 },
-            { date: '2022-10-01', count: 1 },
-            { date: '2022-10-03', count: 2 },
-            { date: '2022-10-06', count: 3 },
+            { date: "2022-07-03", count: 30 },
+            { date: "2022-08-22", count: 90 },
+            { date: "2022-07-29", count: 60 },
+            { date: '2022-10-01', count: 10 },
+            { date: '2022-10-03', count: 30 },
+            { date: '2022-10-06', count: 120 },
             { date: '2022-10-10', count: 5 },
-            { date: '2022-10-11', count: 1 },
-            { date: '2022-10-12', count: 3 },
-            { date: '2022-10-13', count: 4 },
-            { date: '2022-10-14', count: 6 },
-            { date: '2022-10-15', count: 8 },
-            { date: '2022-10-19', count: 10 },
+            { date: '2022-10-15', count: 10 },
+            { date: '2022-10-16', count: 30 },
+            { date: '2022-10-17', count: 60 },
+            { date: '2022-10-18', count: 90 },
+            { date: '2022-10-19', count: 120 },
+            { date: '2022-10-20', count: 40 },
           ]}/>
     </div>
     <div><DataGraph /></div>
