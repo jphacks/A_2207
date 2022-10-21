@@ -1,5 +1,5 @@
 import { createStyles, Text, SimpleGrid, Container } from '@mantine/core'
-import { IconHeart, IconClock, IconCamera, IconCoin, TablerIcon } from '@tabler/icons'
+import { IconHeart, IconClock, IconRun, TablerIcon } from '@tabler/icons'
 
 const useStyles = createStyles((theme) => ({
   feature: {
@@ -71,21 +71,21 @@ function Feature({
 const mockdata = [
   {
     icon: IconHeart,
-    title: 'いつでも来てくれる Zoom 友達',
+    title: '作業モード',
     description:
-      'As electricity builds up inside its body, it becomes more aggressive. One theory is that the electricity.',
+      '作業中は常にアバターが見守ってくれます. 作業を頑張っていれば応援してくれるかもしれません.',
+  },
+  {
+    icon: IconRun,
+    title: '休憩用のスクワッドモード',
+    description:
+      '作業に一区切りがついたらスクワッドで気分転換ができます. 作業中カメラによってスクワッドの回数を計測する機能がついています.',
   },
   {
     icon: IconClock,
-    title: '時間管理で集中力アップ',
+    title: 'タイマー機能',
     description:
-      'Slakoth’s heart beats just once a minute. Whatever happens, it is content to loaf around motionless.',
-  },
-  {
-    icon: IconCamera,
-    title: 'カメラ機能を使ったスクワットゲーム',
-    description:
-      'Thought to have gone extinct, Relicanth was given a name that is a variation of the name of the person who discovered.',
+      '作業と休憩の時間を管理することで適切なサイクルを実現できます. 作業時間や継続日数は記録されます.',
   },
 ]
 

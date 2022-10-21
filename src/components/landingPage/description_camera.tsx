@@ -1,4 +1,4 @@
-import { createStyles, Container, Title, Text, Button } from '@mantine/core';
+import { createStyles, Container, Title, Text } from '@mantine/core';
 
 const useStyles = createStyles((theme) => ({
     root: {
@@ -88,14 +88,13 @@ export function Description_camera() {
                     variant="gradient"
                     gradient={{ from: 'pink', to: 'yellow' }}
                 >
-                カメラ機能
-                </Text>{' '}
                 スクワット
+                </Text>
+                モード
                 </Title>
 
                 <Text className={classes.description} mt={30}>
-                Build fully functional accessible web applications with ease – Mantine includes more
-                than 100 customizable components and hooks to cover you in any situation
+                
                 </Text>
             </div>
             </div>
