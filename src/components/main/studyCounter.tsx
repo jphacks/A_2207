@@ -44,28 +44,23 @@ const useStyles = createStyles((theme) => ({
 }))
 
 const StudyCounter = () => {
-
-  const { classes } = useStyles();
-  const percentage = useRef(0);
-  const [circle, setCircle] = useState(false);
-  const { setMode, setPositionX, setPositionY, setPositionZ, setStudied, countRemain, setCountRemain, workTime, setWorkTime, breakTime, setBreakTime } = useSettingsStore(
-    (state) => ({
-      setMode: state.setMode,
-      setPositionX: state.setPositionX,
-      setPositionY: state.setPositionY,
-      setPositionZ: state.setPositionZ,
-      setStudied: state.setStudied,
-      countRemain: state.countRemain,
-      setCountRemain: state.setCountRemain,
-      workTime: state.workTime,
-      setWorkTime: state.setWorkTime,
-      breakTime: state.breakTime,
-      setBreakTime: state.setBreakTime,
-    }),
-    shallow,
-  )
-  const countRemainRef = useRef(countRemain);
-  const timerSeconds = workTime * 60;
+  const { classes } = useStyles()
+  const percentage = useRef(0)
+  const [circle, setCircle] = useState(false)
+  const { goal, setMode, setStudied, countRemain, setCountRemain, workTime } =
+    useSettingsStore(
+      (state) => ({
+        goal: state.goal,
+        setMode: state.setMode,
+        setStudied: state.setStudied,
+        countRemain: state.countRemain,
+        setCountRemain: state.setCountRemain,
+        workTime: state.workTime,
+      }),
+      shallow,
+    )
+  const countRemainRef = useRef(countRemain)
+  const timerSeconds = workTime * 60
   const { countdown, start, reset, pause, isRunning } = useCountdownTimer({
     timer: 1000 * countRemainRef.current,
   })
@@ -97,7 +92,7 @@ const StudyCounter = () => {
   return (
     <div
       style={{
-        padding: '1.5em',
+        padding: '1em',
         fontWeight: 'bold',
         background: '#FFF',
         border: 'solid 3px #6091d3',

@@ -8,10 +8,6 @@ type SettingsState = {
   studied: boolean
   countRemain: number
   squatGoalCount: number
-  positionX: number
-  positionY: number
-  positionZ: number
-  countRemain: number 
   workTime: number
   breakTime: number
 }
@@ -104,16 +100,7 @@ export const useSettingsStore = create<SettingsStoreState>()(
         false,
         'setSquatGoalCount',
       ),
-      setCountRemain: (count: number) =>
-      set(
-        (state) => ({
-          ...state,
-          countRemain: count,
-        }),
-        false,
-        'setCountRemain',
-      ),
-      setWorkTime: (time: number) =>
+    setWorkTime: (time: number) =>
       set(
         (state) => ({
           ...state,
@@ -122,7 +109,7 @@ export const useSettingsStore = create<SettingsStoreState>()(
         false,
         'setWorkTime',
       ),
-      setBreakTime: (time: number) =>
+    setBreakTime: (time: number) =>
       set(
         (state) => ({
           ...state,

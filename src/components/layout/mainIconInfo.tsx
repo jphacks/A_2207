@@ -20,6 +20,9 @@ export function IconInfo({ opened, setOpened }: IconInfoProps) {
         <Link href="/landingPage" passHref>
           <Button component="a">Landing Page</Button>
         </Link>
+        <Link href="/analytics" passHref>
+          <Button component="a">Analytics</Button>
+        </Link>
       </Modal>
       <Center>
         <ActionIcon variant="transparent">
