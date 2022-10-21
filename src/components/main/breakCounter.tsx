@@ -85,7 +85,7 @@ const BreakCounter = () => {
     setCircle(!circle)
   }
 
-  const animationList = ['ArmStretching', 'NeckStretching']
+  const animationList = ['ArmStretching', 'Thinking']
   useEffect(() => {
     const id = setInterval(() => {
       // setAnimation(

@@ -76,8 +76,8 @@ export const VRMAvatar = () => {
             (clip) => {
               if (currentMixer) {
                 const action = currentMixer.clipAction(clip)
-                activateAction(action)
                 const name = clip.name
+                activateAction(action)
                 baseActions[name as keyof baseActionsProps].action = action
               }
             },
@@ -149,7 +149,7 @@ type panelSettingsProps = {
   StandingGreeting?: () => void
   AirSquatBentArms?: () => void
   ArmStretching?: () => void
-  NeckStretching?: () => void
+  Thinking?: () => void
 }
 let panelSettings: panelSettingsProps
 type baseActionsItemProps = {
@@ -163,7 +163,7 @@ type baseActionsProps = {
   StandingGreeting: baseActionsItemProps
   AirSquatBentArms: baseActionsItemProps
   ArmStretching: baseActionsItemProps
-  NeckStretching: baseActionsItemProps
+  Thinking: baseActionsItemProps
 }
 const baseActions: baseActionsProps = {
   idle: { weight: 1 },
@@ -172,7 +172,7 @@ const baseActions: baseActionsProps = {
   StandingGreeting: { weight: 0 },
   AirSquatBentArms: { weight: 0 },
   ArmStretching: { weight: 0 },
-  NeckStretching: { weight: 0 },
+  Thinking: { weight: 0 },
 }
 function setWeight(action: THREE.AnimationAction, weight: number) {
   action.enabled = true
