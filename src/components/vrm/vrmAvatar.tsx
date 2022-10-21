@@ -3,10 +3,9 @@
 import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader'
 import * as THREE_VRM from '@pixiv/three-vrm'
 import * as THREE from 'three'
-import { useEffect } from 'react'
+import { useEffect, useState } from 'react'
 import { loadMixamoAnimation } from 'src/components/vrm/loadMixamoAnimation'
 import { useThree } from 'react-three-fiber'
-import { useSettingsStore } from 'src/stores/settingsStore'
 import shallow from 'zustand/shallow'
 import { useVrmStore } from 'src/stores/vrmStore'
 import GUI from 'lil-gui'
@@ -18,26 +17,19 @@ type modelNameToUrl = {
 const modelNameToUrl = {
   AliciaSolid: '/models/AliciaSolid.vrm',
   Tsukuyomi: '/models/Tsukuyomi.vrm',
+  Miraikomachi: '/models/Miraikomachi.vrm',
 } as modelNameToUrl
 
 export const VRMAvatar = () => {
   const { scene } = useThree()
-  const { modelName } = useSettingsStore(
-    (state) => ({
-      mode: state.mode,
-      modelName: state.modelName,
-      positionX: state.positionX,
-      positionY: state.positionY,
-      positionZ: state.positionZ,
-      setPositionX: state.setPositionX,
-      setPositionY: state.setPositionY,
-      setPositionZ: state.setPositionZ,
-    }),
-    shallow,
-  )
-  const { animation } = useVrmStore(
+  const [loaded, setLoaded] = useState(false)
+
+  const { animation, expression, modelName, inputVrmModel } = useVrmStore(
     (state) => ({
       animation: state.animation,
+      inputVrmModel: state.inputVrmModel,
+      expression: state.expression,
+      modelName: state.modelName,
     }),
     shallow,
   )
@@ -45,6 +37,7 @@ export const VRMAvatar = () => {
   /* ---------------------------------- 初期設定 ---------------------------------- */
   // https://github.com/pixiv/three-vrm/tree/dev/packages/three-vrm/examples/humanoidAnimation
   useEffect(() => {
+    setLoaded(false)
     const loader = new GLTFLoader()
     loader.crossOrigin = 'anonymous'
     loader.register((parser) => {
@@ -52,8 +45,15 @@ export const VRMAvatar = () => {
         autoUpdateHumanBones: true,
       })
     })
+    let url = ''
+    if (inputVrmModel) {
+      const blob = new Blob([inputVrmModel], {
+        type: 'application/octet-stream',
+      })
+      url = URL.createObjectURL(blob)
+    }
     loader.load(
-      modelNameToUrl[modelName as keyof modelNameToUrl],
+      url ? url : modelNameToUrl[modelName as keyof modelNameToUrl],
       (gltf) => {
         const vrm = gltf.userData.vrm
         vrm.scene.position.setY(-0.8)
@@ -63,7 +63,6 @@ export const VRMAvatar = () => {
         }
         currentVrm = vrm
         currentMixer = new THREE.AnimationMixer(vrm.scene)
-        scene.add(vrm.scene)
         vrm.scene.traverse((obj: any) => {
           if (obj.isMesh) {
             obj.castShadow = true
@@ -84,6 +83,9 @@ export const VRMAvatar = () => {
             },
           )
         })
+        scene.add(vrm.scene)
+
+        setLoaded(true)
       },
       (progress) => {
         console.log(
@@ -99,9 +101,10 @@ export const VRMAvatar = () => {
     // createPanel()
 
     animate()
-  }, [modelName])
+  }, [modelName, inputVrmModel])
 
   /* ---------------------------- animationが変更されたとき --------------------------- */
+
   useEffect(() => {
     const settings = baseActions[animation as keyof baseActionsProps]
     const currentSettings =
@@ -111,7 +114,23 @@ export const VRMAvatar = () => {
     if (currentAction !== action) {
       prepareCrossFade(currentAction, action, 0.35)
     }
-  }, [animation])
+  }, [animation, loaded])
+
+  useEffect(() => {
+    if (currentVrm) {
+      if (expression == 'neutral') {
+        currentVrm.expressionManager?.setValue(
+          THREE_VRM.VRMExpressionPresetName.Happy,
+          0,
+        )
+      } else if (expression == 'happy') {
+        currentVrm.expressionManager?.setValue(
+          THREE_VRM.VRMExpressionPresetName.Happy,
+          0.3,
+        )
+      }
+    }
+  }, [expression, loaded])
 
   return <></>
 }
@@ -128,6 +147,7 @@ type panelSettingsProps = {
   GangnamStyle?: () => void
   BreakdanceEnding1?: () => void
   StandingGreeting?: () => void
+  AirSquatBentArms?: () => void
 }
 let panelSettings: panelSettingsProps
 type baseActionsItemProps = {
@@ -139,12 +159,14 @@ type baseActionsProps = {
   GangnamStyle: baseActionsItemProps
   BreakdanceEnding1: baseActionsItemProps
   StandingGreeting: baseActionsItemProps
+  AirSquatBentArms: baseActionsItemProps
 }
 const baseActions: baseActionsProps = {
   idle: { weight: 1 },
   GangnamStyle: { weight: 0 },
   BreakdanceEnding1: { weight: 0 },
   StandingGreeting: { weight: 0 },
+  AirSquatBentArms: { weight: 0 },
 }
 function setWeight(action: THREE.AnimationAction, weight: number) {
   action.enabled = true
@@ -247,12 +269,12 @@ function executeCrossFade(
     setWeight(endAction, 1)
     endAction.time = 2
     if (startAction) {
-      startAction.reset().reset().crossFadeTo(endAction, duration, true)
+      startAction.crossFadeTo(endAction, duration, true)
     } else {
-      endAction.reset().reset().fadeIn(duration)
+      endAction.fadeIn(duration)
     }
   } else {
-    startAction?.reset().reset().fadeOut(duration)
+    startAction?.fadeOut(duration)
   }
 }
 

@@ -7,7 +7,7 @@ import {
   ThemeIcon,
 } from '@mantine/core'
 import { IconCheck } from '@tabler/icons'
-import { Image } from '@mantine/core';
+import { Image } from '@mantine/core'
 
 const useStyles = createStyles((theme) => ({
   inner: {
@@ -72,7 +72,6 @@ export function Description() {
         <div className={classes.inner}>
           <div className={classes.content}>
             <Title className={classes.title}>
-              
                 <Text
                     component="span"
                     inherit

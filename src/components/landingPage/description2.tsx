@@ -1,26 +1,27 @@
-import { createStyles, Container, Text } from '@mantine/core';
+import { createStyles, Container, Text } from '@mantine/core'
 
-const BREAKPOINT = '@media (max-width: 755px)';
+const BREAKPOINT = '@media (max-width: 755px)'
 
 const useStyles = createStyles((theme) => ({
-    wrapper: {
+  wrapper: {
     position: 'relative',
     boxSizing: 'border-box',
-    backgroundColor: theme.colorScheme === 'dark' ? theme.colors.dark[8] : theme.white,
-    },
+    backgroundColor:
+      theme.colorScheme === 'dark' ? theme.colors.dark[8] : theme.white,
+  },
 
-    inner: {
+  inner: {
     position: 'relative',
     paddingTop: 200,
     paddingBottom: 120,
 
     [BREAKPOINT]: {
-        paddingBottom: 80,
-        paddingTop: 80,
+      paddingBottom: 80,
+      paddingTop: 80,
     },
-    },
+  },
 
-    title: {
+  title: {
     fontFamily: `Greycliff CF, ${theme.fontFamily}`,
     fontSize: 62,
     fontWeight: 900,
@@ -30,53 +31,53 @@ const useStyles = createStyles((theme) => ({
     color: theme.colorScheme === 'dark' ? theme.white : theme.black,
 
     [BREAKPOINT]: {
-        fontSize: 42,
-        lineHeight: 1.2,
+      fontSize: 42,
+      lineHeight: 1.2,
     },
-    },
+  },
 
-    description: {
+  description: {
     marginTop: theme.spacing.xl,
     fontSize: 24,
 
     [BREAKPOINT]: {
-        fontSize: 18,
+      fontSize: 18,
     },
-    },
+  },
 
-    controls: {
+  controls: {
     marginTop: theme.spacing.xl * 2,
 
     [BREAKPOINT]: {
-        marginTop: theme.spacing.xl,
+      marginTop: theme.spacing.xl,
     },
-    },
+  },
 
-    control: {
+  control: {
     height: 54,
     paddingLeft: 38,
     paddingRight: 38,
 
     [BREAKPOINT]: {
-        height: 54,
-        paddingLeft: 18,
-        paddingRight: 18,
-        flex: 1,
+      height: 54,
+      paddingLeft: 18,
+      paddingRight: 18,
+      flex: 1,
     },
-    },
-    }));
+  },
+}))
 
 export function Description2() {
-    const { classes } = useStyles();
+  const { classes } = useStyles()
 
-    return (
+  return (
     <div className={classes.wrapper}>
-        <Container size={700} className={classes.inner}>
+      <Container size={700} className={classes.inner}>
         <h1 className={classes.title}>
             最強の
             <Text component="span" variant="gradient" gradient={{ from: 'blue', to: 'cyan' }} inherit>
             パートナー
-            </Text>{''}
+            </Text>
         </h1>
 
         <Text className={classes.description} color="dimmed">
@@ -84,7 +85,7 @@ export function Description2() {
             誰かと一緒に勉強したいとき, 友達が忙しくても大丈夫です.
 
         </Text>
-        </Container>
+      </Container>
     </div>
-    );
+  )
 }
