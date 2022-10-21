@@ -17,7 +17,7 @@ const VRMCanvas = () => {
   const cameraControls = useRef<CameraControls | null>(null)
   const md = useMediaQuery('(min-width: 1000px)')
   useEffect(() => {
-    if (['study', 'fitness'].includes(mode)) {
+    if (['study'].includes(mode)) {
       if (cameraControls.current) {
         cameraControls.current.reset(true)
         if (md) {
@@ -31,6 +31,16 @@ const VRMCanvas = () => {
       if (cameraControls.current) {
         cameraControls.current.reset(true)
         cameraControls.current.enabled = true
+      }
+    } else if (['fitness'].includes(mode)) {
+      if (cameraControls.current) {
+        cameraControls.current.reset(true)
+        if (md) {
+          cameraControls.current.moveTo(0.6, 0, 0, true)
+        } else {
+          cameraControls.current.moveTo(0, 0, 0, true)
+        }
+        cameraControls.current.enabled = false
       }
     }
   }, [mode, md])

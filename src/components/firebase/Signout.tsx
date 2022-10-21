@@ -1,18 +1,40 @@
-import { Avatar, Center } from '@mantine/core'
+import { Avatar, Center, Popover, Stack, Button } from '@mantine/core'
 import { auth } from './firebase'
 import { css } from '@emotion/react'
+import Link from 'next/link'
 
 function Signout() {
-  return (
-    <Center>
+  const Icon = auth.currentUser ? (
+    <Center pb={10}>
       <Avatar
         css={hover}
         radius="xl"
         variant="outline"
-        src="https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=250&q=80"
-        onClick={() => auth.signOut()}
+        src={auth.currentUser.photoURL}
       />
     </Center>
+  ) : (
+    <Center pb={10}>
+      <Avatar css={hover} radius="xl" variant="outline" color="blue" />
+    </Center>
+  )
+
+  return (
+    <Popover width={200} position="right" withArrow shadow="md">
+      <Popover.Target>{Icon}</Popover.Target>
+      <Popover.Dropdown>
+        <Stack>
+          <Link href="/analytics" passHref>
+            <Button variant="subtle" component="a" color="dark">
+              Analytics
+            </Button>
+          </Link>
+          <Button onClick={() => auth.signOut()} variant="subtle" color="dark">
+            Sign Out
+          </Button>
+        </Stack>
+      </Popover.Dropdown>
+    </Popover>
   )
 }
 
