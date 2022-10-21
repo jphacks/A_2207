@@ -1,77 +1,77 @@
-import { createStyles, Container, Title, Text, Button } from '@mantine/core';
+import { createStyles, Container, Title, Text } from '@mantine/core'
 
 const useStyles = createStyles((theme) => ({
-    root: {
-        backgroundColor: '#11284b',
-        backgroundSize: 'cover',
-        backgroundPosition: 'center',
-        backgroundImage:
-        'linear-gradient(250deg, rgba(130, 201, 30, 0) 0%, #062343 70%), url(https://images.unsplash.com/photo-1451187580459-43490279c0fa?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1080&q=80)',
-        paddingTop: theme.spacing.xl * 3,
-        paddingBottom: theme.spacing.xl * 3,
+  root: {
+    backgroundColor: '#11284b',
+    backgroundSize: 'cover',
+    backgroundPosition: 'center',
+    backgroundImage:
+      'linear-gradient(250deg, rgba(130, 201, 30, 0) 0%, #062343 70%), url(https://images.unsplash.com/photo-1451187580459-43490279c0fa?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1080&q=80)',
+    paddingTop: theme.spacing.xl * 3,
+    paddingBottom: theme.spacing.xl * 3,
+  },
+
+  inner: {
+    display: 'flex',
+    justifyContent: 'space-between',
+
+    [theme.fn.smallerThan('md')]: {
+      flexDirection: 'column',
     },
+  },
 
-    inner: {
-        display: 'flex',
-        justifyContent: 'space-between',
-
-        [theme.fn.smallerThan('md')]: {
-        flexDirection: 'column',
-        },
+  image: {
+    [theme.fn.smallerThan('md')]: {
+      display: 'none',
     },
+  },
 
-    image: {
-        [theme.fn.smallerThan('md')]: {
-        display: 'none',
-        },
+  content: {
+    paddingTop: theme.spacing.xl * 2,
+    paddingBottom: theme.spacing.xl * 2,
+    marginRight: theme.spacing.xl * 3,
+
+    [theme.fn.smallerThan('md')]: {
+      marginRight: 0,
     },
+  },
 
-    content: {
-        paddingTop: theme.spacing.xl * 2,
-        paddingBottom: theme.spacing.xl * 2,
-        marginRight: theme.spacing.xl * 3,
+  title: {
+    color: theme.white,
+    fontFamily: `Greycliff CF, ${theme.fontFamily}`,
+    fontWeight: 900,
+    lineHeight: 1.05,
+    maxWidth: 500,
+    fontSize: 48,
 
-        [theme.fn.smallerThan('md')]: {
-        marginRight: 0,
-        },
+    [theme.fn.smallerThan('md')]: {
+      maxWidth: '100%',
+      fontSize: 34,
+      lineHeight: 1.15,
     },
+  },
 
-    title: {
-        color: theme.white,
-        fontFamily: `Greycliff CF, ${theme.fontFamily}`,
-        fontWeight: 900,
-        lineHeight: 1.05,
-        maxWidth: 500,
-        fontSize: 48,
+  description: {
+    color: theme.white,
+    opacity: 0.75,
+    maxWidth: 500,
 
-        [theme.fn.smallerThan('md')]: {
-        maxWidth: '100%',
-        fontSize: 34,
-        lineHeight: 1.15,
-        },
+    [theme.fn.smallerThan('md')]: {
+      maxWidth: '100%',
     },
+  },
 
-    description: {
-        color: theme.white,
-        opacity: 0.75,
-        maxWidth: 500,
+  control: {
+    paddingLeft: 50,
+    paddingRight: 50,
+    fontFamily: `Greycliff CF, ${theme.fontFamily}`,
+    fontSize: 22,
 
-        [theme.fn.smallerThan('md')]: {
-        maxWidth: '100%',
-        },
+    [theme.fn.smallerThan('md')]: {
+      width: '100%',
     },
-
-    control: {
-        paddingLeft: 50,
-        paddingRight: 50,
-        fontFamily: `Greycliff CF, ${theme.fontFamily}`,
-        fontSize: 22,
-
-        [theme.fn.smallerThan('md')]: {
-        width: '100%',
-        },
-    },
-}));
+  },
+}))
 
 export function Description_camera() {
     const { classes } = useStyles();
@@ -88,18 +88,17 @@ export function Description_camera() {
                     variant="gradient"
                     gradient={{ from: 'pink', to: 'yellow' }}
                 >
-                カメラ機能
-                </Text>{' '}
                 スクワット
+                </Text>
+                モード
                 </Title>
 
                 <Text className={classes.description} mt={30}>
-                Build fully functional accessible web applications with ease – Mantine includes more
-                than 100 customizable components and hooks to cover you in any situation
+                PCのカメラがあなたの体の位置を認識し, スクワットの回数を正しく計測してくれます.
                 </Text>
             </div>
             </div>
         </Container>
-        </div>
-    );
+    </div>
+  )
 }

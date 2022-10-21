@@ -34,7 +34,6 @@
     "next-env.d.ts",
     "**/*.ts",
     "**/*.tsx",
-    "src/components/landingPage/HighestGrossingMovies",
     "src/components/vrm/loadMixamoAnimation.js"
   ]
 }

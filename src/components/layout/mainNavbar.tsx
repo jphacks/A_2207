@@ -5,7 +5,7 @@ import {
   createStyles,
   Stack,
   Center,
-  Text,
+  Image,
 } from '@mantine/core'
 import { TablerIcon, IconHome2, IconRun, IconBook } from '@tabler/icons'
 import { useState } from 'react'
@@ -15,8 +15,8 @@ import { useSettingsStore } from 'src/stores/settingsStore'
 import shallow from 'zustand/shallow'
 import Signin from '../firebase/Signin'
 import SignOut from '../firebase/Signout'
-import { auth } from "../firebase/firebase"
-import { useAuthState } from "react-firebase-hooks/auth"
+import { auth } from '../firebase/firebase'
+import { useAuthState } from 'react-firebase-hooks/auth'
 
 const useStyles = createStyles((theme) => ({
   link: {
@@ -97,48 +97,43 @@ export function MainNavbar() {
   const [infoOpened, setInfoOpened] = useState(false)
   const [configOpened, setConfigOpened] = useState(false)
 
-  const [user] = useAuthState(auth as any);
+  const [user] = useAuthState(auth as any)
 
   return (
     <Navbar width={{ base: 80 }} p="md">
       <Center>
-        <Text
-          component="span"
-          align="center"
-          variant="gradient"
-          gradient={{ from: 'indigo', to: 'cyan', deg: 45 }}
-          size="xl"
-          weight={700}
-          style={{ fontFamily: 'Greycliff CF, sans-serif' }}
-        >
-          VRoom
-        </Text>
+        <Image
+          radius="md"
+          src="/picture/VRooMIcon.png"
+          alt="Random unsplash image"
+          width="50px"
+          height="35px"
+        />
       </Center>
-      {/* <Navbar.Section grow mt={50}> */}
       <Navbar.Section grow mt={50}>
         <Stack justify="center" spacing={0}>
           <NavbarLink
             icon={IconHome2}
             modeTitle="initial"
-            label="Home"
+            label="HOME"
             onClick={() => setMode('initial')}
           />
           <NavbarLink
             icon={IconBook}
             modeTitle="study"
-            label="study"
+            label="STUDY"
             onClick={() => setMode('study')}
           />
           <NavbarLink
             icon={IconRun}
             modeTitle="fitness"
-            label="fitness"
+            label="FITNESS"
             onClick={() => setMode('fitness')}
           />
         </Stack>
       </Navbar.Section>
-      <Navbar.Section>
-        <Stack justify="center" spacing={10}>
+      <Navbar.Section pb={14}>
+        <Stack justify="center" spacing={14}>
           {user ? <SignOut /> : <Signin />}
           <IconConfig opened={configOpened} setOpened={setConfigOpened} />
           <IconInfo opened={infoOpened} setOpened={setInfoOpened} />

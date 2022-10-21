@@ -25,6 +25,7 @@
     "@react-three/drei": "^9.34.4",
     "@react-three/fiber": "^8.8.10",
     "@tabler/icons": "^1.103.0",
+    "camera-controls": "^1.37.3",
     "chart.js": "^3.9.1",
     "firebase": "^9.12.1",
     "next": "12.3.1",
