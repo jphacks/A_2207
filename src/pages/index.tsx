@@ -2,6 +2,7 @@ import type { NextPage } from 'next'
 import VRMCanvas from 'src/components/vrm/vrmCanvas'
 import StartButton from 'src/components/main/startButton'
 import StudyCounter from 'src/components/main/studyCounter'
+import ChoiceButton from 'src/components/main/choiceButton'
 import SquatCounter from 'src/components/main/squatCounter'
 import FinaleMenu from 'src/components/main/finaleMenu'
 import shallow from 'zustand/shallow'
@@ -59,6 +60,19 @@ const Home: NextPage = () => {
             }}
           >
             <GoalViewer />
+          </div>
+        )}
+        {mode === 'choice' && (
+          <div
+            style={{
+              position: 'absolute',
+              zIndex: 10,
+              top: '50%',
+              left: '50%',
+              transform: 'translate(-50%, -50%)',
+            }}
+          >
+            <ChoiceButton />
           </div>
         )}
         {mode === 'fitness' && (
