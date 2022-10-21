@@ -74,23 +74,16 @@ export function Description2() {
     <div className={classes.wrapper}>
       <Container size={700} className={classes.inner}>
         <h1 className={classes.title}>
-          {' '}
-          <Text
-            component="span"
-            variant="gradient"
-            gradient={{ from: 'blue', to: 'cyan' }}
-            inherit
-          >
             最強の
-          </Text>
-          {''}
-          パートナー
+            <Text component="span" variant="gradient" gradient={{ from: 'blue', to: 'cyan' }} inherit>
+            パートナー
+            </Text>
         </h1>
 
         <Text className={classes.description} color="dimmed">
-          Build fully functional accessible web applications with ease – Mantine
-          includes more than 100 customizable components and hooks to cover you
-          in any situation
+            好きなタイミングでアバターがあなたの作業のお供をしてくれます. 
+            誰かと一緒に勉強したいとき, 友達が忙しくても大丈夫です.
+
         </Text>
       </Container>
     </div>

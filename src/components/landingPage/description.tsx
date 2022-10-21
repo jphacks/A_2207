@@ -30,7 +30,7 @@ const useStyles = createStyles((theme) => ({
   title: {
     color: theme.colorScheme === 'dark' ? theme.white : theme.black,
     fontFamily: `Greycliff CF, ${theme.fontFamily}`,
-    fontSize: 44,
+    fontSize: 60,
     lineHeight: 1.2,
     fontWeight: 900,
 
@@ -72,16 +72,18 @@ export function Description() {
         <div className={classes.inner}>
           <div className={classes.content}>
             <Title className={classes.title}>
-              V<span className={classes.highlight}>RooM</span>
-              <br />
-              {''}
+              <Text
+                component="span"
+                inherit
+                variant="gradient"
+                gradient={{ from: 'blue', to: 'cyan' }}
+              >
+                VRooM
+              </Text>
             </Title>
             <Text color="dimmed" mt="md">
-              Build fully functional accessible web applications faster than
-              ever – Mantine includes more than 120 customizable components and
-              hooks to cover you in any situation
+              作業を見守るパートナー
             </Text>
-
             <List
               mt={30}
               spacing="sm"
@@ -93,16 +95,16 @@ export function Description() {
               }
             >
               <List.Item>
-                <b>いつでも来てくれる Zoom 友達</b> – build type safe
-                applications, all components and hooks export types
+                <b>VRMモデルと一緒に作業</b>{' '}
+                魅力的なアバターがあなたの作業のパートナーになってくれます.
               </List.Item>
               <List.Item>
-                <b>時間管理で 集中力アップ</b> – all packages have MIT license,
-                you can use Mantine in any project
+                <b>作業効率の最適化</b>{' '}
+                作業に集中できるような機能が実装されています.
               </List.Item>
               <List.Item>
-                <b>カメラ機能を使った スクワットゲーム</b> – focus ring will
-                appear only when user navigates with keyboard
+                <b>すぐに利用可能</b> Web アプリのため,
+                誰でも簡単に利用することができます.
               </List.Item>
             </List>
           </div>

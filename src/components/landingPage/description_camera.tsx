@@ -74,33 +74,31 @@ const useStyles = createStyles((theme) => ({
 }))
 
 export function Description_camera() {
-  const { classes } = useStyles()
-  return (
-    <div className={classes.root}>
-      <Container size="lg">
-        <div className={classes.inner}>
-          <div className={classes.content}>
-            <Title className={classes.title}>
-              {' '}
-              <Text
-                component="span"
-                inherit
-                variant="gradient"
-                gradient={{ from: 'pink', to: 'yellow' }}
-              >
-                カメラ機能
-              </Text>{' '}
-              スクワット
-            </Title>
+    const { classes } = useStyles();
+    return (
+        <div className={classes.root}>
+        <Container size="lg">
+            <div className={classes.inner}>
+            <div className={classes.content}>
+                <Title className={classes.title}>
+                {' '}
+                <Text
+                    component="span"
+                    inherit
+                    variant="gradient"
+                    gradient={{ from: 'pink', to: 'yellow' }}
+                >
+                スクワット
+                </Text>
+                モード
+                </Title>
 
-            <Text className={classes.description} mt={30}>
-              Build fully functional accessible web applications with ease –
-              Mantine includes more than 100 customizable components and hooks
-              to cover you in any situation
-            </Text>
-          </div>
-        </div>
-      </Container>
+                <Text className={classes.description} mt={30}>
+                PCのカメラがあなたの体の位置を認識し, スクワットの回数を正しく計測してくれます.
+                </Text>
+            </div>
+            </div>
+        </Container>
     </div>
   )
 }
