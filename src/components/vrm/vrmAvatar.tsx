@@ -18,6 +18,7 @@ type modelNameToUrl = {
 const modelNameToUrl = {
   AliciaSolid: '/models/AliciaSolid.vrm',
   Tsukuyomi: '/models/Tsukuyomi.vrm',
+  Miraikomachi: '/models/Miraikomachi.vrm',
 } as modelNameToUrl
 
 export const VRMAvatar = () => {
@@ -26,18 +27,13 @@ export const VRMAvatar = () => {
     (state) => ({
       mode: state.mode,
       modelName: state.modelName,
-      positionX: state.positionX,
-      positionY: state.positionY,
-      positionZ: state.positionZ,
-      setPositionX: state.setPositionX,
-      setPositionY: state.setPositionY,
-      setPositionZ: state.setPositionZ,
     }),
     shallow,
   )
-  const { animation } = useVrmStore(
+  const { animation, expression } = useVrmStore(
     (state) => ({
       animation: state.animation,
+      expression: state.expression,
     }),
     shallow,
   )
@@ -112,6 +108,22 @@ export const VRMAvatar = () => {
       prepareCrossFade(currentAction, action, 0.35)
     }
   }, [animation])
+
+  useEffect(() => {
+    if (currentVrm) {
+      if (expression == 'neutral') {
+        currentVrm.expressionManager?.setValue(
+          THREE_VRM.VRMExpressionPresetName.Happy,
+          0,
+        )
+      } else if (expression == 'happy') {
+        currentVrm.expressionManager?.setValue(
+          THREE_VRM.VRMExpressionPresetName.Happy,
+          1,
+        )
+      }
+    }
+  }, [expression])
 
   return <></>
 }

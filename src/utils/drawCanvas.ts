@@ -26,7 +26,7 @@ export const drawCanvas = (
 
   if (elbow[0] !== 0 && elbow[1] !== 0) {
     ctx.lineWidth = 4
-    ctx.strokeStyle = 'red'
+    ctx.strokeStyle = '#ffffff'
     ctx.moveTo(0, elbow[0] * height)
     ctx.lineTo(width, elbow[0] * height)
     ctx.stroke()

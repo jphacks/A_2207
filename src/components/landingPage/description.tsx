@@ -1,16 +1,13 @@
 import {
   createStyles,
-  //Image,
   Container,
   Title,
-  Button,
-  Group,
   Text,
   List,
   ThemeIcon,
 } from '@mantine/core'
 import { IconCheck } from '@tabler/icons'
-import { Image } from '@mantine/core';
+import { Image } from '@mantine/core'
 
 const useStyles = createStyles((theme) => ({
   inner: {
@@ -75,7 +72,9 @@ export function Description() {
         <div className={classes.inner}>
           <div className={classes.content}>
             <Title className={classes.title}>
-              V<span className={classes.highlight}>RooM</span><br />{''}
+              V<span className={classes.highlight}>RooM</span>
+              <br />
+              {''}
             </Title>
             <Text color="dimmed" mt="md">
               Build fully functional accessible web applications faster than
@@ -94,16 +93,16 @@ export function Description() {
               }
             >
               <List.Item>
-                <b>いつでも来てくれる Zoom 友達</b> – build type safe applications, all
-                components and hooks export types
+                <b>いつでも来てくれる Zoom 友達</b> – build type safe
+                applications, all components and hooks export types
               </List.Item>
               <List.Item>
-                <b>時間管理で 集中力アップ</b> – all packages have MIT license, you
-                can use Mantine in any project
+                <b>時間管理で 集中力アップ</b> – all packages have MIT license,
+                you can use Mantine in any project
               </List.Item>
               <List.Item>
-                <b>カメラ機能を使った スクワットゲーム</b> – focus ring will appear only when
-                user navigates with keyboard
+                <b>カメラ機能を使った スクワットゲーム</b> – focus ring will
+                appear only when user navigates with keyboard
               </List.Item>
             </List>
           </div>

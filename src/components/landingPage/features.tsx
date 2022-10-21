@@ -1,5 +1,5 @@
 import { createStyles, Text, SimpleGrid, Container } from '@mantine/core'
-import { IconHeart, IconClock, IconCamera, IconCoin, TablerIcon } from '@tabler/icons'
+import { IconHeart, IconClock, IconCamera, TablerIcon } from '@tabler/icons'
 
 const useStyles = createStyles((theme) => ({
   feature: {

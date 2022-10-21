@@ -26,9 +26,9 @@ const StartButton = () => {
       <Stack sx={() => ({ backgroundColor: 'transparent', height: 300 })}>
         <TextInput
           value={goal}
+          size="md"
           onChange={(event) => setGoal(event.currentTarget.value)}
-          label="目標を入力してください"
-          placeholder="頑張る！！"
+          placeholder="ゴールを入力"
         />
 
       <SimpleGrid

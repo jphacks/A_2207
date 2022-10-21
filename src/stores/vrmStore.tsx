@@ -3,12 +3,15 @@ import { devtools } from 'zustand/middleware'
 
 interface VrmState {
   animation: string
+  expression: string
   setAnimation: (animation: string) => void
+  setExpression: (expression: string) => void
 }
 
 export const useVrmStore = create<VrmState>()(
   devtools((set) => ({
     animation: 'idle',
+    expression: 'neutral',
     setAnimation: (animation) =>
       set(
         (state) => ({
@@ -17,6 +20,15 @@ export const useVrmStore = create<VrmState>()(
         }),
         false,
         'setAnimation',
+      ),
+    setExpression: (expression) =>
+      set(
+        (state) => ({
+          ...state,
+          expression,
+        }),
+        false,
+        'setExpression',
       ),
   })),
 )
