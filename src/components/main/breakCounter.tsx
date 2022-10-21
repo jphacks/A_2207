@@ -43,15 +43,13 @@ const BreakCounter = () => {
   const { classes } = useStyles()
   const percentage = useRef(0)
   const [circle, setCircle] = useState(false)
-  const { setMode, setStudied, setCountRemain, breakTime } = useSettingsStore(
+  const { setMode, setStudied, breakTime } = useSettingsStore(
     (state) => ({
       setMode: state.setMode,
       setStudied: state.setStudied,
-      setCountRemain: state.setCountRemain,
       workTime: state.workTime,
       setWorkTime: state.setWorkTime,
       breakTime: state.breakTime,
-      setBreakTime: state.setBreakTime,
     }),
     shallow,
   )
@@ -62,6 +60,7 @@ const BreakCounter = () => {
     shallow,
   )
   const timerSeconds = breakTime * 60
+
   const { countdown, start, isRunning } = useCountdownTimer({
     timer: 1000 * timerSeconds,
   })
@@ -77,7 +76,6 @@ const BreakCounter = () => {
       setStudied(true)
       setMode('initial')
     }
-    setCountRemain(countdown / 1000)
     percentage.current = (countdown * 100) / (timerSeconds * 1000)
   }, [isRunning, countdown])
 

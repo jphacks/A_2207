@@ -47,12 +47,13 @@ const StudyCounter = () => {
   const { classes } = useStyles()
   const percentage = useRef(0)
   const [circle, setCircle] = useState(false)
-  const { goal, setMode, setStudied, setCountRemain, workTime } =
+  const { goal, setMode, setStudied, countRemain, setCountRemain, workTime } =
     useSettingsStore(
       (state) => ({
         goal: state.goal,
         setMode: state.setMode,
         setStudied: state.setStudied,
+        countRemain: state.countRemain,
         setCountRemain: state.setCountRemain,
         workTime: state.workTime,
       }),
@@ -60,7 +61,7 @@ const StudyCounter = () => {
     )
   const timerSeconds = workTime * 60
   const { countdown, start, reset, pause, isRunning } = useCountdownTimer({
-    timer: 1000 * timerSeconds,
+    timer: 1000 * countRemain,
   })
 
   useEffect(() => {
