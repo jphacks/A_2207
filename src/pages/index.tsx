@@ -4,6 +4,7 @@ import StartButton from 'src/components/main/startButton'
 import StudyCounter from 'src/components/main/studyCounter'
 import ChoiceButton from 'src/components/main/choiceButton'
 import SquatCounter from 'src/components/main/squatCounter'
+import BreakCounter from 'src/components/main/breakCounter'
 import FinaleMenu from 'src/components/main/finaleMenu'
 import shallow from 'zustand/shallow'
 import { useSettingsStore } from 'src/stores/settingsStore'
@@ -65,7 +66,7 @@ const Home: NextPage = () => {
           </>
         )}
         {mode === 'choice' && (
-          <OverlayWrapper top="50%" left="50%">
+          <OverlayWrapper top="50%" left="70%">
             <ChoiceButton />
           </OverlayWrapper>
         )}
@@ -73,6 +74,19 @@ const Home: NextPage = () => {
           <OverlayWrapper top={md ? '50%' : '75%'} left={md ? '70%' : '50%'}>
             <SquatCounter />
           </OverlayWrapper>
+        )}
+        {mode === 'break' && (
+          <div
+            style={{
+              position: 'absolute',
+              zIndex: 10,
+              top: '50%',
+              left: '70%',
+              transform: 'translate(-50%, -50%)',
+            }}
+          >
+            <BreakCounter />
+          </div>
         )}
         {mode === 'finish' && (
           <OverlayWrapper top="50%" left="50%">

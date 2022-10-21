@@ -74,6 +74,11 @@ const SquatCounter = () => {
   }, [onResults])
 
   useEffect(() => {
+    const audio = new Audio("/voices/13.wav")
+    audio.play()
+  }, [])
+
+  useEffect(() => {
     if (time > 0 && resultsRef.current !== null) {
       const landmarks = resultsRef.current.poseLandmarks
       if (landmarks && landmarks[13] && landmarks[14]) {
@@ -112,24 +117,17 @@ const SquatCounter = () => {
   }, [isStart])
 
   useEffect(() => {
-    if (count === 10) {
-      const audio = new Audio('/voices/7.wav')
+
+    const countGoal = 5
+    if (countGoal >= 10 && count === Math.floor(countGoal/2)) {
+      const audio = new Audio("/voices/8.wav")
       audio.play()
-    } else if (
-      squatGoalCount <= 10 &&
-      count === Math.floor(squatGoalCount / 2)
-    ) {
-      const audio = new Audio('/voices/8.wav')
+    } else if (count === countGoal-3) {
+      const audio = new Audio("/voices/14.wav")
       audio.play()
-    } else if (count === 3) {
-      const audio = new Audio('/voices/9.wav')
-      audio.play()
-    } else if (count === 1) {
-      const audio = new Audio('/voices/10.wav')
-      audio.play()
-    } else if (count === 0) {
+    } else if (count === countGoal) {
       if (studied) {
-        setMode('finish')
+        setMode('break')
       } else {
         setMode('study')
       }

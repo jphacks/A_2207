@@ -1,4 +1,4 @@
-import { Button, Center, TextInput, Stack } from '@mantine/core'
+import { Button, Center, TextInput, Stack, Text } from '@mantine/core'
 import shallow from 'zustand/shallow'
 import { useSettingsStore } from 'src/stores/settingsStore'
 import { useEffect } from 'react'
@@ -16,21 +16,23 @@ const ChoiceButton = () => {
   const sleep = (second: number) => new Promise(resolve => setTimeout(resolve, second * 1000))
 
   useEffect(() => {
-    (async() => {
-      const fileNumbers = [4, 5, 6]
-      for (const fileNumber of fileNumbers) {
-        // 音声の再生が終わるまでループを回さないように止めておく
-        await new Promise<void>((resolve) => {
-            const sound = new Audio(`voices/${fileNumber}.wav`)
-            sound.play();
-            sound.addEventListener('ended', async () => {
-                // 音声終了後にいきなり次の音声が再生されてると違和感がすごいのでちょっとスリープかける
-                await sleep(1);
-                resolve();
-            }, {once: true});
-        });
-      }
-    })()
+    // (async() => {
+    //   const fileNumbers = [4]
+    //   for (const fileNumber of fileNumbers) {
+    //     // 音声の再生が終わるまでループを回さないように止めておく
+    //     await new Promise<void>((resolve) => {
+    //         const sound = new Audio(`voices/${fileNumber}.wav`)
+    //         sound.play();
+    //         sound.addEventListener('ended', async () => {
+    //             // 音声終了後にいきなり次の音声が再生されてると違和感がすごいのでちょっとスリープかける
+    //             await sleep(1);
+    //             resolve();
+    //         }, {once: true});
+    //     });
+    //   }
+    // })()
+    const audio = new Audio("/voices/11.wav")
+    audio.play()
   }, [])
 
 
@@ -44,13 +46,26 @@ const ChoiceButton = () => {
           size="xl"
           onClick={() => setMode('fitness')}
         >
-          スクワットに挑戦する
+          スクワットモード
         </Button>
         <Button
-          variant="default"
+          variant="gradient"
+          gradient={{ from: 'indigo', to: 'cyan' }}
           radius="xl"
           size="xl"
-          onClick={() => setMode('finale')}
+          // disabled
+        >
+          <Stack spacing={0}>
+            <Text color="gray.5">深呼吸モード</Text>
+            <Text size="xs" color="gray.4">Comming Soon</Text>
+          </Stack>
+        </Button>
+        <Button
+          variant="gradient"
+          gradient={{ from: 'indigo', to: 'cyan' }}
+          radius="xl"
+          size="xl"
+          onClick={() => setMode('finish')}
         >
           終了する
         </Button>
