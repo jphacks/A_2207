@@ -111,7 +111,20 @@ const SquatCounter = () => {
   }, [isStart])
 
   useEffect(() => {
-    if (count === 5) {
+    const countGoal = 5
+    if (count === countGoal - 10) {
+      const audio = new Audio('/voices/7.wav')
+      audio.play()
+    } else if (countGoal >= 10 && count === Math.floor(countGoal / 2)) {
+      const audio = new Audio('/voices/8.wav')
+      audio.play()
+    } else if (count === countGoal - 3) {
+      const audio = new Audio('/voices/9.wav')
+      audio.play()
+    } else if (count === countGoal - 1) {
+      const audio = new Audio('/voices/10.wav')
+      audio.play()
+    } else if (count === 15) {
       if (studied) {
         setMode('finish')
       } else {
