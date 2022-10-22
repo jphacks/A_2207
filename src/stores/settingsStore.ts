@@ -25,8 +25,8 @@ export const initialState: SettingsState = {
   mode: 'initial',
   goal: '',
   studied: false,
-  countRemain: 60*25,
-  squatGoalCount: 15,
+  countRemain: 60 * 25,
+  squatGoalCount: 4,
   workTime: 25,
   breakTime: 5,
 }
