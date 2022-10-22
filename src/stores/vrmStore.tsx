@@ -15,7 +15,7 @@ interface VrmState {
 export const useVrmStore = create<VrmState>()(
   devtools((set) => ({
     modelName: 'AliciaSolid',
-    animation: 'idle',
+    animation: 'None',
     expression: 'neutral',
     inputVrmModel: undefined,
     setModelName: (name) =>

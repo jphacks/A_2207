@@ -68,6 +68,7 @@ const BreakCounter = () => {
   useEffect(() => {
     start()
     const audio = new Audio('/voices/15.wav')
+    setAnimation('StandingGreeting')
     audio.play()
   }, [])
 
@@ -83,13 +84,19 @@ const BreakCounter = () => {
     setCircle(!circle)
   }
 
-  const animationList = ['ArmStretching', 'Thinking']
   useEffect(() => {
     const id = setInterval(() => {
-      // setAnimation(
-      //   animationList[Math.floor(Math.random() * animationList.length)],
-      // )
-    }, 10000)
+      const n = Math.random()
+      if (n < 0.85) {
+        setAnimation('idle')
+      } else if (n < 0.9) {
+        setAnimation('ArmStretching')
+      } else if (n < 0.95) {
+        setAnimation('Thinking')
+      } else {
+        setAnimation('Bored')
+      }
+    }, 5000)
     return () => clearInterval(id)
   }, [])
 
@@ -98,10 +105,11 @@ const BreakCounter = () => {
       style={{
         padding: '1em',
         fontWeight: 'bold',
-        background: '#FFF',
+        background: '#ffffffa0',
         border: 'solid 3px #6091d3',
         borderRadius: '10px',
         position: 'relative',
+        minWidth: '300px',
       }}
     >
       <Stack sx={() => ({ backgroundColor: 'transparent' })}>

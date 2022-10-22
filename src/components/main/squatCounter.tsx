@@ -85,6 +85,7 @@ const SquatCounter = () => {
 
   useEffect(() => {
     const audio = new Audio('/voices/13.wav')
+    setAnimation('StandingGreeting')
     audio.play()
   }, [])
 
@@ -158,7 +159,7 @@ const SquatCounter = () => {
                 display: 'flex',
                 alignItems: 'center',
                 justifyContent: 'center',
-                backgroundColor: '#fff',
+                backgroundColor: '#ffffffa0',
                 borderRadius: '10px',
                 marginBottom: '5px',
               }}

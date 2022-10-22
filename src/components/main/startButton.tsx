@@ -1,10 +1,10 @@
 import {
   Button,
-  Center,
   TextInput,
   Stack,
   SimpleGrid,
   NumberInput,
+  Title,
 } from '@mantine/core'
 import shallow from 'zustand/shallow'
 import { useSettingsStore } from 'src/stores/settingsStore'
@@ -38,8 +38,18 @@ const StartButton = () => {
     setGoal('')
   }, [])
   return (
-    <Center style={{ width: '100%', height: '100%' }}>
-      <Stack sx={() => ({ backgroundColor: 'transparent', height: 300 })}>
+    <div
+      style={{
+        padding: '1em',
+        fontWeight: 'bold',
+        background: '#ffffffa0',
+        border: 'solid 3px #6091d3',
+        borderRadius: '10px',
+        position: 'relative',
+        minWidth: '300px',
+      }}
+    >
+      <Stack sx={() => ({ backgroundColor: 'transparent' })}>
         <TextInput
           value={goal}
           size="md"
@@ -50,7 +60,7 @@ const StartButton = () => {
         <SimpleGrid cols={2} spacing="lg">
           <NumberInput
             mt="md"
-            label="作業時間"
+            label={<Title order={5}>作業時間</Title>}
             // description="From 0 to Infinity, step is 5"
             value={workTime}
             step={5}
@@ -62,7 +72,7 @@ const StartButton = () => {
           />
           <NumberInput
             mt="md"
-            label="休憩時間"
+            label={<Title order={5}>休憩時間</Title>}
             // description="From 0 to Infinity, step is 5"
             value={breakTime}
             step={1}
@@ -84,7 +94,7 @@ const StartButton = () => {
           START
         </Button>
       </Stack>
-    </Center>
+    </div>
   )
 }
 

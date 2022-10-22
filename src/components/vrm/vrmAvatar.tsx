@@ -24,15 +24,17 @@ export const VRMAvatar = () => {
   const { scene } = useThree()
   const [loaded, setLoaded] = useState(false)
 
-  const { animation, expression, modelName, inputVrmModel } = useVrmStore(
-    (state) => ({
-      animation: state.animation,
-      inputVrmModel: state.inputVrmModel,
-      expression: state.expression,
-      modelName: state.modelName,
-    }),
-    shallow,
-  )
+  const { animation, expression, modelName, inputVrmModel, setAnimation } =
+    useVrmStore(
+      (state) => ({
+        animation: state.animation,
+        inputVrmModel: state.inputVrmModel,
+        expression: state.expression,
+        modelName: state.modelName,
+        setAnimation: state.setAnimation,
+      }),
+      shallow,
+    )
 
   /* ---------------------------------- 初期設定 ---------------------------------- */
   // https://github.com/pixiv/three-vrm/tree/dev/packages/three-vrm/examples/humanoidAnimation
@@ -84,7 +86,6 @@ export const VRMAvatar = () => {
           )
         })
         scene.add(vrm.scene)
-
         setLoaded(true)
       },
       (progress) => {
@@ -113,6 +114,9 @@ export const VRMAvatar = () => {
     const action = settings ? settings.action : null
     if (currentAction !== action) {
       prepareCrossFade(currentAction, action, 0.35)
+    }
+    if (animation === 'StandingGreeting') {
+      setAnimation('idle')
     }
   }, [animation, loaded])
 
@@ -150,6 +154,10 @@ type panelSettingsProps = {
   AirSquatBentArms?: () => void
   ArmStretching?: () => void
   Thinking?: () => void
+  Talking?: () => void
+  Bored?: () => void
+  ThoughtfulHeadNod?: () => void
+  Thankful?: () => void
 }
 let panelSettings: panelSettingsProps
 type baseActionsItemProps = {
@@ -164,6 +172,10 @@ type baseActionsProps = {
   AirSquatBentArms: baseActionsItemProps
   ArmStretching: baseActionsItemProps
   Thinking: baseActionsItemProps
+  Talking: baseActionsItemProps
+  Bored: baseActionsItemProps
+  ThoughtfulHeadNod: baseActionsItemProps
+  Thankful: baseActionsItemProps
 }
 const baseActions: baseActionsProps = {
   idle: { weight: 1 },
@@ -173,6 +185,10 @@ const baseActions: baseActionsProps = {
   AirSquatBentArms: { weight: 0 },
   ArmStretching: { weight: 0 },
   Thinking: { weight: 0 },
+  Talking: { weight: 0 },
+  Bored: { weight: 0 },
+  ThoughtfulHeadNod: { weight: 0 },
+  Thankful: { weight: 0 },
 }
 function setWeight(action: THREE.AnimationAction, weight: number) {
   action.enabled = true

@@ -53,13 +53,17 @@ const Home: NextPage = () => {
     <Layout>
       <div className="container">
         {mode === 'initial' && (
-          <OverlayWrapper top={'50%'} left={'50%'}>
+          <OverlayWrapper
+            top={md ? '70%' : '70%'}
+            right={md ? '-5%' : undefined}
+            left={md ? undefined : '50%'}
+          >
             <StartButton />
           </OverlayWrapper>
         )}
         {mode === 'study' && (
           <>
-            <OverlayWrapper top={md ? '50%' : '70%'} left={md ? '70%' : '50%'}>
+            <OverlayWrapper top={md ? '50%' : '73%'} left={md ? '70%' : '50%'}>
               <StudyCounter />
             </OverlayWrapper>
           </>

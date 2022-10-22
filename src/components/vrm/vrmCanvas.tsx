@@ -54,9 +54,9 @@ const VRMCanvas = () => {
       if (cameraControls.current) {
         cameraControls.current.reset(true)
         if (md) {
-          cameraControls.current.moveTo(0.6, 0, 0, true)
+          cameraControls.current.moveTo(0.2, 0.5, -3, true)
         } else {
-          cameraControls.current.moveTo(0, 0, 0, true)
+          cameraControls.current.moveTo(0, 0.5, -3, true)
         }
         cameraControls.current.enabled = false
       }

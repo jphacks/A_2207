@@ -2,6 +2,7 @@ import { Button, Center, Stack, Text } from '@mantine/core'
 import shallow from 'zustand/shallow'
 import { useSettingsStore } from 'src/stores/settingsStore'
 import { useEffect } from 'react'
+import { useVrmStore } from 'src/stores/vrmStore'
 
 const ChoiceButton = () => {
   const { setMode } = useSettingsStore(
@@ -9,6 +10,12 @@ const ChoiceButton = () => {
       setMode: state.setMode,
       goal: state.goal,
       setGoal: state.setGoal,
+    }),
+    shallow,
+  )
+  const { setAnimation } = useVrmStore(
+    (state) => ({
+      setAnimation: state.setAnimation,
     }),
     shallow,
   )
@@ -30,6 +37,7 @@ const ChoiceButton = () => {
     //   }
     // })()
     const audio = new Audio('/voices/11.wav')
+    setAnimation('Thankful')
     audio.play()
   }, [])
 

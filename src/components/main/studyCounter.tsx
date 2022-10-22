@@ -4,7 +4,6 @@ import {
   Stack,
   Title,
   Text,
-  Grid,
   Group,
   Progress,
   Card,
@@ -15,6 +14,7 @@ import { useCountdownTimer } from 'use-countdown-timer'
 import shallow from 'zustand/shallow'
 import { useSettingsStore } from 'src/stores/settingsStore'
 import { useEffect, useRef, useState } from 'react'
+import { useVrmStore } from 'src/stores/vrmStore'
 
 const getRandomInt = (max: number) => {
   return Math.floor(Math.random() * max)
@@ -59,14 +59,21 @@ const StudyCounter = () => {
       }),
       shallow,
     )
+  const { setAnimation } = useVrmStore(
+    (state) => ({
+      setAnimation: state.setAnimation,
+    }),
+    shallow,
+  )
   const timerSeconds = workTime * 60
-  const { countdown, start, reset, pause, isRunning } = useCountdownTimer({
+  const { countdown, start, pause, isRunning } = useCountdownTimer({
     timer: 1000 * countRemain,
   })
 
   useEffect(() => {
     start()
     const audio = new Audio('/voices/1.wav')
+    setAnimation('StandingGreeting')
     audio.play()
   }, [])
 
@@ -93,10 +100,11 @@ const StudyCounter = () => {
       style={{
         padding: '1em',
         fontWeight: 'bold',
-        background: '#FFF',
+        background: '#ffffffa0',
         border: 'solid 3px #6091d3',
         borderRadius: '10px',
         position: 'relative',
+        minWidth: '300px',
       }}
     >
       <Stack sx={() => ({ backgroundColor: 'transparent' })}>
