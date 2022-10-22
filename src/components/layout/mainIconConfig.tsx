@@ -6,11 +6,13 @@ import {
   Title,
   Stack,
   FileInput,
+  NumberInput,
 } from '@mantine/core'
 import { IconSettings, IconUpload } from '@tabler/icons'
 import { Dispatch, SetStateAction } from 'react'
 import shallow from 'zustand/shallow'
 import { useVrmStore } from 'src/stores/vrmStore'
+import { useSettingsStore } from 'src/stores/settingsStore'
 
 interface IconConfigProps {
   opened: boolean
@@ -18,21 +20,20 @@ interface IconConfigProps {
 }
 
 export function IconConfig({ opened, setOpened }: IconConfigProps) {
-  const {
-    expression,
-    setExpression,
-    modelName,
-    setModelName,
-    inputVrmModel,
-    setInputVrmModel,
-  } = useVrmStore(
+  const { modelName, setModelName, inputVrmModel, setInputVrmModel } =
+    useVrmStore(
+      (state) => ({
+        modelName: state.modelName,
+        inputVrmModel: state.inputVrmModel,
+        setModelName: state.setModelName,
+        setInputVrmModel: state.setInputVrmModel,
+      }),
+      shallow,
+    )
+  const { squatGoalCount, setSquatGoalCount } = useSettingsStore(
     (state) => ({
-      expression: state.expression,
-      modelName: state.modelName,
-      inputVrmModel: state.inputVrmModel,
-      setModelName: state.setModelName,
-      setExpression: state.setExpression,
-      setInputVrmModel: state.setInputVrmModel,
+      squatGoalCount: state.squatGoalCount,
+      setSquatGoalCount: state.setSquatGoalCount,
     }),
     shallow,
   )
@@ -66,6 +67,12 @@ export function IconConfig({ opened, setOpened }: IconConfigProps) {
             value={inputVrmModel}
             onChange={setInputVrmModel}
             icon={<IconUpload size={14} />}
+          />
+
+          <NumberInput
+            label="スクワットの回数を指定してください"
+            value={squatGoalCount}
+            onChange={setSquatGoalCount}
           />
           {/* <Select
             label="expressionを選んでください"

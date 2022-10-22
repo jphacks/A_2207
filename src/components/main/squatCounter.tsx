@@ -101,6 +101,8 @@ const SquatCounter = () => {
     }
     if (time === 0) {
       setAnimation('AirSquatBentArms')
+      const audio = new Audio('/voices/start.wav')
+      audio.play()
     }
   }, [time])
 
