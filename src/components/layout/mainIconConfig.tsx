@@ -55,7 +55,6 @@ export function IconConfig({ opened, setOpened }: IconConfigProps) {
             onChange={setModelName}
             data={[
               { value: 'AliciaSolid', label: 'アリシア・ソリッド' },
-              { value: 'Tsukuyomi', label: 'つくよみちゃん' },
               { value: 'Miraikomachi', label: 'ミライ小町' },
             ]}
           />

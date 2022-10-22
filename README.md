@@ -86,8 +86,11 @@ VRooM（webアプリ）は，誰かと一緒に作業をしている感覚を提
 ## 開発技術
 ### 活用した技術
 #### API・データ
-* 
-* 
+* animationデータ:[mixamo](https://www.mixamo.com/#/)
+* 音声データ:[CoeFont](https://coefont.cloud/)
+* モデルデータ
+  * [AliciaSolid](https://3d.nicovideo.jp/works/td32797)
+  * [ミライ小町](https://www.miraikomachi.com/download/)
 
 #### フレームワーク・ライブラリ・モジュール
 * nextjs

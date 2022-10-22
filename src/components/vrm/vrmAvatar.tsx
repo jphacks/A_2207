@@ -12,11 +12,10 @@ import GUI from 'lil-gui'
 
 type modelNameToUrl = {
   AliciaSolid: string
-  Tsukuyomi: string
+  Miraikomachi: string
 }
 const modelNameToUrl = {
   AliciaSolid: '/models/AliciaSolid.vrm',
-  Tsukuyomi: '/models/Tsukuyomi.vrm',
   Miraikomachi: '/models/Miraikomachi.vrm',
 } as modelNameToUrl
 
