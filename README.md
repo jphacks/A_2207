@@ -23,8 +23,12 @@
 * 
 
 #### フレームワーク・ライブラリ・モジュール
-* 
-* 
+* nextjs
+* zustand
+* three
+  * @pixiv/three-vrm
+  * @react-three/fiber
+* @mediapipe
 
 #### デバイス
 * 
@@ -32,8 +36,8 @@
 
 ### 独自技術
 #### ハッカソンで開発した独自機能・技術
-* 独自で開発したものの内容をこちらに記載してください
-* 特に力を入れた部分をファイルリンク、またはcommit_idを記載してください。
+* @pixiv/three-vrmでvrmモデルを組み込んでアニメーションを管理しているWEBアプリは自分の知る限りこのアプリが初めて
+  * 単一のmixamoのアニメーションを動かすなどの動作をしているような[コード](https://github.com/pixiv/three-vrm/tree/dev/packages/three-vrm-core/examples/humanoidAnimation)が出ているが、@pixiv/three-vrm公式が最近出したもので、最終更新日は今年の10月4日でかなり直近。今回はこのコードを元に作成した。
 
 #### 製品に取り入れた研究内容（データ・ソフトウェアなど）（※アカデミック部門の場合のみ提出必須）
 * 
