@@ -1,8 +1,8 @@
 # VRooM (リモートワーク × Tech)
 
-[![IMAGE ALT TEXT HERE](https://jphacks.com/wp-content/uploads/2022/08/JPHACKS2022_ogp.jpg)](https://www.youtube.com/watch?v=LUPQFB4QyVo)
+[![](https://img.youtube.com/vi/9WgERDJqyWw/0.jpg)](https://www.youtube.com/watch?v=9WgERDJqyWw)
 
-紹介動画は[こちら](https://www.youtube.com/watch?v=9WgERDJqyWw)）
+（紹介動画は[こちら](https://www.youtube.com/watch?v=9WgERDJqyWw)）
 
 ## 製品概要
 ### 背景(製品開発のきっかけ、課題等）
@@ -40,9 +40,11 @@ VRooM（webアプリ）は，誰かと一緒に作業をしている感覚を提
 #### 4. 誰でも簡単に利用できます
 - webアプリのため，URLからページにアクセスするだけですぐに利用を開始できる．
     - 現在はパソコンでの利用を想定した実装になっている．レスポンシブデザインの導入を完了させ，スマホやタブレットでも最適なUIで利用できるように拡張予定．
+
 |  初期画面  |  作業画面  |  スクワット画面  |  休憩画面  |　統計画面
 | ---- | ---- | ---- | ---- | ---- |
-|  [[こちら](https://user-images.githubusercontent.com/54445545/197318552-f77f09eb-8273-46d1-8141-ccfb50c962bc.png)]   |  [こちら](https://user-images.githubusercontent.com/54445545/197318593-6d35ed47-66b2-4f2a-80b4-0ba7d5054670.png)   |  [こちら](https://user-images.githubusercontent.com/54445545/197318765-d0f84d83-93f4-4c13-81f1-cd1497e30956.png)  |  [こちら](https://user-images.githubusercontent.com/54445545/197318966-6025fd41-9436-45fc-9752-007c62c5fce0.png)   |  [こちら](https://user-images.githubusercontent.com/54445545/197319009-cfd2dcf1-ae78-4e5d-8aef-79d8d95fbc09.png)   |
+|  <img width="1425" alt="start" src="https://user-images.githubusercontent.com/60843722/197320182-804fd11c-9658-4ef2-a664-6afb6ecee740.png">  |  <img width="1427" alt="timer" src="https://user-images.githubusercontent.com/60843722/197320187-8f1fe341-ef8b-417b-a12c-f547c8274f96.png">   |  <img width="1431" alt="squat" src="https://user-images.githubusercontent.com/60843722/197320192-22aa494c-6b27-470f-b491-124af22dcc98.png">  |  <img width="1436" alt="break" src="https://user-images.githubusercontent.com/60843722/197320202-f72e6024-0553-4ff8-990c-32ae2a90cdfe.png">   |  <img width="1336" alt="analytics" src="https://user-images.githubusercontent.com/60843722/197320212-5c7e3406-cf15-4dc2-9167-d82a9ea4d618.png">   |
+
 ### 解決出来ること
 - 在宅の一人作業では，なかなか取りかかることが出来ない・集中力が切れてしまうという問題
 - 誰かと一緒に勉強したいというニーズ
