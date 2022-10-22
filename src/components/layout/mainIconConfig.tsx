@@ -61,13 +61,13 @@ export function IconConfig({ opened, setOpened }: IconConfigProps) {
 
           {/* TODO */}
           <FileInput
-            label="または"
+            label="好きなvrmモデルをアップロードしてください"
             placeholder="vrmファイルをアップロード"
             value={inputVrmModel}
             onChange={setInputVrmModel}
             icon={<IconUpload size={14} />}
           />
-          <Select
+          {/* <Select
             label="expressionを選んでください"
             value={expression}
             onChange={setExpression}
@@ -75,7 +75,7 @@ export function IconConfig({ opened, setOpened }: IconConfigProps) {
               { value: 'neutral', label: 'neutral' },
               { value: 'happy', label: 'Happy' },
             ]}
-          />
+          /> */}
         </Stack>
       </Modal>
       <Center>

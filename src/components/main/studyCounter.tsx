@@ -80,6 +80,7 @@ const StudyCounter = () => {
   useEffect(() => {
     if (countdown === 0 && isRunning === true) {
       setStudied(true)
+      setCountRemain(workTime * 60)
       setMode('choice')
     }
     setCountRemain(countdown / 1000)
