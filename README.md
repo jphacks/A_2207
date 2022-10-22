@@ -36,8 +36,12 @@
 
 ### 独自技術
 #### ハッカソンで開発した独自機能・技術
-* @pixiv/three-vrmでvrmモデルを組み込んでアニメーションを管理しているWEBアプリは自分の知る限りこのアプリが初めて
-  * 単一のmixamoのアニメーションを動かすなどの動作をしているような[コード](https://github.com/pixiv/three-vrm/tree/dev/packages/three-vrm-core/examples/humanoidAnimation)が出ているが、@pixiv/three-vrm公式が最近出したもので、最終更新日は今年の10月4日でかなり直近。今回はこのコードを元に作成した。
+* 複数のアニメーションをvrmモデルに適応し管理したreactアプリ
+  * @pixiv/three-vrm公式が[mixamoのアニメーションを動かすコード](https://github.com/pixiv/three-vrm/tree/dev/packages/three-vrm-core/examples/humanoidAnimation)を出していたが以下の点が課題だった。
+    1. あくまでこれは「**単一のアニメーション**」だけを動かすものだった。
+    2. このコードはバニラjavascriptで「**reactに最適化されていないコード**」だった。
+    3. 最終更新日が2022年の10月4日とかなり直近で、ドキュメントなどもなく、「**実際に使用しているWEBアプリも見当たらなかった**」。
+  * そのため今回のアプリのようにmixamoの「複数のアニメーション」を「vrmモデルに適応」し「管理」までしたことは独自機能だと思っている。
 
 #### 製品に取り入れた研究内容（データ・ソフトウェアなど）（※アカデミック部門の場合のみ提出必須）
 * 
