@@ -2,7 +2,7 @@
 
 [![](https://img.youtube.com/vi/9WgERDJqyWw/0.jpg)](https://www.youtube.com/watch?v=9WgERDJqyWw)
 
-* デモは[こちら](jphacks-2022-4839e.web.app/)
+* デモは[こちら](https://jphacks-2022-4839e.web.app/)
 * 紹介動画は[こちら](https://www.youtube.com/watch?v=9WgERDJqyWw)
 
 ## 製品概要
