@@ -25,7 +25,7 @@ function Signout() {
       <Popover.Dropdown>
         <Stack>
           <Link href="/analytics" passHref>
-            <Button variant="subtle" component="a" color="dark">
+            <Button variant="subtle" component="a" color="dark" disabled>
               Analytics
             </Button>
           </Link>
