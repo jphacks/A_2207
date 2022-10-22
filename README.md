@@ -1,4 +1,4 @@
-# サンプル（プロダクト名）
+# VRooM (リモートワーク × Tech)
 
 [![IMAGE ALT TEXT HERE](https://jphacks.com/wp-content/uploads/2022/08/JPHACKS2022_ogp.jpg)](https://www.youtube.com/watch?v=LUPQFB4QyVo)
 
@@ -95,8 +95,8 @@ VRooM（webアプリ）は，誰かと一緒に作業をしている感覚を提
   * @react-three/fiber
 * @mediapipe
 
-#### デバイス
-* 
+#### インフラ
+* Firebase
 * 
 
 ### 独自技術
