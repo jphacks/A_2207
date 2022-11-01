@@ -143,7 +143,7 @@ export const VRMAvatar = () => {
 let currentVrm: THREE_VRM.VRM | undefined = undefined
 let currentMixer: THREE.AnimationMixer | undefined = undefined
 const clock = new THREE.Clock()
-let currentBaseAction = 'idle'
+let currentBaseAction = 'SittingIdle'
 const crossFadeControls: any[] = []
 type panelSettingsProps = {
   idle?: () => void
@@ -157,6 +157,7 @@ type panelSettingsProps = {
   Bored?: () => void
   ThoughtfulHeadNod?: () => void
   Thankful?: () => void
+  SittingIdle?: () => void
 }
 let panelSettings: panelSettingsProps
 type baseActionsItemProps = {
@@ -175,6 +176,7 @@ type baseActionsProps = {
   Bored: baseActionsItemProps
   ThoughtfulHeadNod: baseActionsItemProps
   Thankful: baseActionsItemProps
+  SittingIdle: baseActionsItemProps
 }
 const baseActions: baseActionsProps = {
   idle: { weight: 1 },
@@ -188,6 +190,7 @@ const baseActions: baseActionsProps = {
   Bored: { weight: 0 },
   ThoughtfulHeadNod: { weight: 0 },
   Thankful: { weight: 0 },
+  SittingIdle: { weight: 0 }
 }
 function setWeight(action: THREE.AnimationAction, weight: number) {
   action.enabled = true

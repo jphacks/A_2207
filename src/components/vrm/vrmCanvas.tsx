@@ -7,6 +7,8 @@ import { useSettingsStore } from 'src/stores/settingsStore'
 import shallow from 'zustand/shallow'
 import { useMediaQuery } from '@mantine/hooks'
 import { useVrmStore } from 'src/stores/vrmStore'
+import { FBXChair } from './fbxChair'
+import { Stage } from '@react-three/drei'
 
 const VRMCanvas = () => {
   const { mode } = useSettingsStore(
@@ -24,7 +26,7 @@ const VRMCanvas = () => {
   const cameraControls = useRef<CameraControls | null>(null)
   const md = useMediaQuery('(min-width: 1000px)')
   useEffect(() => {
-    setAnimation('idle')
+    setAnimation('SittingIdle')
     if (['study'].includes(mode)) {
       if (cameraControls.current) {
         cameraControls.current.reset(true)
@@ -66,9 +68,12 @@ const VRMCanvas = () => {
   return (
     <Canvas camera={{ fov: 20 }}>
       <spotLight position={[0, 50, 50]} />
-      <Suspense fallback={<p>Loading...</p>}>
-        <VRMAvatar />
-      </Suspense>
+      <VRMAvatar />
+      <Suspense fallback={null}>
+        <Stage scale={0.001} intensity={0}>
+          <FBXChair />
+        </Stage>
+      </Suspense>  
       <CameraControls ref={cameraControls} />
     </Canvas>
   )
