@@ -1,7 +1,7 @@
 import 'react-calendar-heatmap/dist/styles.css'
 import CalendarHeatmap from 'react-calendar-heatmap'
 import ReactTooltip from 'react-tooltip'
-import { Container } from '@mantine/core'
+import { Center, Container, Text } from '@mantine/core'
 import { css } from '@emotion/react'
 
 const heatmap = css`
@@ -33,6 +33,9 @@ export const HeatMap = ({
   return (
     <Container>
       <div css={heatmap}>
+        <Center>
+          <Text size="xs" color="gray">過去3ヵ月の作業記録</Text>
+        </Center>
         <CalendarHeatmap
           // 表示させる月
           startDate={startDate}
@@ -45,7 +48,7 @@ export const HeatMap = ({
             if (!value) {
               return 'color-empty'
             }
-            return `color-scale-${Math.min(4, Math.floor(value.count / 25))}`
+            return `color-scale-${Math.min(4, Math.ceil(value.count / 25))}`
           }}
           tooltipDataAttrs={(value: { date: string; count: number }) => {
             if (!value || !value.date) {
@@ -61,6 +64,7 @@ export const HeatMap = ({
           {' '}
           <rect width={10} height={10} className="color-empty" />
         </div>
+
       </div>
       <ReactTooltip />
     </Container>

@@ -15,6 +15,8 @@ import shallow from 'zustand/shallow'
 import { useSettingsStore } from 'src/stores/settingsStore'
 import { useEffect, useRef, useState } from 'react'
 import { useVrmStore } from 'src/stores/vrmStore'
+import { db, auth } from 'src/components/firebase/firebase'
+import { formatDate } from '../analytics/datagraph'
 
 const getRandomInt = (max: number) => {
   return Math.floor(Math.random() * max)
@@ -82,6 +84,40 @@ const StudyCounter = () => {
       setStudied(true)
       setCountRemain(workTime * 60)
       setMode('choice')
+      if (auth.currentUser) {
+        const uid = auth.currentUser.uid;
+        const docRef = db.collection('log').doc(uid)
+        docRef
+          .get()
+          .then((doc) => {
+            if (doc.exists) {
+              const data = doc.data()
+              const log = data?.log as Array<{ date: string; count: number }>
+              if (!log.some((l) => l.date === formatDate(new Date()))) {
+                log.push({ date: formatDate(new Date()), count: workTime })
+              } else {
+                for (const l of log) {
+                  if (l.date === formatDate(new Date())) {
+                    l.count += workTime;
+                  }
+                }
+              }
+              docRef.update({ log: log })
+            } else {
+              docRef.set({
+                log: [
+                  {
+                    date: formatDate(new Date()),
+                    count: 0,
+                  },
+                ],
+              })
+            }
+          })
+          .catch((error) => {
+            console.log('Error getting document:', error)
+          })
+      }
     }
     setCountRemain(countdown / 1000)
     percentage.current = (countdown * 100) / (timerSeconds * 1000)
