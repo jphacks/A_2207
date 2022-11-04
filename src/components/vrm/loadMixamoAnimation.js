@@ -6,6 +6,7 @@ export function loadMixamoAnimation(name, url, vrm) {
   const loader = new FBXLoader() // A loader which loads FBX
   return loader.loadAsync(url).then((asset) => {
     const clip = THREE.AnimationClip.findByName(asset.animations, 'mixamo.com') // extract the AnimationClip
+    if (!clip) return asset.animations[0]
 
     const tracks = [] // KeyframeTracks compatible with VRM will be added here
 
@@ -28,11 +29,8 @@ export function loadMixamoAnimation(name, url, vrm) {
       // Convert each tracks for VRM use, and push to `tracks`
       const trackSplitted = track.name.split('.')
       const mixamoRigName = trackSplitted[0]
-      const vrmBoneName =
-        mixamoVRMRigMap[mixamoRigName]
-      const vrmNodeName = vrm.humanoid?.getNormalizedBoneNode(
-        vrmBoneName,
-      )?.name
+      const vrmBoneName = mixamoVRMRigMap[mixamoRigName]
+      const vrmNodeName = vrm.humanoid?.getNormalizedBoneNode(vrmBoneName)?.name
       const mixamoRigNode = asset.getObjectByName(mixamoRigName)
 
       if (vrmNodeName != null) {

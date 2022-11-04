@@ -116,7 +116,7 @@ export const VRMAvatar = () => {
       prepareCrossFade(currentAction, action, 0.35)
     }
     if (animation === 'StandingGreeting') {
-      setAnimation('idle')
+      setAnimation('My stack')
     }
   }, [animation, loaded])
 
@@ -158,6 +158,7 @@ type panelSettingsProps = {
   Bored?: () => void
   ThoughtfulHeadNod?: () => void
   Thankful?: () => void
+  'My stack'?: () => void
 }
 let panelSettings: panelSettingsProps
 type baseActionsItemProps = {
@@ -176,9 +177,10 @@ type baseActionsProps = {
   Bored: baseActionsItemProps
   ThoughtfulHeadNod: baseActionsItemProps
   Thankful: baseActionsItemProps
+  'My stack': baseActionsItemProps
 }
 const baseActions: baseActionsProps = {
-  idle: { weight: 1 },
+  idle: { weight: 0 },
   GangnamStyle: { weight: 0 },
   BreakdanceEnding1: { weight: 0 },
   StandingGreeting: { weight: 0 },
@@ -189,6 +191,7 @@ const baseActions: baseActionsProps = {
   Bored: { weight: 0 },
   ThoughtfulHeadNod: { weight: 0 },
   Thankful: { weight: 0 },
+  'My stack': { weight: 1 },
 }
 function setWeight(action: THREE.AnimationAction, weight: number) {
   action.enabled = true
@@ -238,6 +241,7 @@ function createPanel() {
 function activateAction(action: THREE.AnimationAction) {
   const clip = action.getClip()
   const settings = baseActions[clip.name as keyof baseActionsProps]
+  console.log(settings)
   setWeight(action, settings.weight)
   action.play()
 }

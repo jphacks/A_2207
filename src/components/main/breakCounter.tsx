@@ -88,7 +88,7 @@ const BreakCounter = () => {
     const id = setInterval(() => {
       const n = Math.random()
       if (n < 0.85) {
-        setAnimation('idle')
+        setAnimation('My stack')
       } else if (n < 0.9) {
         setAnimation('ArmStretching')
       } else if (n < 0.95) {
