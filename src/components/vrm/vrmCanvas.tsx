@@ -1,6 +1,6 @@
 /* eslint-disable react/no-unknown-property */
 import { Canvas } from '@react-three/fiber'
-import { VRMAvatar } from './vrmAvatar'
+import { VRMAvatar } from './vrmAvatar1'
 import { Suspense, useEffect, useRef } from 'react'
 import { CameraControls } from './cameraControls'
 import { useSettingsStore } from 'src/stores/settingsStore'
@@ -66,7 +66,7 @@ const VRMCanvas = () => {
   return (
     <Canvas camera={{ fov: 20 }}>
       <spotLight position={[0, 50, 50]} />
-      <Suspense fallback={<p>Loading...</p>}>
+      <Suspense fallback={null}>
         <VRMAvatar />
       </Suspense>
       <CameraControls ref={cameraControls} />
