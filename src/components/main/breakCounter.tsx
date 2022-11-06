@@ -53,9 +53,9 @@ const BreakCounter = () => {
     }),
     shallow,
   )
-  const { setAnimation } = useVrmStore(
+  const { emoteStart } = useVrmStore(
     (state) => ({
-      setAnimation: state.setAnimation,
+      emoteStart: state.emoteStart,
     }),
     shallow,
   )
@@ -68,7 +68,7 @@ const BreakCounter = () => {
   useEffect(() => {
     start()
     const audio = new Audio('/voices/15.wav')
-    setAnimation('StandingGreeting')
+    emoteStart('StandingGreeting')
     audio.play()
   }, [])
 
@@ -87,15 +87,13 @@ const BreakCounter = () => {
   useEffect(() => {
     const id = setInterval(() => {
       const n = Math.random()
-      if (n < 0.85) {
-        setAnimation('idle')
-      } else if (n < 0.9) {
-        setAnimation('ArmStretching')
-      } else if (n < 0.95) {
-        setAnimation('Thinking')
-      } else {
-        setAnimation('Bored')
-      }
+      // if (n < 0.9) {
+      //   emoteStart('ArmStretching')
+      // } else if (n < 0.95) {
+      //   emoteStart('Thinking')
+      // } else {
+      //   emoteStart('Bored')
+      // }
     }, 5000)
     return () => clearInterval(id)
   }, [])

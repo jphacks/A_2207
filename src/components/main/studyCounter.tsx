@@ -59,9 +59,9 @@ const StudyCounter = () => {
       }),
       shallow,
     )
-  const { setAnimation } = useVrmStore(
+  const { emoteStart } = useVrmStore(
     (state) => ({
-      setAnimation: state.setAnimation,
+      emoteStart: state.emoteStart,
     }),
     shallow,
   )
@@ -73,7 +73,6 @@ const StudyCounter = () => {
   useEffect(() => {
     start()
     const audio = new Audio('/voices/1.wav')
-    setAnimation('StandingGreeting')
     audio.play()
   }, [])
 
