@@ -1,7 +1,7 @@
 import 'react-calendar-heatmap/dist/styles.css'
 import CalendarHeatmap from 'react-calendar-heatmap'
 import ReactTooltip from 'react-tooltip'
-import { Container } from '@mantine/core'
+import { Center, Container, Text } from '@mantine/core'
 import { css } from '@emotion/react'
 
 const heatmap = css`
@@ -27,23 +27,28 @@ export const HeatMap = ({
 }: {
   values: Array<{ date: string; count: number }>
 }) => {
-  const startDate = new Date('2022-10-20')
-  const endDate = new Date('2022-10-20')
-  startDate.setMonth(startDate.getMonth() - 4)
+  const startDate = new Date()
+  const endDate = new Date()
+  startDate.setMonth(endDate.getMonth() - 4)
   return (
     <Container>
       <div css={heatmap}>
+        <Center>
+          <Text size="xs" color="gray">過去3ヵ月の作業記録</Text>
+        </Center>
         <CalendarHeatmap
           // 表示させる月
           startDate={startDate}
-          endDate={endDate}
+          // endDate={endDate}
           values={values}
+          
+          showWeekdayLabels={true}
           // color
           classForValue={(value: { date: string; count: number }) => {
             if (!value) {
               return 'color-empty'
             }
-            return `color-scale-${Math.min(4, Math.floor(value.count / 30))}`
+            return `color-scale-${Math.min(4, Math.ceil(value.count / 25))}`
           }}
           tooltipDataAttrs={(value: { date: string; count: number }) => {
             if (!value || !value.date) {
@@ -51,7 +56,7 @@ export const HeatMap = ({
             }
             // react-tooltipの構成
             return {
-              'data-tip': `${value.date} has count: ${value.count}`,
+              'data-tip': `${value.count} minutes on ${value.date}`,
             }
           }}
         />
@@ -59,6 +64,7 @@ export const HeatMap = ({
           {' '}
           <rect width={10} height={10} className="color-empty" />
         </div>
+
       </div>
       <ReactTooltip />
     </Container>
