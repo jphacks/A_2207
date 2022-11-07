@@ -1,4 +1,4 @@
-import React, { MouseEvent, useEffect, useRef, useState } from 'react'
+import React, { useEffect, useRef, useState } from 'react'
 import {
   Chart as ChartJS,
   LinearScale,
@@ -31,44 +31,47 @@ const options = {
 }
 
 export const formatDate = (dt: Date) => {
-  const y = dt.getFullYear();
-  const m = ('00' + (dt.getMonth()+1)).slice(-2);
-  const d = ('00' + dt.getDate()).slice(-2);
-  return (y + '-' + m + '-' + d);
+  const y = dt.getFullYear()
+  const m = ('00' + (dt.getMonth() + 1)).slice(-2)
+  const d = ('00' + dt.getDate()).slice(-2)
+  return y + '-' + m + '-' + d
 }
 
 const getBefore7days = () => {
-  const daysLabel : string[] = [];
-  for (let i=6; i>=0; i--) {
-    const dt = new Date();
-    dt.setDate(dt.getDate()-i);
-    daysLabel.push(formatDate(dt));
+  const daysLabel: string[] = []
+  for (let i = 6; i >= 0; i--) {
+    const dt = new Date()
+    dt.setDate(dt.getDate() - i)
+    daysLabel.push(formatDate(dt))
   }
-  return daysLabel;
+  return daysLabel
 }
 
-
-export const DataGraph = ({values}: {values: Array<{ date: string; count: number }>}) => {
-  const [labels, setLabels] = useState<Array<string>>([]);
-  const [tdata, setTdata] = useState<Array<number>>([]);
+export const DataGraph = ({
+  values,
+}: {
+  values: Array<{ date: string; count: number }>
+}) => {
+  const [labels, setLabels] = useState<Array<string>>([])
+  const [tdata, setTdata] = useState<Array<number>>([])
 
   useEffect(() => {
-    const newLabels = getBefore7days();
+    const newLabels = getBefore7days()
 
-    const newTdata = Array(7).fill(0);
+    const newTdata = Array(7).fill(0)
 
-    console.log(newLabels);
-    for (let i=0; i<7; i++) {
-      const label = newLabels[i];
+    console.log(newLabels)
+    for (let i = 0; i < 7; i++) {
+      const label = newLabels[i]
       for (const value of values) {
         if (value.date === label) {
-          newTdata[i] = value.count;
-          break;
+          newTdata[i] = value.count
+          break
         }
       }
     }
-    setLabels(newLabels);
-    setTdata(newTdata);
+    setLabels(newLabels)
+    setTdata(newTdata)
   }, [])
 
   const chartRef = useRef<ChartJS>(null)
@@ -80,24 +83,19 @@ export const DataGraph = ({values}: {values: Array<{ date: string; count: number
         type="bar"
         // onClick={onClick}
         options={options}
-        data={
-          {
-            labels,
-            datasets: [
-              {
-                type: 'bar' as const,
-                label: '今週の作業時間（分）',
-                backgroundColor: 'rgba(53, 162, 235, 0.5)',
-                data: tdata,
-                borderColor: 'rgb(53, 162, 235)',
-                borderWidth: 2,
-              },
-            ],
-          }
-        }
+        data={{
+          labels,
+          datasets: [
+            {
+              label: '今週の作業時間（分）',
+              backgroundColor: 'rgba(53, 162, 235, 0.5)',
+              data: tdata,
+              borderColor: 'rgb(53, 162, 235)',
+              borderWidth: 2,
+            },
+          ],
+        }}
       />
-
     </Container>
-
   )
 }
