@@ -100,14 +100,14 @@ function Signin() {
             color="dark"
             onClick={() => signInWithGoogle()}
           >
-            Login with Google
+            Googleでログイン
           </Button>
           <Button
             variant="subtle"
             color="dark"
             onClick={() => signInAsTestAccount()}
           >
-            Login as Test Account
+            テストアカウントでログイン
           </Button>
         </Stack>
       </Popover.Dropdown>

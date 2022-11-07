@@ -16,13 +16,18 @@ import UserAnalytics from './userAnalytics'
 function Signout() {
   const [analyticsOpened, setAnalyticsOpened] = useState(false)
   const [isTestAccount, setIsTestAccount] = useState(false)
+  const [username, setUsername] = useState("");
 
   useEffect(() => {
     setIsTestAccount(
       auth?.currentUser?.email ===
         process.env.NEXT_PUBLIC_FIREBASE_TEST_ACCOUNT_EMAIL,
     )
-    console.log()
+    if (isTestAccount) {
+      setUsername("くま")
+    } else if (auth?.currentUser?.displayName) {
+      setUsername(auth?.currentUser.displayName)
+    }
   }, [auth])
 
   const Icon = (isTestAccount: boolean) => {
@@ -53,12 +58,12 @@ function Signout() {
         centered
         opened={analyticsOpened}
         onClose={() => setAnalyticsOpened(false)}
-        title={<Title>Analytics</Title>}
+        title={<Title>{username}さんの記録</Title>}
       >
         <UserAnalytics />
       </Modal>
 
-      <Popover width={200} position="right" withArrow shadow="md">
+      <Popover width={180} position="right" withArrow shadow="md">
         <Popover.Target>{Icon(isTestAccount)}</Popover.Target>
         <Popover.Dropdown>
           <Stack>
@@ -68,14 +73,14 @@ function Signout() {
               color="dark"
               onClick={() => setAnalyticsOpened(true)}
             >
-              Analytics
+              記録
             </Button>
             <Button
               onClick={() => auth.signOut()}
               variant="subtle"
               color="dark"
             >
-              Sign Out
+              サインアウト
             </Button>
           </Stack>
         </Popover.Dropdown>
