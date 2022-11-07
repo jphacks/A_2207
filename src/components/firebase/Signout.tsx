@@ -16,7 +16,7 @@ import UserAnalytics from './userAnalytics'
 function Signout() {
   const [analyticsOpened, setAnalyticsOpened] = useState(false)
   const [isTestAccount, setIsTestAccount] = useState(false)
-  const [username, setUsername] = useState("");
+  const [username, setUsername] = useState("くま");
 
   useEffect(() => {
     setIsTestAccount(
