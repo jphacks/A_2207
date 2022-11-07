@@ -4,10 +4,11 @@ import {
   LinearScale,
   CategoryScale,
   BarElement,
+  BarController,
   PointElement,
   LineElement,
   Legend,
-  Tooltip,
+  Tooltip
 } from 'chart.js'
 import { Chart } from 'react-chartjs-2'
 import { Container } from '@mantine/core'
@@ -16,6 +17,7 @@ ChartJS.register(
   LinearScale,
   CategoryScale,
   BarElement,
+  BarController,
   PointElement,
   LineElement,
   Legend,
