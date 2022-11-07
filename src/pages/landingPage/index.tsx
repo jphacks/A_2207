@@ -1,6 +1,5 @@
 import { Box } from '@mantine/core'
 import type { NextPage } from 'next'
-import { BaseDemo } from 'src/components/landingPage/dropzone'
 import { Description } from 'src/components/landingPage/description'
 import { Description2 } from 'src/components/landingPage/description2'
 import { Description_camera } from 'src/components/landingPage/description_camera'
@@ -9,9 +8,6 @@ import { Features } from 'src/components/landingPage/features'
 const Home: NextPage = () => {
   return (
     <>
-      <Box py="100px">
-        <BaseDemo />
-      </Box>
       <Box py="100px">
         <Description />
       </Box>

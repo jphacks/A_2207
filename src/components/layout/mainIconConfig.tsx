@@ -5,14 +5,15 @@ import {
   Center,
   Title,
   Stack,
-  FileInput,
   NumberInput,
+  Divider,
 } from '@mantine/core'
-import { IconSettings, IconUpload } from '@tabler/icons'
+import { IconSettings } from '@tabler/icons'
 import { Dispatch, SetStateAction } from 'react'
 import shallow from 'zustand/shallow'
 import { useVrmStore } from 'src/stores/vrmStore'
 import { useSettingsStore } from 'src/stores/settingsStore'
+import { DropZone } from './dropzone'
 
 interface IconConfigProps {
   opened: boolean
@@ -20,16 +21,13 @@ interface IconConfigProps {
 }
 
 export function IconConfig({ opened, setOpened }: IconConfigProps) {
-  const { modelName, setModelName, inputVrmModel, setInputVrmModel } =
-    useVrmStore(
-      (state) => ({
-        modelName: state.modelName,
-        inputVrmModel: state.inputVrmModel,
-        setModelName: state.setModelName,
-        setInputVrmModel: state.setInputVrmModel,
-      }),
-      shallow,
-    )
+  const { modelName, setModelName } = useVrmStore(
+    (state) => ({
+      modelName: state.modelName,
+      setModelName: state.setModelName,
+    }),
+    shallow,
+  )
   const { squatGoalCount, setSquatGoalCount } = useSettingsStore(
     (state) => ({
       squatGoalCount: state.squatGoalCount,
@@ -45,43 +43,33 @@ export function IconConfig({ opened, setOpened }: IconConfigProps) {
         centered
         opened={opened}
         onClose={() => setOpened(false)}
-        title={<Title>設定</Title>}
       >
-        {/* Modal content */}
         <Stack spacing="xl">
-          <Select
-            label="好きな3Dモデルを選択してください"
-            value={modelName}
-            onChange={setModelName}
-            data={[
-              { value: 'AliciaSolid', label: 'アリシア・ソリッド' },
-              { value: 'Miraikomachi', label: 'ミライ小町' },
-            ]}
-          />
+          <Title order={3}>VRMモデルの選択</Title>
+          {/* Modal content */}
+          <Stack spacing="xl">
+            <Select
+              radius="md"
+              size="md"
+              value={modelName}
+              onChange={setModelName}
+              data={[
+                { value: 'AliciaSolid', label: 'アリシア・ソリッド' },
+                { value: 'Miraikomachi', label: 'ミライ小町' },
+              ]}
+            />
+            {/* TODO */}
+            <DropZone />
+          </Stack>
+          <Divider my="sm" size="sm" color={'black'} />
 
-          {/* TODO */}
-          <FileInput
-            label="好きなvrmモデルをアップロードしてください"
-            placeholder="vrmファイルをアップロード"
-            value={inputVrmModel}
-            onChange={setInputVrmModel}
-            icon={<IconUpload size={14} />}
-          />
-
+          <Title order={3}>詳細設定</Title>
           <NumberInput
-            label="スクワットの回数を指定してください"
+            size="md"
+            label="スクワットの回数"
             value={squatGoalCount}
             onChange={setSquatGoalCount}
           />
-          {/* <Select
-            label="expressionを選んでください"
-            value={expression}
-            onChange={setExpression}
-            data={[
-              { value: 'neutral', label: 'neutral' },
-              { value: 'happy', label: 'Happy' },
-            ]}
-          /> */}
         </Stack>
       </Modal>
       <Center>
