@@ -1,91 +1,116 @@
-import { createStyles, Container, Text } from '@mantine/core'
-
-const BREAKPOINT = '@media (max-width: 755px)'
+import { Title, Text, Container, Overlay, createStyles } from '@mantine/core';
 
 const useStyles = createStyles((theme) => ({
   wrapper: {
     position: 'relative',
-    boxSizing: 'border-box',
-    backgroundColor:
-      theme.colorScheme === 'dark' ? theme.colors.dark[8] : theme.white,
+    paddingTop: 180,
+    paddingBottom: 130,
+    backgroundImage:
+      'url(picture/LP_image2.png)',
+    backgroundSize: 'cover',
+    backgroundPosition: 'center',
+
+    '@media (max-width: 520px)': {
+      paddingTop: 80,
+      paddingBottom: 50,
+    },
   },
 
   inner: {
     position: 'relative',
-    paddingTop: 200,
-    paddingBottom: 120,
-
-    [BREAKPOINT]: {
-      paddingBottom: 80,
-      paddingTop: 80,
-    },
+    zIndex: 1,
   },
 
   title: {
+    fontWeight: 800,
+    fontSize: 40,
+    letterSpacing: -1,
+    paddingLeft: theme.spacing.md,
+    paddingRight: theme.spacing.md,
+    color: theme.white,
+    marginBottom: theme.spacing.xs,
+    textAlign: 'center',
     fontFamily: `Greycliff CF, ${theme.fontFamily}`,
-    fontSize: 62,
-    fontWeight: 900,
-    lineHeight: 1.1,
-    margin: 0,
-    padding: 0,
-    color: theme.colorScheme === 'dark' ? theme.white : theme.black,
 
-    [BREAKPOINT]: {
-      fontSize: 42,
-      lineHeight: 1.2,
+    '@media (max-width: 520px)': {
+      fontSize: 28,
+      textAlign: 'left',
     },
   },
 
-  description: {
-    marginTop: theme.spacing.xl,
-    fontSize: 24,
+  highlight: {
+    color: theme.colors[theme.primaryColor][4],
+  },
 
-    [BREAKPOINT]: {
-      fontSize: 18,
+  description: {
+    color: theme.colors.gray[0],
+    textAlign: 'center',
+
+    '@media (max-width: 520px)': {
+      fontSize: theme.fontSizes.md,
+      textAlign: 'left',
     },
   },
 
   controls: {
-    marginTop: theme.spacing.xl * 2,
+    marginTop: theme.spacing.xl * 1.5,
+    display: 'flex',
+    justifyContent: 'center',
+    paddingLeft: theme.spacing.md,
+    paddingRight: theme.spacing.md,
 
-    [BREAKPOINT]: {
-      marginTop: theme.spacing.xl,
+    '@media (max-width: 520px)': {
+      flexDirection: 'column',
     },
   },
 
   control: {
-    height: 54,
-    paddingLeft: 38,
-    paddingRight: 38,
+    height: 42,
+    fontSize: theme.fontSizes.md,
 
-    [BREAKPOINT]: {
-      height: 54,
-      paddingLeft: 18,
-      paddingRight: 18,
-      flex: 1,
+    '&:not(:first-of-type)': {
+      marginLeft: theme.spacing.md,
+    },
+
+    '@media (max-width: 520px)': {
+      '&:not(:first-of-type)': {
+        marginTop: theme.spacing.md,
+        marginLeft: 0,
+      },
     },
   },
-}))
+
+  secondaryControl: {
+    color: theme.white,
+    backgroundColor: 'rgba(255, 255, 255, .4)',
+
+    '&:hover': {
+      backgroundColor: 'rgba(255, 255, 255, .45) !important',
+    },
+  },
+}));
 
 export function Description2() {
-  const { classes } = useStyles()
+  const { classes} = useStyles();
 
   return (
     <div className={classes.wrapper}>
-      <Container size={700} className={classes.inner}>
-        <h1 className={classes.title}>
-            最強の
-            <Text component="span" variant="gradient" gradient={{ from: 'blue', to: 'cyan' }} inherit>
+      <Overlay color="#000" opacity={0.65} zIndex={1} />
+
+      <div className={classes.inner}>
+        <Title className={classes.title}>
+          最強の
+          <Text component="span" inherit className={classes.highlight}>
             パートナー
-            </Text>
-        </h1>
+          </Text>
+        </Title>
 
-        <Text className={classes.description} color="dimmed">
-            好きなタイミングでアバターがあなたの作業のお供をしてくれます. 
-            誰かと一緒に勉強したいとき, 友達が忙しくても大丈夫です.
-
-        </Text>
-      </Container>
+        <Container size={640}>
+          <Text size="lg" className={classes.description}>
+            あなたの好きなタイミングでアバターが作業のお供をしてくれます. 友達が忙しくても大丈夫です. アバターの種類は自由に変えることができます.
+          </Text>
+        </Container>
+      </div>
     </div>
-  )
+  );
 }

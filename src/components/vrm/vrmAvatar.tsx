@@ -3,43 +3,67 @@
 import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader'
 import * as THREE_VRM from '@pixiv/three-vrm'
 import * as THREE from 'three'
-import { useEffect, useState } from 'react'
+import { useCallback, useEffect } from 'react'
 import { loadMixamoAnimation } from 'src/components/vrm/loadMixamoAnimation'
-import { useThree } from 'react-three-fiber'
 import shallow from 'zustand/shallow'
 import { useVrmStore } from 'src/stores/vrmStore'
 import GUI from 'lil-gui'
+import { useThree } from '@react-three/fiber'
+import { useSettingsStore } from 'src/stores/settingsStore'
 
 type modelNameToUrl = {
   AliciaSolid: string
-  Tsukuyomi: string
+  Miraikomachi: string
 }
 const modelNameToUrl = {
   AliciaSolid: '/models/AliciaSolid.vrm',
-  Tsukuyomi: '/models/Tsukuyomi.vrm',
   Miraikomachi: '/models/Miraikomachi.vrm',
 } as modelNameToUrl
 
-export const VRMAvatar = () => {
-  const { scene } = useThree()
-  const [loaded, setLoaded] = useState(false)
+export const AnimationNames = [
+  'StandingGreeting',
+  'AirSquatBentArms',
+  'idle',
+  'SittingIdle',
+] as const
+const states = ['idle', 'SittingIdle']
+const emotes = ['StandingGreeting', 'AirSquatBentArms']
 
-  const { animation, expression, modelName, inputVrmModel, setAnimation } =
-    useVrmStore(
-      (state) => ({
-        animation: state.animation,
-        inputVrmModel: state.inputVrmModel,
-        expression: state.expression,
-        modelName: state.modelName,
-        setAnimation: state.setAnimation,
-      }),
-      shallow,
-    )
+export const VRMAvatar = () => {
+  const { gl, scene } = useThree()
+  const {
+    animation,
+    modelName,
+    inputVrmModel,
+    emote,
+    emoteFinish,
+    setAnimation,
+  } = useVrmStore(
+    (state) => ({
+      animation: state.animation,
+      inputVrmModel: state.inputVrmModel,
+      modelName: state.modelName,
+      emote: state.emote,
+      emoteFinish: state.emoteFinish,
+      setAnimation: state.setAnimation,
+    }),
+    shallow,
+  )
+  const { mode } = useSettingsStore(
+    (state) => ({
+      mode: state.mode,
+    }),
+    shallow,
+  )
 
   /* ---------------------------------- 初期設定 ---------------------------------- */
-  // https://github.com/pixiv/three-vrm/tree/dev/packages/three-vrm/examples/humanoidAnimation
   useEffect(() => {
-    setLoaded(false)
+    gl.outputEncoding = THREE.sRGBEncoding
+    const light = new THREE.DirectionalLight(0xffffff)
+    light.position.set(1.0, 1.0, 1.0).normalize()
+    light.castShadow = true
+    scene.add(light)
+
     const loader = new GLTFLoader()
     loader.crossOrigin = 'anonymous'
     loader.register((parser) => {
@@ -57,256 +81,151 @@ export const VRMAvatar = () => {
     loader.load(
       url ? url : modelNameToUrl[modelName as keyof modelNameToUrl],
       (gltf) => {
-        const vrm = gltf.userData.vrm
-        vrm.scene.position.setY(-0.8)
-        if (currentVrm) {
-          scene.remove(currentVrm.scene)
-          THREE_VRM.VRMUtils.deepDispose(currentVrm.scene)
+        if (vrm) {
+          scene.remove(vrm.scene)
+          THREE_VRM.VRMUtils.deepDispose(vrm.scene)
         }
-        currentVrm = vrm
-        currentMixer = new THREE.AnimationMixer(vrm.scene)
-        vrm.scene.traverse((obj: any) => {
+
+        vrm = gltf.userData.vrm as THREE_VRM.VRM
+        mixer = new THREE.AnimationMixer(gltf.userData.vrm.scene)
+        const currentVRM = gltf.userData.vrm
+
+        currentVRM.scene.position.setY(-0.8)
+        THREE_VRM.VRMUtils.rotateVRM0(currentVRM)
+        currentVRM.scene.traverse((obj: any) => {
           if (obj.isMesh) {
             obj.castShadow = true
             obj.receiveShadow = true
           }
           obj.frustumCulled = false
         })
-        THREE_VRM.VRMUtils.rotateVRM0(vrm)
-        Object.keys(baseActions).forEach((name) => {
-          loadMixamoAnimation(name, `/animations/${name}.fbx`, vrm).then(
+        AnimationNames.forEach((name) => {
+          loadMixamoAnimation(name, `/animations/${name}.fbx`, currentVRM).then(
             (clip) => {
-              if (currentMixer) {
-                const action = currentMixer.clipAction(clip)
+              if (mixer) {
+                const action = mixer.clipAction(clip)
                 const name = clip.name
-                activateAction(action)
-                baseActions[name as keyof baseActionsProps].action = action
+                actions[name] = action
+                if (emotes.indexOf(name) >= 0) {
+                  action.clampWhenFinished = true
+                  action.loop = THREE.LoopOnce
+                }
+                if (name === animation) fadeToAction(animation, 0.5)
               }
             },
           )
         })
+
         scene.add(vrm.scene)
-        setLoaded(true)
       },
-      (progress) => {
-        console.log(
-          'Loading model...',
-          100.0 * (progress.loaded / progress.total),
-          '%',
-        )
-      },
-      (error) => console.error(error),
     )
 
-    /* --------------------------- vrmの挙動を確かめる用のPanel --------------------------- */
-    // createPanel()
-
     animate()
+
+    // デバック用のGUI
+    // createGUI()
+
+    return () => {
+      scene.remove(light)
+    }
   }, [modelName, inputVrmModel])
 
-  /* ---------------------------- animationが変更されたとき --------------------------- */
-
+  /* ----------------------------- 基本的なアニメーションの処理 ----------------------------- */
   useEffect(() => {
-    const settings = baseActions[animation as keyof baseActionsProps]
-    const currentSettings =
-      baseActions[currentBaseAction as keyof baseActionsProps]
-    const currentAction = currentSettings ? currentSettings.action : null
-    const action = settings ? settings.action : null
-    if (currentAction !== action) {
-      prepareCrossFade(currentAction, action, 0.35)
-    }
-    if (animation === 'StandingGreeting') {
+    if (['study'].includes(mode)) {
+      setAnimation('SittingIdle')
+    } else if (['initial'].includes(mode)) {
+      setAnimation('idle')
+    } else if (['fitness'].includes(mode)) {
+      setAnimation('idle')
+    } else if (['break'].includes(mode)) {
       setAnimation('idle')
     }
-  }, [animation, loaded])
+  }, [mode])
 
   useEffect(() => {
-    if (currentVrm) {
-      if (expression == 'neutral') {
-        currentVrm.expressionManager?.setValue(
-          THREE_VRM.VRMExpressionPresetName.Happy,
-          0,
-        )
-      } else if (expression == 'happy') {
-        currentVrm.expressionManager?.setValue(
-          THREE_VRM.VRMExpressionPresetName.Happy,
-          0.3,
-        )
-      }
+    if (states.includes(animation)) {
+      fadeToAction(animation, 0.5)
     }
-  }, [expression, loaded])
+    emoteFinish()
+  }, [animation, emoteFinish])
+
+  /* --------------------------------- エモートの処理 -------------------------------- */
+  const restoreState = useCallback(() => {
+    mixer?.removeEventListener('finished', restoreState)
+    fadeToAction(animation, 0.2)
+    emoteFinish()
+  }, [animation, emoteFinish])
+
+  useEffect(() => {
+    if (emote) {
+      fadeToAction(emote, 0.2)
+      mixer?.addEventListener('finished', restoreState)
+    }
+  }, [emote])
 
   return <></>
 }
 
 /* -------------------------------- vrmの挙動の制御 ------------------------------- */
-// https://threejs.org/examples/#webgl_animation_skinning_additive_blending
-let currentVrm: THREE_VRM.VRM | undefined = undefined
-let currentMixer: THREE.AnimationMixer | undefined = undefined
+// https://threejs.org/examples/#webgl_animation_skinning_morph
+let vrm: THREE_VRM.VRM | undefined = undefined
+let mixer: THREE.AnimationMixer | undefined = undefined
+const actions: any = {}
+let activeAction: any, previousAction: any
 const clock = new THREE.Clock()
-let currentBaseAction = 'idle'
-const crossFadeControls: any[] = []
-type panelSettingsProps = {
-  idle?: () => void
-  GangnamStyle?: () => void
-  BreakdanceEnding1?: () => void
-  StandingGreeting?: () => void
-  AirSquatBentArms?: () => void
-  ArmStretching?: () => void
-  Thinking?: () => void
-  Talking?: () => void
-  Bored?: () => void
-  ThoughtfulHeadNod?: () => void
-  Thankful?: () => void
-}
-let panelSettings: panelSettingsProps
-type baseActionsItemProps = {
-  weight: number
-  action?: THREE.AnimationAction
-}
-type baseActionsProps = {
-  idle: baseActionsItemProps
-  GangnamStyle: baseActionsItemProps
-  BreakdanceEnding1: baseActionsItemProps
-  StandingGreeting: baseActionsItemProps
-  AirSquatBentArms: baseActionsItemProps
-  ArmStretching: baseActionsItemProps
-  Thinking: baseActionsItemProps
-  Talking: baseActionsItemProps
-  Bored: baseActionsItemProps
-  ThoughtfulHeadNod: baseActionsItemProps
-  Thankful: baseActionsItemProps
-}
-const baseActions: baseActionsProps = {
-  idle: { weight: 1 },
-  GangnamStyle: { weight: 0 },
-  BreakdanceEnding1: { weight: 0 },
-  StandingGreeting: { weight: 0 },
-  AirSquatBentArms: { weight: 0 },
-  ArmStretching: { weight: 0 },
-  Thinking: { weight: 0 },
-  Talking: { weight: 0 },
-  Bored: { weight: 0 },
-  ThoughtfulHeadNod: { weight: 0 },
-  Thankful: { weight: 0 },
-}
-function setWeight(action: THREE.AnimationAction, weight: number) {
-  action.enabled = true
-  action.setEffectiveTimeScale(1)
-  action.setEffectiveWeight(weight)
-}
 
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
-function createPanel() {
-  const panel = new GUI({ width: 310 })
-  const folder1 = panel.addFolder('Base Actions')
-  panelSettings = {}
-  const baseNames = ['None', ...Object.keys(baseActions)]
-  for (let i = 0, l = baseNames.length; i !== l; ++i) {
-    const name = baseNames[i]
-    const settings = baseActions[name as keyof baseActionsProps]
-    panelSettings[name as keyof panelSettingsProps] = function () {
-      const currentSettings =
-        baseActions[currentBaseAction as keyof baseActionsProps]
-      const currentAction = currentSettings ? currentSettings.action : null
-      const action = settings ? settings.action : null
+function fadeToAction(name: string, duration: number) {
+  previousAction = activeAction
+  activeAction = actions[name]
 
-      if (currentAction !== action) {
-        prepareCrossFade(currentAction, action, 0.35)
-      }
-    }
-    crossFadeControls.push(folder1.add(panelSettings, name))
+  if (previousAction !== activeAction) {
+    previousAction?.fadeOut(duration)
   }
 
-  folder1.open()
-
-  crossFadeControls.forEach(function (control) {
-    control.setInactive = function () {
-      control.domElement.classList.add('control-inactive')
-    }
-    control.setActive = function () {
-      control.domElement.classList.remove('control-inactive')
-    }
-    const settings = baseActions[control.property as keyof baseActionsProps]
-
-    if (!settings || !settings.weight) {
-      control.setInactive()
-    }
-  })
-}
-
-function activateAction(action: THREE.AnimationAction) {
-  const clip = action.getClip()
-  const settings = baseActions[clip.name as keyof baseActionsProps]
-  setWeight(action, settings.weight)
-  action.play()
-}
-
-function prepareCrossFade(
-  startAction: THREE.AnimationAction | null | undefined,
-  endAction: THREE.AnimationAction | null | undefined,
-  duration: number,
-) {
-  if (currentBaseAction === 'idle' || !startAction || !endAction) {
-    executeCrossFade(startAction, endAction, duration)
-  } else {
-    synchronizeCrossFade(startAction, endAction, duration)
-  }
-  if (endAction) {
-    const clip = endAction.getClip()
-    currentBaseAction = clip.name
-  } else {
-    currentBaseAction = 'None'
-  }
-  crossFadeControls.forEach(function (control) {
-    const name = control.property
-    if (name === currentBaseAction) {
-      control.setActive()
-    } else {
-      control.setInactive()
-    }
-  })
-}
-
-function synchronizeCrossFade(
-  startAction: THREE.AnimationAction | null | undefined,
-  endAction: THREE.AnimationAction | null | undefined,
-  duration: number,
-) {
-  currentMixer?.addEventListener('loop', onLoopFinished)
-  function onLoopFinished(event: any) {
-    if (event.action === startAction) {
-      currentMixer?.removeEventListener('loop', onLoopFinished)
-      executeCrossFade(startAction, endAction, duration)
-    }
-  }
-}
-
-function executeCrossFade(
-  startAction: THREE.AnimationAction | null | undefined,
-  endAction: THREE.AnimationAction | null | undefined,
-  duration: number,
-) {
-  if (endAction) {
-    setWeight(endAction, 1)
-    endAction.time = 2
-    if (startAction) {
-      startAction.crossFadeTo(endAction, duration, true)
-    } else {
-      endAction.fadeIn(duration)
-    }
-  } else {
-    startAction?.fadeOut(duration)
-  }
+  activeAction
+    ?.reset()
+    .setEffectiveTimeScale(1)
+    .setEffectiveWeight(1)
+    .fadeIn(duration)
+    .play()
 }
 
 function animate() {
+  const dt = clock.getDelta()
   requestAnimationFrame(animate)
-  const deltaTime = clock.getDelta()
-  if (currentMixer) {
-    currentMixer.update(deltaTime)
+  if (mixer) mixer.update(dt)
+  if (vrm) vrm.update(dt)
+}
+
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
+function createGUI() {
+  const api: any = { state: 'idle' }
+  const gui = new GUI()
+
+  // states
+  const statesFolder = gui.addFolder('States')
+  const clipCtrl = statesFolder.add(api, 'state').options(states)
+  clipCtrl.onChange(function () {
+    fadeToAction(api.state, 0.5)
+  })
+  statesFolder.open()
+
+  // emotes
+  const emoteFolder = gui.addFolder('Emotes')
+  function createEmoteCallback(name: string) {
+    api[name] = function () {
+      fadeToAction(name, 0.2)
+      mixer?.addEventListener('finished', restoreState)
+    }
+    emoteFolder.add(api, name)
   }
-  if (currentVrm) {
-    currentVrm.update(deltaTime)
+  function restoreState() {
+    mixer?.removeEventListener('finished', restoreState)
+    fadeToAction(api.state, 0.2)
   }
+  for (let i = 0; i < emotes.length; i++) {
+    createEmoteCallback(emotes[i])
+  }
+  emoteFolder.open()
 }

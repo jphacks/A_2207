@@ -34,6 +34,7 @@
     "next-env.d.ts",
     "**/*.ts",
     "**/*.tsx",
-    "src/components/vrm/loadMixamoAnimation.js"
+    "src/components/vrm/loadMixamoAnimation.js",
+    "src/components/vrm/mixamoToVrm.js"
   ]
 }

@@ -6,18 +6,22 @@ interface VrmState {
   animation: string
   expression: string
   inputVrmModel: File | null | undefined
+  emote: string | undefined
   setAnimation: (animation: string) => void
   setExpression: (expression: string) => void
   setModelName: (name: string) => void
   setInputVrmModel: (file: File | null | undefined) => void
+  emoteStart: (emote: string) => void
+  emoteFinish: () => void
 }
 
 export const useVrmStore = create<VrmState>()(
   devtools((set) => ({
     modelName: 'AliciaSolid',
-    animation: 'None',
+    animation: 'idle',
     expression: 'neutral',
     inputVrmModel: undefined,
+    emote: undefined,
     setModelName: (name) =>
       set(
         (state) => ({
@@ -54,6 +58,24 @@ export const useVrmStore = create<VrmState>()(
         }),
         false,
         'setInputVrmModel',
+      ),
+    emoteStart: (emote) =>
+      set(
+        (state) => ({
+          ...state,
+          emote,
+        }),
+        false,
+        'emoteStart',
+      ),
+    emoteFinish: () =>
+      set(
+        (state) => ({
+          ...state,
+          emote: undefined,
+        }),
+        false,
+        'emoteFinish',
       ),
   })),
 )

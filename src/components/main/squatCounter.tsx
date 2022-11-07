@@ -19,9 +19,9 @@ const SquatCounter = () => {
     }),
     shallow,
   )
-  const { setAnimation } = useVrmStore(
+  const { emoteStart } = useVrmStore(
     (state) => ({
-      setAnimation: state.setAnimation,
+      emoteStart: state.emoteStart,
     }),
     shallow,
   )
@@ -85,7 +85,7 @@ const SquatCounter = () => {
 
   useEffect(() => {
     const audio = new Audio('/voices/13.wav')
-    setAnimation('StandingGreeting')
+    emoteStart('StandingGreeting')
     audio.play()
   }, [])
 
@@ -100,7 +100,6 @@ const SquatCounter = () => {
       }
     }
     if (time === 0) {
-      setAnimation('AirSquatBentArms')
       const audio = new Audio('/voices/start.wav')
       audio.play()
     }
@@ -133,6 +132,7 @@ const SquatCounter = () => {
   }, [isStart])
 
   useEffect(() => {
+    if (squatGoalCount !== count) emoteStart('AirSquatBentArms')
     if (squatGoalCount >= 10 && count === Math.floor(squatGoalCount / 2)) {
       const audio = new Audio('/voices/8.wav')
       audio.play()
@@ -140,8 +140,6 @@ const SquatCounter = () => {
       const audio = new Audio('/voices/14.wav')
       audio.play()
     } else if (count === 0) {
-      setAnimation('idle')
-
       if (studied) {
         setMode('break')
       } else {

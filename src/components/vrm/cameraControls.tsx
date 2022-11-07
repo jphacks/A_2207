@@ -21,6 +21,10 @@ import {
 } from 'three'
 import { ReactThreeFiber, extend, useFrame, useThree } from '@react-three/fiber'
 import CameraControlsDefault from 'camera-controls'
+import { useSettingsStore } from 'src/stores/settingsStore'
+import shallow from 'zustand/shallow'
+import { useMediaQuery } from '@mantine/hooks'
+import { Stage } from '@react-three/drei'
 
 declare global {
   namespace JSX {
@@ -58,6 +62,41 @@ export const CameraControls = forwardRef<CameraControlsDefault, unknown>(
     const cameraControls = useRef<CameraControlsDefault | null>(null)
     const camera = useThree((state) => state.camera)
     const renderer = useThree((state) => state.gl)
+    const { mode } = useSettingsStore(
+      (state) => ({
+        mode: state.mode,
+      }),
+      shallow,
+    )
+
+    const md = useMediaQuery('(min-width: 1000px)')
+    useEffect(() => {
+      if (cameraControls.current) {
+        cameraControls.current.reset(true)
+        cameraControls.current.enabled = false
+        if (['study'].includes(mode)) {
+          if (md) {
+            cameraControls.current.moveTo(0.2, 0.5, -3, true)
+          } else {
+            cameraControls.current.moveTo(0, 0.5, -3, true)
+          }
+        } else if (['initial'].includes(mode)) {
+          cameraControls.current.enabled = true
+        } else if (['fitness'].includes(mode)) {
+          if (md) {
+            cameraControls.current.moveTo(0.6, 0, 0, true)
+          } else {
+            cameraControls.current.moveTo(0, 0, 0, true)
+          }
+        } else if (['break'].includes(mode)) {
+          if (md) {
+            cameraControls.current.moveTo(0.2, 0.5, -3, true)
+          } else {
+            cameraControls.current.moveTo(0, 0.5, -3, true)
+          }
+        }
+      }
+    }, [mode, md])
 
     useFrame((_, delta) => cameraControls.current?.update(delta))
     useEffect(() => () => cameraControls.current?.dispose(), [])
