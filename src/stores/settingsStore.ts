@@ -2,6 +2,7 @@ import create from 'zustand'
 import { devtools } from 'zustand/middleware'
 
 type SettingsState = {
+  transitionMode: string
   mode: string
   goal: string
   studied: boolean
@@ -12,6 +13,7 @@ type SettingsState = {
 }
 type SettingsStoreState = {
   setDefaultState: () => void
+  setTransitionMode: (name: string) => void
   setMode: (name: string) => void
   setGoal: (goal: string) => void
   setStudied: (bool: boolean) => void
@@ -22,10 +24,11 @@ type SettingsStoreState = {
 } & SettingsState
 
 export const initialState: SettingsState = {
+  transitionMode: 'first',
   mode: 'initial',
   goal: '',
   studied: false,
-  countRemain: 60*25,
+  countRemain: 60 * 25,
   squatGoalCount: 15,
   workTime: 25,
   breakTime: 5,
@@ -43,11 +46,21 @@ export const useSettingsStore = create<SettingsStoreState>()(
         false,
         'setDefaultState',
       ),
+    setTransitionMode: (name: string) =>
+      set(
+        (state) => ({
+          ...state,
+          transitionMode: name,
+        }),
+        false,
+        'setTransitionMode',
+      ),
     setMode: (name: string) =>
       set(
         (state) => ({
           ...state,
           mode: name,
+          transitionMode: '',
         }),
         false,
         'setMode',

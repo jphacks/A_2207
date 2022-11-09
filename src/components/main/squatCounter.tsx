@@ -11,14 +11,16 @@ import { useSettingsStore } from 'src/stores/settingsStore'
 import { useVrmStore } from 'src/stores/vrmStore'
 
 const SquatCounter = () => {
-  const { setMode, studied, squatGoalCount } = useSettingsStore(
-    (state) => ({
-      setMode: state.setMode,
-      studied: state.studied,
-      squatGoalCount: state.squatGoalCount,
-    }),
-    shallow,
-  )
+  const { setMode, setTransitionMode, studied, squatGoalCount } =
+    useSettingsStore(
+      (state) => ({
+        setTransitionMode: state.setTransitionMode,
+        setMode: state.setMode,
+        studied: state.studied,
+        squatGoalCount: state.squatGoalCount,
+      }),
+      shallow,
+    )
   const { emoteStart } = useVrmStore(
     (state) => ({
       emoteStart: state.emoteStart,
@@ -148,9 +150,9 @@ const SquatCounter = () => {
       audio.play()
     } else if (count === 0) {
       if (studied) {
-        setMode('break')
+        setTransitionMode('break')
       } else {
-        setMode('study')
+        setTransitionMode('study')
       }
     }
     return () => audio?.pause()

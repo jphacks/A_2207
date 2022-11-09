@@ -1,19 +1,18 @@
-import { css , keyframes } from '@emotion/react'
-import { useEffect, useState } from 'react';
+import { css, keyframes } from '@emotion/react'
+import { useEffect, useState } from 'react'
 
-const WiperTransition = () => {
-    const [animState, setAnimState] = useState(false)
+const WiperTransition = ({ time }: { time: number }) => {
+  const [animState, setAnimState] = useState(false)
 
-    useEffect(() => {
-        setAnimState(true)
-        setTimeout(() => setAnimState(false), 4*1000)
-    }, [])
+  useEffect(() => {
+    setAnimState(true)
+    setTimeout(() => setAnimState(false), 4 * 1000)
+  }, [])
+  const animTrans = css`
+    animation: ${anim} ${time}s ease-in-out;
+  `
 
-    return (
-        <>
-            {animState && <div css={[transition, animTrans]} />}
-        </>
-    )
+  return <>{animState && <div css={[transition, animTrans]} />}</>
 }
 
 const anim = keyframes`
@@ -25,18 +24,14 @@ const anim = keyframes`
     100% { transform: skewX(-5deg) translateX(-50vw); width: 30vw; z-index: 1; box-shadow: none; background: #E7F5FF;}
 `
 
-const animTrans = css`
-    animation: ${anim} 4s ease-in-out;
-`
-
 const transition = css`
-    position: absolute;
-    height: 100vh;
-    width: 100vw;
-    background: #E7F5FF;
-    transform: translateX(-100vw);
-    transition: 2s all ease-in-out;
-    -webkit-transition: 2s all ease-in-out;
+  position: absolute;
+  height: 100vh;
+  width: 100vw;
+  background: #e7f5ff;
+  transform: translateX(-100vw);
+  transition: 2s all ease-in-out;
+  -webkit-transition: 2s all ease-in-out;
 `
 
 export default WiperTransition

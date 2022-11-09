@@ -76,7 +76,7 @@ const BreakCounter = () => {
   useEffect(() => {
     if (countdown === 0 && isRunning === true) {
       setStudied(true)
-      setMode('initial')
+      setTransitionMode('initial')
     }
     percentage.current = (countdown * 100) / (timerSeconds * 1000)
   }, [isRunning, countdown])
@@ -166,7 +166,10 @@ const BreakCounter = () => {
           )}
         </Center>
         <Stack align="center">
-          <Button variant="default" onClick={() => setMode('initial')}>
+          <Button
+            variant="default"
+            onClick={() => setTransitionMode('initial')}
+          >
             休憩を終了する
           </Button>
         </Stack>

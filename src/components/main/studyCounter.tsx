@@ -69,7 +69,7 @@ const StudyCounter = () => {
   )
   const timerSeconds = workTime * 60
   const { countdown, start, pause, isRunning } = useCountdownTimer({
-    timer: 1000 * (countRemain!==0 ? countRemain : workTime * 60),
+    timer: 1000 * (countRemain !== 0 ? countRemain : workTime * 60),
   })
 
   useEffect(() => {
@@ -83,7 +83,7 @@ const StudyCounter = () => {
     if (countdown === 0 && isRunning === true) {
       setStudied(true)
       setCountRemain(workTime * 60)
-      setMode('choice')
+      setTransitionMode('choice')
       if (auth.currentUser) {
         const uid = auth.currentUser.uid
         const docRef = db.collection('log').doc(uid)

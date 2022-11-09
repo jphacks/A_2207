@@ -26,9 +26,10 @@ export const AnimationNames = [
   'idle',
   'SittingIdle',
   'Typing',
+  'Waving',
 ] as const
 const states = ['idle', 'SittingIdle', 'Typing']
-const emotes = ['StandingGreeting', 'AirSquatBentArms']
+const emotes = ['StandingGreeting', 'AirSquatBentArms', 'Waving']
 
 export const VRMAvatar = () => {
   const { gl, scene } = useThree()
@@ -149,6 +150,9 @@ export const VRMAvatar = () => {
       } else if (['initial'].includes(mode)) {
         setAnimation('idle')
       } else if (['fitness'].includes(mode)) {
+        // vrm.scene.rotateY(-0.25 * Math.PI)
+        // vrm.scene.position.setX(-0.4)
+        // vrm.scene.position.setZ(1.1)
         setAnimation('idle')
       } else if (['break'].includes(mode)) {
         setAnimation('idle')

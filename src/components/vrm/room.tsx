@@ -263,13 +263,13 @@ export function Room(props: JSX.IntrinsicElements['group']) {
             material={materials.Blue}
           />
         </group>
-        <mesh
+        {/* <mesh
           castShadow
           receiveShadow
           geometry={nodes.Coffe_table.geometry}
           material={materials.Frame}
           position={[1.197, 0.554, -0.881]}
-        />
+        /> */}
         <group position={[1.186, 0.208, -0.871]} rotation={[0, 0.455, 0]}>
           <mesh
             castShadow
@@ -284,14 +284,14 @@ export function Room(props: JSX.IntrinsicElements['group']) {
             material={materials.White}
           />
         </group>
-        <mesh
+        {/* <mesh
           castShadow
           receiveShadow
           geometry={nodes.Cushion.geometry}
           material={materials.Blanket}
           position={[2.772, 0.282, -0.848]}
           rotation={[0, 0.349, 0]}
-        />
+        /> */}
         <group position={[3.394, 1.271, 3.672]}>
           <mesh
             castShadow
@@ -318,28 +318,15 @@ export function Room(props: JSX.IntrinsicElements['group']) {
             material={materials.Yellow}
           />
         </group>
-        <mesh
+        {/* <mesh
           castShadow
           receiveShadow
           geometry={nodes.Cushion001.geometry}
           material={materials.Blanket}
           position={[1.416, 0.282, -2.391]}
           rotation={[-Math.PI, 1.403, -Math.PI]}
-        />
-        <group position={[-3.568, 0.174, -3.313]}>
-          <mesh
-            castShadow
-            receiveShadow
-            geometry={nodes.Cube035.geometry}
-            material={materials.Blanket}
-          />
-          <mesh
-            castShadow
-            receiveShadow
-            geometry={nodes.Cube035_1.geometry}
-            material={materials.Pillow}
-          />
-        </group>
+        /> */}
+
         <group position={[2.496, 1.877, 3.672]}>
           <mesh
             castShadow
@@ -367,7 +354,7 @@ export function Room(props: JSX.IntrinsicElements['group']) {
           />
         </group>
 
-        <group position={[1.687, 0.667, -0.803]}>
+        {/* <group position={[1.687, 0.667, -0.803]}>
           <mesh
             castShadow
             receiveShadow
@@ -394,7 +381,7 @@ export function Room(props: JSX.IntrinsicElements['group']) {
             geometry={nodes.Cylinder006_1.geometry}
             material={materials.Coffe}
           />
-        </group>
+        </group> */}
 
         <group position={[2.568, 1.491, 3.646]} rotation={[0, 0.315, 0]}>
           <mesh
@@ -478,6 +465,20 @@ export function Room(props: JSX.IntrinsicElements['group']) {
             receiveShadow
             geometry={nodes.Cube017_1.geometry}
             material={materials['Pin picture.001']}
+          />
+        </group>
+        <group position={[-3.568 + tableDiff, 0.174, -3.313]}>
+          <mesh
+            castShadow
+            receiveShadow
+            geometry={nodes.Cube035.geometry}
+            material={materials.Blanket}
+          />
+          <mesh
+            castShadow
+            receiveShadow
+            geometry={nodes.Cube035_1.geometry}
+            material={materials.Pillow}
           />
         </group>
 

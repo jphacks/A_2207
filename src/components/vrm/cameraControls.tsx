@@ -77,7 +77,7 @@ export const CameraControls = forwardRef<CameraControlsDefault, unknown>(
     //   }
     // }, [])
 
-    const md = useMediaQuery('(min-width: 1000px)')
+    const md = useMediaQuery('(min-width: 992px)')
     useEffect(() => {
       if (cameraControls.current) {
         cameraControls.current.reset(true)
@@ -91,10 +91,12 @@ export const CameraControls = forwardRef<CameraControlsDefault, unknown>(
         } else if (['initial'].includes(mode)) {
           cameraControls.current.enabled = true
         } else if (['fitness'].includes(mode)) {
+          cameraControls.current.enabled = true
           if (md) {
-            cameraControls.current.moveTo(0.6, 0, 0, true)
+            cameraControls.current.setPosition(-4.5, 1.4, 5, true)
           } else {
-            cameraControls.current.moveTo(0, 0, 0, true)
+            cameraControls.current.setPosition(-3.7, 1.3, 5.7, true)
+            cameraControls.current.moveTo(10, 0.5, -3, true)
           }
         } else if (['break'].includes(mode)) {
           if (md) {

@@ -94,9 +94,10 @@ function NavbarLink({
 }
 
 export function MainNavbar() {
-  const { setMode } = useSettingsStore(
+  const { setMode, setTransitionMode } = useSettingsStore(
     (state) => ({
       setMode: state.setMode,
+      setTransitionMode: state.setTransitionMode,
     }),
     shallow,
   )
@@ -122,25 +123,25 @@ export function MainNavbar() {
             icon={IconHome2}
             modeTitle="initial"
             label="スタート"
-            onClick={() => setMode('initial')}
+            onClick={() => setTransitionMode('initial')}
           />
           <NavbarLink
             icon={IconBook}
             modeTitle="study"
             label="勉強"
-            onClick={() => setMode('study')}
+            onClick={() => setTransitionMode('study')}
           />
           <NavbarLink
             icon={IconRun}
             modeTitle="fitness"
             label="運動"
-            onClick={() => setMode('fitness')}
+            onClick={() => setTransitionMode('fitness')}
           />
           <NavbarLink
             icon={IconCoffee}
             modeTitle="break"
             label="休憩"
-            onClick={() => setMode('break')}
+            onClick={() => setTransitionMode('break')}
           />
         </Stack>
       </Navbar.Section>
