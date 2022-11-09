@@ -10,6 +10,7 @@ import { useSettingsStore } from 'src/stores/settingsStore'
 import Layout from 'src/components/layout/mainLayout'
 import { Property } from 'csstype'
 import { useMediaQuery } from '@mantine/hooks'
+import WiperTransition from 'src/components/transition/wiperTransition'
 
 const OverlayWrapper = ({
   children,
@@ -63,6 +64,9 @@ const Home: NextPage = () => {
         )}
         {mode === 'study' && (
           <>
+            <div style={{position: 'absolute', zIndex: 11}}>
+              <WiperTransition />
+            </div>
             <OverlayWrapper top={md ? '50%' : '73%'} left={md ? '70%' : '50%'}>
               <StudyCounter />
             </OverlayWrapper>
