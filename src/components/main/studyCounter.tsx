@@ -76,6 +76,7 @@ const StudyCounter = () => {
     start()
     const audio = new Audio('/voices/1.wav')
     audio.play()
+    return () => audio.pause()
   }, [])
 
   useEffect(() => {
@@ -84,7 +85,7 @@ const StudyCounter = () => {
       setCountRemain(workTime * 60)
       setMode('choice')
       if (auth.currentUser) {
-        const uid = auth.currentUser.uid;
+        const uid = auth.currentUser.uid
         const docRef = db.collection('log').doc(uid)
         docRef
           .get()
@@ -97,7 +98,7 @@ const StudyCounter = () => {
               } else {
                 for (const l of log) {
                   if (l.date === formatDate(new Date())) {
-                    l.count += workTime;
+                    l.count += workTime
                   }
                 }
               }

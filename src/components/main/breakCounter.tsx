@@ -70,6 +70,7 @@ const BreakCounter = () => {
     const audio = new Audio('/voices/15.wav')
     emoteStart('StandingGreeting')
     audio.play()
+    return () => audio.pause()
   }, [])
 
   useEffect(() => {

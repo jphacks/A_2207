@@ -13,11 +13,11 @@ const VRMCanvas = () => {
       </mesh> */}
       <VRMAvatar />
 
-      <mesh position={[0, -0.94, 0.5]} scale={0.6} rotation-y={Math.PI}>
+      <mesh position={[0, -0.94, 0.5]} scale={0.5} rotation-y={Math.PI}>
         <Room />
       </mesh>
       <CameraControls />
-      <Environment background={false} preset={'sunset'} />
+      <Environment background={false} preset={'apartment'} />
     </Canvas>
   )
 }
