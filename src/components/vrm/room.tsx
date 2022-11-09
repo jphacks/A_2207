@@ -109,6 +109,7 @@ export function Room(props: JSX.IntrinsicElements['group']) {
   const { nodes, materials } = useGLTF(
     'models/room.glb',
   ) as unknown as GLTFResult
+  const tableDiff = 1.4
   return (
     <group {...props} dispose={null}>
       <group>
@@ -209,20 +210,7 @@ export function Room(props: JSX.IntrinsicElements['group']) {
             material={materials['Pin picture.001']}
           />
         </group>
-        <group position={[-3.23, 0.198, -1.541]}>
-          <mesh
-            castShadow
-            receiveShadow
-            geometry={nodes.Cube017.geometry}
-            material={materials.Frame}
-          />
-          <mesh
-            castShadow
-            receiveShadow
-            geometry={nodes.Cube017_1.geometry}
-            material={materials['Pin picture.001']}
-          />
-        </group>
+
         <group position={[3.378, 1.88, 3.675]}>
           <mesh
             castShadow
@@ -378,20 +366,7 @@ export function Room(props: JSX.IntrinsicElements['group']) {
             material={materials.Yellow}
           />
         </group>
-        <group position={[-1.738, 1.057, -1.254]}>
-          <mesh
-            castShadow
-            receiveShadow
-            geometry={nodes.Cube052.geometry}
-            material={materials.Blanket}
-          />
-          <mesh
-            castShadow
-            receiveShadow
-            geometry={nodes.Cube052_1.geometry}
-            material={materials.Frame}
-          />
-        </group>
+
         <group position={[1.687, 0.667, -0.803]}>
           <mesh
             castShadow
@@ -420,6 +395,7 @@ export function Room(props: JSX.IntrinsicElements['group']) {
             material={materials.Coffe}
           />
         </group>
+
         <group position={[2.568, 1.491, 3.646]} rotation={[0, 0.315, 0]}>
           <mesh
             castShadow
@@ -460,7 +436,9 @@ export function Room(props: JSX.IntrinsicElements['group']) {
             material={materials['Pin picture']}
           />
         </group>
-        <group position={[-3.654, 1.444, -1.056]}>
+
+        {/* table */}
+        <group position={[-3.654 + tableDiff, 1.444, -1.056]}>
           <mesh
             castShadow
             receiveShadow
@@ -474,7 +452,7 @@ export function Room(props: JSX.IntrinsicElements['group']) {
             material={materials['Pin picture.001']}
           />
         </group>
-        <group position={[-2.953, 1.441, -1.105]}>
+        <group position={[-3 + tableDiff, 1.441, -1.105]}>
           <mesh
             castShadow
             receiveShadow
@@ -488,32 +466,38 @@ export function Room(props: JSX.IntrinsicElements['group']) {
             material={materials['Pin picture.001']}
           />
         </group>
-        <group position={[-3.659, 1.445, -2.442]}>
+        <group position={[-3.23 + tableDiff, 0.198, -1.541]}>
           <mesh
             castShadow
             receiveShadow
-            geometry={nodes.Cylinder.geometry}
-            material={materials.Coffe}
+            geometry={nodes.Cube017.geometry}
+            material={materials.Frame}
           />
           <mesh
             castShadow
             receiveShadow
-            geometry={nodes.Cylinder_1.geometry}
+            geometry={nodes.Cube017_1.geometry}
+            material={materials['Pin picture.001']}
+          />
+        </group>
+
+        {/* chair */}
+        <group position={[-1.738 + 1, 1.057, -1.254]}>
+          <mesh
+            castShadow
+            receiveShadow
+            geometry={nodes.Cube052.geometry}
             material={materials.Blanket}
           />
           <mesh
             castShadow
             receiveShadow
-            geometry={nodes.Cylinder_2.geometry}
-            material={materials.Leaves}
-          />
-          <mesh
-            castShadow
-            receiveShadow
-            geometry={nodes.Cylinder_3.geometry}
+            geometry={nodes.Cube052_1.geometry}
             material={materials.Frame}
           />
         </group>
+
+        {/* wall */}
         <mesh
           castShadow
           receiveShadow

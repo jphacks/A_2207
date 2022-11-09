@@ -87,6 +87,7 @@ const SquatCounter = () => {
     const audio = new Audio('/voices/13.wav')
     emoteStart('StandingGreeting')
     audio.play()
+    return () => audio.pause()
   }, [])
 
   useEffect(() => {
@@ -122,6 +123,12 @@ const SquatCounter = () => {
           ) {
             setCount((prevCount) => prevCount - 1)
           }
+          if (
+            prevStageRef.current === 'UP' &&
+            updateResult.newStage === 'DOWN'
+          ) {
+            emoteStart('AirSquatBentArms')
+          }
           prevStageRef.current = updateResult.newStage
         }
       }, 100)
@@ -132,12 +139,12 @@ const SquatCounter = () => {
   }, [isStart])
 
   useEffect(() => {
-    if (squatGoalCount !== count) emoteStart('AirSquatBentArms')
+    let audio: HTMLAudioElement
     if (squatGoalCount >= 10 && count === Math.floor(squatGoalCount / 2)) {
-      const audio = new Audio('/voices/8.wav')
+      audio = new Audio('/voices/8.wav')
       audio.play()
     } else if (count === 3) {
-      const audio = new Audio('/voices/14.wav')
+      audio = new Audio('/voices/14.wav')
       audio.play()
     } else if (count === 0) {
       if (studied) {
@@ -146,6 +153,7 @@ const SquatCounter = () => {
         setMode('study')
       }
     }
+    return () => audio?.pause()
   }, [count])
 
   return (

@@ -3,7 +3,7 @@
 import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader'
 import * as THREE_VRM from '@pixiv/three-vrm'
 import * as THREE from 'three'
-import { useCallback, useEffect } from 'react'
+import { useEffect, useState } from 'react'
 import { loadMixamoAnimation } from 'src/components/vrm/loadMixamoAnimation'
 import shallow from 'zustand/shallow'
 import { useVrmStore } from 'src/stores/vrmStore'
@@ -25,8 +25,9 @@ export const AnimationNames = [
   'AirSquatBentArms',
   'idle',
   'SittingIdle',
+  'Typing',
 ] as const
-const states = ['idle', 'SittingIdle']
+const states = ['idle', 'SittingIdle', 'Typing']
 const emotes = ['StandingGreeting', 'AirSquatBentArms']
 
 export const VRMAvatar = () => {
@@ -55,12 +56,14 @@ export const VRMAvatar = () => {
     }),
     shallow,
   )
+  const [loaded, setLoaded] = useState(false)
 
   /* ---------------------------------- 初期設定 ---------------------------------- */
   useEffect(() => {
+    setLoaded(false)
     gl.outputEncoding = THREE.sRGBEncoding
     const light = new THREE.DirectionalLight(0xffffff)
-    light.position.set(1.0, 1.0, 1.0).normalize()
+    light.position.set(-1.0, 1.0, 1.0).normalize()
     light.castShadow = true
     scene.add(light)
 
@@ -87,11 +90,13 @@ export const VRMAvatar = () => {
         }
 
         vrm = gltf.userData.vrm as THREE_VRM.VRM
+
         mixer = new THREE.AnimationMixer(gltf.userData.vrm.scene)
         const currentVRM = gltf.userData.vrm
 
         currentVRM.scene.position.setY(-0.8)
-        THREE_VRM.VRMUtils.rotateVRM0(currentVRM)
+        THREE_VRM.VRMUtils.rotateVRM0(vrm)
+
         currentVRM.scene.traverse((obj: any) => {
           if (obj.isMesh) {
             obj.castShadow = true
@@ -115,8 +120,8 @@ export const VRMAvatar = () => {
             },
           )
         })
-
         scene.add(vrm.scene)
+        setLoaded(true)
       },
     )
 
@@ -132,32 +137,42 @@ export const VRMAvatar = () => {
 
   /* ----------------------------- 基本的なアニメーションの処理 ----------------------------- */
   useEffect(() => {
-    if (['study'].includes(mode)) {
-      setAnimation('SittingIdle')
-    } else if (['initial'].includes(mode)) {
-      setAnimation('idle')
-    } else if (['fitness'].includes(mode)) {
-      setAnimation('idle')
-    } else if (['break'].includes(mode)) {
-      setAnimation('idle')
+    if (vrm) {
+      THREE_VRM.VRMUtils.rotateVRM0(vrm)
+      vrm.scene.position.setX(0)
+      vrm.scene.position.setZ(0)
+      if (['study'].includes(mode)) {
+        vrm.scene.rotateY(0.5 * Math.PI)
+        vrm.scene.position.setX(0.4)
+        vrm.scene.position.setZ(1.1)
+        setAnimation('Typing')
+      } else if (['initial'].includes(mode)) {
+        setAnimation('idle')
+      } else if (['fitness'].includes(mode)) {
+        setAnimation('idle')
+      } else if (['break'].includes(mode)) {
+        setAnimation('idle')
+      }
     }
-  }, [mode])
+  }, [mode, loaded])
 
   useEffect(() => {
-    if (states.includes(animation)) {
-      fadeToAction(animation, 0.5)
-    }
     emoteFinish()
+    api.state = animation
+    if (states.includes(animation)) {
+      fadeToAction(api.state, 0.5)
+    }
   }, [animation, emoteFinish])
 
   /* --------------------------------- エモートの処理 -------------------------------- */
-  const restoreState = useCallback(() => {
+  const restoreState = () => {
     mixer?.removeEventListener('finished', restoreState)
-    fadeToAction(animation, 0.2)
+    fadeToAction(api.state, 0.2)
     emoteFinish()
-  }, [animation, emoteFinish])
+  }
 
   useEffect(() => {
+    api.state = animation
     if (emote) {
       fadeToAction(emote, 0.2)
       mixer?.addEventListener('finished', restoreState)
@@ -174,6 +189,7 @@ let mixer: THREE.AnimationMixer | undefined = undefined
 const actions: any = {}
 let activeAction: any, previousAction: any
 const clock = new THREE.Clock()
+const api: any = { state: 'idle' }
 
 function fadeToAction(name: string, duration: number) {
   previousAction = activeAction
@@ -200,7 +216,6 @@ function animate() {
 
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 function createGUI() {
-  const api: any = { state: 'idle' }
   const gui = new GUI()
 
   // states

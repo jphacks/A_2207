@@ -1,5 +1,5 @@
 import { Group, Text, useMantineTheme } from '@mantine/core'
-import { IconUpload, IconPhoto, IconX } from '@tabler/icons'
+import { IconUpload, IconMan, IconX } from '@tabler/icons'
 import { Dropzone, DropzoneProps } from '@mantine/dropzone'
 import { useVrmStore } from 'src/stores/vrmStore'
 import shallow from 'zustand/shallow'
@@ -45,7 +45,7 @@ export function DropZone(props: Partial<DropzoneProps>) {
           />
         </Dropzone.Reject>
         <Dropzone.Idle>
-          <IconPhoto size={50} stroke={1.5} />
+          <IconMan size={50} stroke={1.5} />
         </Dropzone.Idle>
 
         <div>
