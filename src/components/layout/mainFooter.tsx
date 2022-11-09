@@ -18,14 +18,8 @@ import {
   IconCoffee,
 } from '@tabler/icons'
 import { useState } from 'react'
-import { IconInfo } from './mainIconInfo'
-import { IconConfig } from './mainIconConfig'
 import { useSettingsStore } from 'src/stores/settingsStore'
 import shallow from 'zustand/shallow'
-import Signin from '../firebase/Signin'
-import SignOut from '../firebase/Signout'
-import { auth } from '../firebase/firebase'
-import { useAuthState } from 'react-firebase-hooks/auth'
 
 const useStyles = createStyles((theme) => ({
   link: {
@@ -84,22 +78,25 @@ function NavbarLink({
   return (
     <Tooltip label={label} position="top" transitionDuration={0}>
       <div>
-        <Stack spacing={0}>
-          <Center>
-            <UnstyledButton
-                component="a"
-                onClick={onClick}
-                className={cx(classes.link, {
-                  [classes.active]: mode === modeTitle,
-                })}
-              >
-              <Icon stroke={1.5} />
-            </UnstyledButton>
-          </Center>
-          <Center>
-            <Text>{label}</Text>
-          </Center>
-        </Stack>
+        <Center>
+          <UnstyledButton
+            component="a"
+            onClick={onClick}
+            className={cx(classes.link, {
+              [classes.active]: mode === modeTitle,
+            })}
+          >
+            <Stack spacing={0}>
+              <Center>
+                <Icon stroke={1.5} />
+              </Center>
+
+              <Center>
+                <Text size="xs">{label}</Text>
+              </Center>        
+            </Stack>
+          </UnstyledButton>
+        </Center>
       </div>
     </Tooltip>
   )
@@ -115,10 +112,8 @@ export function MainFooter() {
   const [infoOpened, setInfoOpened] = useState(false)
   const [configOpened, setConfigOpened] = useState(false)
 
-  const [user] = useAuthState(auth as any)
-
   return (
-    <Footer height={100} p="md">
+    <Footer height={70} p="xs">
       <Grid>
         <Grid.Col span={3}>
           <NavbarLink

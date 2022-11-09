@@ -46,7 +46,6 @@ export function IconConfig({ opened, setOpened }: IconConfigProps) {
       >
         <Stack spacing="xl">
           <Title order={3}>VRMモデルの選択</Title>
-          {/* Modal content */}
           <Stack spacing="xl">
             <Select
               radius="md"
@@ -58,7 +57,6 @@ export function IconConfig({ opened, setOpened }: IconConfigProps) {
                 { value: 'Miraikomachi', label: 'ミライ小町' },
               ]}
             />
-            {/* TODO */}
             <DropZone />
           </Stack>
           <Divider my="sm" size="sm" color={'black'} />
@@ -72,6 +70,7 @@ export function IconConfig({ opened, setOpened }: IconConfigProps) {
           />
         </Stack>
       </Modal>
+      
       <Center>
         <ActionIcon variant="transparent">
           <IconSettings onClick={() => setOpened(true)} />

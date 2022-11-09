@@ -83,7 +83,7 @@ function Signin() {
   }
 
   return (
-    <Popover position={matches ? "right" : "top"} withArrow shadow="md">
+    <Popover position={matches ? "right" : "bottom-end"} withArrow shadow="md">
       <Popover.Target>
         <Center pb={10}>
           <Avatar
