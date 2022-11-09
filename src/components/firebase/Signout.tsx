@@ -12,8 +12,10 @@ import { auth } from './firebase'
 import { css } from '@emotion/react'
 import { useEffect, useState } from 'react'
 import UserAnalytics from './userAnalytics'
+import { useMediaQuery } from '@mantine/hooks'
 
 function Signout() {
+  const matches = useMediaQuery('(min-width: 576px)');
   const [analyticsOpened, setAnalyticsOpened] = useState(false)
   const [isTestAccount, setIsTestAccount] = useState(false)
   const [username, setUsername] = useState("くま");
@@ -63,7 +65,7 @@ function Signout() {
         <UserAnalytics />
       </Modal>
 
-      <Popover width={180} position="right" withArrow shadow="md">
+      <Popover width={180} position={matches ? "right" : "top"} withArrow shadow="md">
         <Popover.Target>{Icon(isTestAccount)}</Popover.Target>
         <Popover.Dropdown>
           <Stack>

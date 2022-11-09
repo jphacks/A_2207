@@ -12,7 +12,7 @@ import { Property } from 'csstype'
 import { useMediaQuery } from '@mantine/hooks'
 import WiperTransition from 'src/components/transition/wiperTransition'
 
-const OverlayWrapper = ({
+export const OverlayWrapper = ({
   children,
   top,
   left,
