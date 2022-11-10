@@ -94,13 +94,32 @@ export const CameraControls = forwardRef<CameraControlsDefault, unknown>(
           cameraControls.current.enabled = true
           if (md) {
             cameraControls.current.setPosition(
-              -4.120952540970385,
-              1.8630424664406187,
-              5.048380325457386,
+              -4.32,
+              1.66,
+              8.84,
               true,
             )
+            cameraControls.current.setTarget(
+              1,
+              -0.3,
+              0,
+              true
+            )
+            cameraControls.current.dolly(  3.6, true )
           } else {
-            cameraControls.current.setPosition(-3.7, 1.3, 5.7, true)
+            cameraControls.current.setPosition(
+              -5.22,
+              1.66,
+              8.84,
+              true,
+            )
+            cameraControls.current.setTarget(
+              0,
+              -0.2,
+              0,
+              true
+            )
+            cameraControls.current.dolly(  3.6, true )
           }
         } else if (['break'].includes(mode)) {
           if (md) {

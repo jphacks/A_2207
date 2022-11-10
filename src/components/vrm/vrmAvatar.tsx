@@ -156,8 +156,8 @@ export const VRMAvatar = () => {
         setAnimation('idle')
       } else if (['fitness'].includes(mode)) {
         // vrm.scene.rotateY(-0.25 * Math.PI)
-        vrm.scene.position.setX(-0.4)
-        vrm.scene.position.setZ(1.1)
+        vrm.scene.position.setX(-0.6)
+        vrm.scene.position.setZ(1)
         setAnimation('idle')
       } else if (['break'].includes(mode)) {
         vrm.lookAt!.target = camera
