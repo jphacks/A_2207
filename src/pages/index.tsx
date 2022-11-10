@@ -5,79 +5,10 @@ import StudyCounter from 'src/components/main/studyCounter'
 import ChoiceButton from 'src/components/main/choiceButton'
 import SquatCounter from 'src/components/main/squatCounter'
 import BreakCounter from 'src/components/main/breakCounter'
-import shallow from 'zustand/shallow'
-import { useSettingsStore } from 'src/stores/settingsStore'
 import Layout from 'src/components/layout/mainLayout'
-import { Property } from 'csstype'
 import { useMediaQuery } from '@mantine/hooks'
-import WiperTransition from 'src/components/transition/wiperTransition'
-import { useEffect } from 'react'
-
-export const OverlayWrapper = ({
-  children,
-  top,
-  left,
-  right,
-  bottom,
-}: {
-  children: React.ReactNode
-  top?: Property.Top<string | number> | undefined
-  left?: Property.Left<string | number> | undefined
-  right?: Property.Right<string | number> | undefined
-  bottom?: Property.Bottom<string | number> | undefined
-}) => {
-  return (
-    <div
-      style={{
-        position: 'absolute',
-        zIndex: 10,
-        top: top,
-        left: left,
-        right: right,
-        bottom: bottom,
-        transform: 'translate(-50%, -50%)',
-      }}
-    >
-      {children}
-    </div>
-  )
-}
-
-const TransitionContainer = ({
-  children,
-  modeName,
-  time,
-}: {
-  children: React.ReactNode
-  modeName: string
-  time: number
-}) => {
-  const { mode, transitionMode, setMode } = useSettingsStore(
-    (state) => ({
-      mode: state.mode,
-      transitionMode: state.transitionMode,
-      setMode: state.setMode,
-    }),
-    shallow,
-  )
-  useEffect(() => {
-    if (transitionMode === modeName) {
-      const timeoutId = setTimeout(() => {
-        setMode(transitionMode)
-      }, (1000 * time) / 2)
-      return () => {
-        clearTimeout(timeoutId)
-      }
-    }
-  }, [transitionMode, modeName])
-  return (
-    <>
-      {(transitionMode === modeName || mode === modeName) &&
-        transitionMode !== 'first' && <WiperTransition time={time} />}
-      {mode === modeName && children}
-    </>
-  )
-}
+import { TransitionContainer } from 'src/components/main/elements/transitionContainer'
+import { OverlayWrapper } from 'src/components/main/elements/overlayWrapper'
 
 const Home: NextPage = () => {
   const md = useMediaQuery('(min-width: 992px)')
