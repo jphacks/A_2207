@@ -3,8 +3,6 @@ import {
   Tooltip,
   UnstyledButton,
   createStyles,
-  Group,
-  Image,
   Text,
   Center,
   Grid,
@@ -17,7 +15,6 @@ import {
   IconBook,
   IconCoffee,
 } from '@tabler/icons'
-import { useState } from 'react'
 import { useSettingsStore } from 'src/stores/settingsStore'
 import shallow from 'zustand/shallow'
 
@@ -93,7 +90,7 @@ function NavbarLink({
 
               <Center>
                 <Text size="xs">{label}</Text>
-              </Center>        
+              </Center>
             </Stack>
           </UnstyledButton>
         </Center>
@@ -103,14 +100,12 @@ function NavbarLink({
 }
 
 export function MainFooter() {
-  const { setMode } = useSettingsStore(
+  const { setTransitionMode } = useSettingsStore(
     (state) => ({
-      setMode: state.setMode,
+      setTransitionMode: state.setTransitionMode,
     }),
     shallow,
   )
-  const [infoOpened, setInfoOpened] = useState(false)
-  const [configOpened, setConfigOpened] = useState(false)
 
   return (
     <Footer height={70} p="xs">
@@ -120,7 +115,7 @@ export function MainFooter() {
             icon={IconHome2}
             modeTitle="initial"
             label="スタート"
-            onClick={() => setMode('initial')}
+            onClick={() => setTransitionMode('initial')}
           />
         </Grid.Col>
         <Grid.Col span={3}>
@@ -128,7 +123,7 @@ export function MainFooter() {
             icon={IconBook}
             modeTitle="study"
             label="勉強"
-            onClick={() => setMode('study')}
+            onClick={() => setTransitionMode('study')}
           />
         </Grid.Col>
         <Grid.Col span={3}>
@@ -136,7 +131,7 @@ export function MainFooter() {
             icon={IconRun}
             modeTitle="fitness"
             label="運動"
-            onClick={() => setMode('fitness')}
+            onClick={() => setTransitionMode('fitness')}
           />
         </Grid.Col>
         <Grid.Col span={3}>
@@ -144,7 +139,7 @@ export function MainFooter() {
             icon={IconCoffee}
             modeTitle="break"
             label="休憩"
-            onClick={() => setMode('break')}
+            onClick={() => setTransitionMode('break')}
           />
         </Grid.Col>
       </Grid>

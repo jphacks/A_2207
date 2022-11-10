@@ -84,42 +84,21 @@ export const CameraControls = forwardRef<CameraControlsDefault, unknown>(
         cameraControls.current.enabled = false
         if (['study'].includes(mode)) {
           if (md) {
-            cameraControls.current.setPosition(2, 0.23, 2.6, true)
+            cameraControls.current.setPosition(1.8, 0.23, 2.6, true)
           } else {
-            cameraControls.current.setPosition(1.5, 0.05, 2.8, true)
+            cameraControls.current.setPosition(1.4, 0.05, 2.8, true)
           }
         } else if (['initial'].includes(mode)) {
           cameraControls.current.enabled = true
         } else if (['fitness'].includes(mode)) {
-          cameraControls.current.enabled = true
           if (md) {
-            cameraControls.current.setPosition(
-              -4.32,
-              1.66,
-              8.84,
-              true,
-            )
-            cameraControls.current.setTarget(
-              1,
-              -0.3,
-              0,
-              true
-            )
-            cameraControls.current.dolly(  3.6, true )
+            cameraControls.current.setPosition(-6.32, 1.66, 8.84, true)
+            cameraControls.current.setTarget(1, -0.3, 0, true)
+            cameraControls.current.dolly(4.3, true)
           } else {
-            cameraControls.current.setPosition(
-              -5.22,
-              1.66,
-              8.84,
-              true,
-            )
-            cameraControls.current.setTarget(
-              0,
-              -0.2,
-              0,
-              true
-            )
-            cameraControls.current.dolly(  3.6, true )
+            cameraControls.current.setPosition(-5.22, 1.66, 8.84, true)
+            cameraControls.current.setTarget(0, -0.2, 0, true)
+            cameraControls.current.dolly(3.6, true)
           }
         } else if (['break'].includes(mode)) {
           if (md) {

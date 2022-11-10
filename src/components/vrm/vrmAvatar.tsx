@@ -142,6 +142,7 @@ export const VRMAvatar = () => {
   /* ----------------------------- 基本的なアニメーションの処理 ----------------------------- */
   useEffect(() => {
     if (vrm) {
+      vrm.scene.rotation.set(0, 0, 0)
       THREE_VRM.VRMUtils.rotateVRM0(vrm)
       vrm.scene.position.setX(0)
       vrm.scene.position.setZ(0)
@@ -155,7 +156,7 @@ export const VRMAvatar = () => {
         vrm.lookAt!.target = camera
         setAnimation('idle')
       } else if (['fitness'].includes(mode)) {
-        // vrm.scene.rotateY(-0.25 * Math.PI)
+        vrm.scene.rotateY(-0.2 * Math.PI)
         vrm.scene.position.setX(-0.6)
         vrm.scene.position.setZ(1)
         setAnimation('idle')

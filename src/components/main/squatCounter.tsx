@@ -189,7 +189,7 @@ const SquatCounter = () => {
                 background: '#FFF',
                 border: 'solid 3px #6091d3',
                 borderRadius: '10px',
-                minWidth: matches ? '500px' : '80vw',
+                minWidth: matches ? '500px' : '90vw',
                 width: '100%',
                 position: 'relative',
               }}
