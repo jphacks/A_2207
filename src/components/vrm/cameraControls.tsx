@@ -68,14 +68,14 @@ export const CameraControls = forwardRef<CameraControlsDefault, unknown>(
       }),
       shallow,
     )
-    useEffect(() => {
-      const intervalId = setInterval(() => {
-        console.log(camera)
-      }, 1000)
-      return () => {
-        clearInterval(intervalId)
-      }
-    }, [])
+    // useEffect(() => {
+    //   const intervalId = setInterval(() => {
+    //     console.log(camera)
+    //   }, 1000)
+    //   return () => {
+    //     clearInterval(intervalId)
+    //   }
+    // }, [])
 
     const md = useMediaQuery('(min-width: 992px)')
     useEffect(() => {
