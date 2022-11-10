@@ -64,7 +64,7 @@ function Signout() {
         <UserAnalytics />
       </Modal>
 
-      <Popover width={180} position={matches ? "right" : "top"} withArrow shadow="md">
+      <Popover width={180} position={matches ? "right" : "bottom-end"} withArrow shadow="md">
         <Popover.Target>{Icon(isTestAccount)}</Popover.Target>
         <Popover.Dropdown>
           <Stack>
