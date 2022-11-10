@@ -25,7 +25,7 @@ export function MainHeader() {
               variant="gradient"
               gradient={{ from: 'blue', to: 'cyan' }}
             >
-              VRoom
+              VRooM
             </Title>
           </Link>
 
