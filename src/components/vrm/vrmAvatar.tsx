@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-non-null-assertion */
 /* eslint-disable react/no-unknown-property */
 
 import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader'
@@ -32,7 +33,7 @@ const states = ['idle', 'SittingIdle', 'Typing']
 const emotes = ['StandingGreeting', 'AirSquatBentArms', 'Waving']
 
 export const VRMAvatar = () => {
-  const { gl, scene } = useThree()
+  const { gl, scene, camera } = useThree()
   const {
     animation,
     modelName,
@@ -144,12 +145,14 @@ export const VRMAvatar = () => {
       THREE_VRM.VRMUtils.rotateVRM0(vrm)
       vrm.scene.position.setX(0)
       vrm.scene.position.setZ(0)
+      vrm.lookAt!.target = null
       if (['study'].includes(mode)) {
         vrm.scene.rotateY(0.5 * Math.PI)
         vrm.scene.position.setX(0.4)
         vrm.scene.position.setZ(1.1)
         setAnimation('Typing')
       } else if (['initial'].includes(mode)) {
+        vrm.lookAt!.target = camera
         setAnimation('idle')
       } else if (['fitness'].includes(mode)) {
         // vrm.scene.rotateY(-0.25 * Math.PI)
@@ -157,6 +160,7 @@ export const VRMAvatar = () => {
         vrm.scene.position.setZ(1.1)
         setAnimation('idle')
       } else if (['break'].includes(mode)) {
+        vrm.lookAt!.target = camera
         setAnimation('idle')
       }
     }

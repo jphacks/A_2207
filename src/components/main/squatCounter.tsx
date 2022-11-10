@@ -9,6 +9,7 @@ import { Title, Stack, Progress } from '@mantine/core'
 import shallow from 'zustand/shallow'
 import { useSettingsStore } from 'src/stores/settingsStore'
 import { useVrmStore } from 'src/stores/vrmStore'
+import { useMediaQuery } from '@mantine/hooks'
 
 const SquatCounter = () => {
   const { setTransitionMode, studied, squatGoalCount } = useSettingsStore(
@@ -25,6 +26,7 @@ const SquatCounter = () => {
     }),
     shallow,
   )
+  const matches = useMediaQuery('(min-width: 576px)')
   const webcamRef = useRef<Webcam>(null)
   const canvasRef = useRef<HTMLCanvasElement>(null)
   const resultsRef = useRef<any>(null)
@@ -187,7 +189,7 @@ const SquatCounter = () => {
                 background: '#FFF',
                 border: 'solid 3px #6091d3',
                 borderRadius: '10px',
-                minWidth: '500px',
+                minWidth: matches ? '500px' : '80vw',
                 width: '100%',
                 position: 'relative',
               }}
