@@ -11,16 +11,14 @@ import { useSettingsStore } from 'src/stores/settingsStore'
 import { useVrmStore } from 'src/stores/vrmStore'
 
 const SquatCounter = () => {
-  const { setMode, setTransitionMode, studied, squatGoalCount } =
-    useSettingsStore(
-      (state) => ({
-        setTransitionMode: state.setTransitionMode,
-        setMode: state.setMode,
-        studied: state.studied,
-        squatGoalCount: state.squatGoalCount,
-      }),
-      shallow,
-    )
+  const { setTransitionMode, studied, squatGoalCount } = useSettingsStore(
+    (state) => ({
+      setTransitionMode: state.setTransitionMode,
+      studied: state.studied,
+      squatGoalCount: state.squatGoalCount,
+    }),
+    shallow,
+  )
   const { emoteStart } = useVrmStore(
     (state) => ({
       emoteStart: state.emoteStart,
@@ -88,7 +86,7 @@ const SquatCounter = () => {
   useEffect(() => {
     const audio = new Audio('/voices/13.wav')
     emoteStart('StandingGreeting')
-    audio.play()
+    setTimeout(() => audio.play(), 500)
     return () => audio.pause()
   }, [])
 

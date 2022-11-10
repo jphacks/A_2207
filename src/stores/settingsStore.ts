@@ -60,7 +60,6 @@ export const useSettingsStore = create<SettingsStoreState>()(
         (state) => ({
           ...state,
           mode: name,
-          transitionMode: '',
         }),
         false,
         'setMode',

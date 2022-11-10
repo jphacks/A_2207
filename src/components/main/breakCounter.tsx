@@ -43,9 +43,9 @@ const BreakCounter = () => {
   const { classes } = useStyles()
   const percentage = useRef(0)
   const [circle, setCircle] = useState(false)
-  const { setMode, setStudied, breakTime } = useSettingsStore(
+  const { setTransitionMode, setStudied, breakTime } = useSettingsStore(
     (state) => ({
-      setMode: state.setMode,
+      setTransitionMode: state.setTransitionMode,
       setStudied: state.setStudied,
       workTime: state.workTime,
       setWorkTime: state.setWorkTime,
@@ -69,8 +69,9 @@ const BreakCounter = () => {
     start()
     const audio = new Audio('/voices/15.wav')
     emoteStart('StandingGreeting')
-    audio.play()
-    return () => audio.pause()
+    setTimeout(() => {
+      audio.play()
+    }, 500)
   }, [])
 
   useEffect(() => {

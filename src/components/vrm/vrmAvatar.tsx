@@ -89,6 +89,8 @@ export const VRMAvatar = () => {
           scene.remove(vrm.scene)
           THREE_VRM.VRMUtils.deepDispose(vrm.scene)
         }
+        THREE_VRM.VRMUtils.removeUnnecessaryVertices(gltf.scene)
+        THREE_VRM.VRMUtils.removeUnnecessaryJoints(gltf.scene)
 
         vrm = gltf.userData.vrm as THREE_VRM.VRM
 
@@ -151,8 +153,8 @@ export const VRMAvatar = () => {
         setAnimation('idle')
       } else if (['fitness'].includes(mode)) {
         // vrm.scene.rotateY(-0.25 * Math.PI)
-        // vrm.scene.position.setX(-0.4)
-        // vrm.scene.position.setZ(1.1)
+        vrm.scene.position.setX(-0.4)
+        vrm.scene.position.setZ(1.1)
         setAnimation('idle')
       } else if (['break'].includes(mode)) {
         setAnimation('idle')
@@ -161,17 +163,15 @@ export const VRMAvatar = () => {
   }, [mode, loaded])
 
   useEffect(() => {
-    emoteFinish()
     api.state = animation
-    if (states.includes(animation)) {
+    if (states.includes(animation) && !emote) {
       fadeToAction(api.state, 0.5)
     }
-  }, [animation, emoteFinish])
+  }, [animation, emoteFinish, emote])
 
   /* --------------------------------- エモートの処理 -------------------------------- */
   const restoreState = () => {
     mixer?.removeEventListener('finished', restoreState)
-    fadeToAction(api.state, 0.2)
     emoteFinish()
   }
 
@@ -211,11 +211,22 @@ function fadeToAction(name: string, duration: number) {
     .play()
 }
 
+const blinkValue = () => {
+  return Math.max(
+    0,
+    Math.sin((clock.elapsedTime * 1) / 3) ** 4096 +
+      Math.sin((clock.elapsedTime * 4) / 7) ** 4096,
+  )
+}
+
 function animate() {
   const dt = clock.getDelta()
   requestAnimationFrame(animate)
   if (mixer) mixer.update(dt)
-  if (vrm) vrm.update(dt)
+  if (vrm) {
+    vrm.expressionManager?.setValue('blink', blinkValue())
+    vrm.update(dt)
+  }
 }
 
 // eslint-disable-next-line @typescript-eslint/no-unused-vars

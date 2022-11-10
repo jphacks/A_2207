@@ -42,6 +42,7 @@ const OverlayWrapper = ({
     </div>
   )
 }
+
 const TransitionContainer = ({
   children,
   modeName,
@@ -60,19 +61,19 @@ const TransitionContainer = ({
     shallow,
   )
   useEffect(() => {
-    if (transitionMode)
-      setTimeout(() => {
+    if (transitionMode === modeName) {
+      const timeoutId = setTimeout(() => {
         setMode(transitionMode)
       }, (1000 * time) / 2)
-  }, [transitionMode])
+      return () => {
+        clearTimeout(timeoutId)
+      }
+    }
+  }, [transitionMode, modeName])
   return (
     <>
       {(transitionMode === modeName || mode === modeName) &&
-        transitionMode !== 'first' && (
-          <div style={{ position: 'absolute', zIndex: 11 }}>
-            <WiperTransition time={time} />
-          </div>
-        )}
+        transitionMode !== 'first' && <WiperTransition time={time} />}
       {mode === modeName && children}
     </>
   )
@@ -80,7 +81,7 @@ const TransitionContainer = ({
 
 const Home: NextPage = () => {
   const md = useMediaQuery('(min-width: 992px)')
-  const transitionTime = 2
+  const transitionTime = 1.5
 
   return (
     <Layout>

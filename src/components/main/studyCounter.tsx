@@ -14,7 +14,6 @@ import { useCountdownTimer } from 'use-countdown-timer'
 import shallow from 'zustand/shallow'
 import { useSettingsStore } from 'src/stores/settingsStore'
 import { useEffect, useRef, useState } from 'react'
-import { useVrmStore } from 'src/stores/vrmStore'
 import { db, auth } from 'src/components/firebase/firebase'
 import { formatDate } from '../analytics/datagraph'
 
@@ -49,24 +48,25 @@ const StudyCounter = () => {
   const { classes } = useStyles()
   const percentage = useRef(0)
   const [circle, setCircle] = useState(false)
-  const { goal, setMode, setStudied, countRemain, setCountRemain, workTime } =
-    useSettingsStore(
-      (state) => ({
-        goal: state.goal,
-        setMode: state.setMode,
-        setStudied: state.setStudied,
-        countRemain: state.countRemain,
-        setCountRemain: state.setCountRemain,
-        workTime: state.workTime,
-      }),
-      shallow,
-    )
-  const { emoteStart } = useVrmStore(
+  const {
+    goal,
+    setTransitionMode,
+    setStudied,
+    countRemain,
+    setCountRemain,
+    workTime,
+  } = useSettingsStore(
     (state) => ({
-      emoteStart: state.emoteStart,
+      goal: state.goal,
+      setTransitionMode: state.setTransitionMode,
+      setStudied: state.setStudied,
+      countRemain: state.countRemain,
+      setCountRemain: state.setCountRemain,
+      workTime: state.workTime,
     }),
     shallow,
   )
+
   const timerSeconds = workTime * 60
   const { countdown, start, pause, isRunning } = useCountdownTimer({
     timer: 1000 * (countRemain !== 0 ? countRemain : workTime * 60),
@@ -75,7 +75,7 @@ const StudyCounter = () => {
   useEffect(() => {
     start()
     const audio = new Audio('/voices/1.wav')
-    audio.play()
+    setTimeout(() => audio.play(), 500)
     return () => audio.pause()
   }, [])
 
