@@ -68,16 +68,16 @@ export const CameraControls = forwardRef<CameraControlsDefault, unknown>(
       }),
       shallow,
     )
-    // useEffect(() => {
-    //   const intervalId = setInterval(() => {
-    //     console.log(camera)
-    //   }, 1000)
-    //   return () => {
-    //     clearInterval(intervalId)
-    //   }
-    // }, [])
+    useEffect(() => {
+      const intervalId = setInterval(() => {
+        console.log(camera)
+      }, 1000)
+      return () => {
+        clearInterval(intervalId)
+      }
+    }, [])
 
-    const md = useMediaQuery('(min-width: 1000px)')
+    const md = useMediaQuery('(min-width: 992px)')
     useEffect(() => {
       if (cameraControls.current) {
         cameraControls.current.reset(true)
@@ -91,10 +91,16 @@ export const CameraControls = forwardRef<CameraControlsDefault, unknown>(
         } else if (['initial'].includes(mode)) {
           cameraControls.current.enabled = true
         } else if (['fitness'].includes(mode)) {
+          cameraControls.current.enabled = true
           if (md) {
-            cameraControls.current.moveTo(0.6, 0, 0, true)
+            cameraControls.current.setPosition(
+              -4.120952540970385,
+              1.8630424664406187,
+              5.048380325457386,
+              true,
+            )
           } else {
-            cameraControls.current.moveTo(0, 0, 0, true)
+            cameraControls.current.setPosition(-3.7, 1.3, 5.7, true)
           }
         } else if (['break'].includes(mode)) {
           if (md) {

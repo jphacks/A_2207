@@ -5,9 +5,9 @@ import { useEffect } from 'react'
 import { useVrmStore } from 'src/stores/vrmStore'
 
 const ChoiceButton = () => {
-  const { setMode } = useSettingsStore(
+  const { setTransitionMode } = useSettingsStore(
     (state) => ({
-      setMode: state.setMode,
+      setTransitionMode: state.setTransitionMode,
       goal: state.goal,
       setGoal: state.setGoal,
     }),
@@ -34,7 +34,7 @@ const ChoiceButton = () => {
           gradient={{ from: 'indigo', to: 'cyan' }}
           radius="xl"
           size="xl"
-          onClick={() => setMode('fitness')}
+          onClick={() => setTransitionMode('fitness')}
         >
           スクワットモード
         </Button>
@@ -57,7 +57,7 @@ const ChoiceButton = () => {
           gradient={{ from: 'indigo', to: 'cyan' }}
           radius="xl"
           size="xl"
-          onClick={() => setMode('initial')}
+          onClick={() => setTransitionMode('initial')}
         >
           終了する
         </Button>

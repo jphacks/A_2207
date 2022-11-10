@@ -11,6 +11,7 @@ import Layout from 'src/components/layout/mainLayout'
 import { Property } from 'csstype'
 import { useMediaQuery } from '@mantine/hooks'
 import WiperTransition from 'src/components/transition/wiperTransition'
+import { useEffect } from 'react'
 
 export const OverlayWrapper = ({
   children,
@@ -41,19 +42,51 @@ export const OverlayWrapper = ({
     </div>
   )
 }
-const Home: NextPage = () => {
-  const { mode } = useSettingsStore(
+
+const TransitionContainer = ({
+  children,
+  modeName,
+  time,
+}: {
+  children: React.ReactNode
+  modeName: string
+  time: number
+}) => {
+  const { mode, transitionMode, setMode } = useSettingsStore(
     (state) => ({
       mode: state.mode,
+      transitionMode: state.transitionMode,
+      setMode: state.setMode,
     }),
     shallow,
   )
-  const md = useMediaQuery('(min-width: 1000px)')
+  useEffect(() => {
+    if (transitionMode === modeName) {
+      const timeoutId = setTimeout(() => {
+        setMode(transitionMode)
+      }, (1000 * time) / 2)
+      return () => {
+        clearTimeout(timeoutId)
+      }
+    }
+  }, [transitionMode, modeName])
+  return (
+    <>
+      {(transitionMode === modeName || mode === modeName) &&
+        transitionMode !== 'first' && <WiperTransition time={time} />}
+      {mode === modeName && children}
+    </>
+  )
+}
+
+const Home: NextPage = () => {
+  const md = useMediaQuery('(min-width: 992px)')
+  const transitionTime = 1.5
 
   return (
     <Layout>
       <div className="container">
-        {mode === 'initial' && (
+        <TransitionContainer modeName="initial" time={transitionTime}>
           <OverlayWrapper
             top={md ? '70%' : '70%'}
             right={md ? '-5%' : undefined}
@@ -61,32 +94,32 @@ const Home: NextPage = () => {
           >
             <StartButton />
           </OverlayWrapper>
-        )}
-        {mode === 'study' && (
-          <>
-            <div style={{position: 'absolute', zIndex: 11}}>
-              <WiperTransition />
-            </div>
-            <OverlayWrapper top={md ? '50%' : '73%'} left={md ? '70%' : '50%'}>
-              <StudyCounter />
-            </OverlayWrapper>
-          </>
-        )}
-        {mode === 'choice' && (
+        </TransitionContainer>
+
+        <TransitionContainer modeName="study" time={transitionTime}>
+          <OverlayWrapper top={md ? '50%' : '73%'} left={md ? '70%' : '50%'}>
+            <StudyCounter />
+          </OverlayWrapper>
+        </TransitionContainer>
+
+        <TransitionContainer modeName="choice" time={transitionTime}>
           <OverlayWrapper top="50%" left="70%">
             <ChoiceButton />
           </OverlayWrapper>
-        )}
-        {mode === 'fitness' && (
+        </TransitionContainer>
+
+        <TransitionContainer modeName="fitness" time={transitionTime}>
           <OverlayWrapper top={md ? '50%' : '75%'} left={md ? '70%' : '50%'}>
             <SquatCounter />
           </OverlayWrapper>
-        )}
-        {mode === 'break' && (
+        </TransitionContainer>
+
+        <TransitionContainer modeName="break" time={transitionTime}>
           <OverlayWrapper top={md ? '50%' : '70%'} left={md ? '70%' : '50%'}>
             <BreakCounter />
           </OverlayWrapper>
-        )}
+        </TransitionContainer>
+
         <VRMCanvas />
       </div>
     </Layout>

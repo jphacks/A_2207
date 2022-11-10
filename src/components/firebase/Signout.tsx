@@ -6,7 +6,6 @@ import {
   Button,
   Modal,
   Title,
-  Text,
 } from '@mantine/core'
 import { auth } from './firebase'
 import { css } from '@emotion/react'
@@ -18,7 +17,7 @@ function Signout() {
   const matches = useMediaQuery('(min-width: 576px)');
   const [analyticsOpened, setAnalyticsOpened] = useState(false)
   const [isTestAccount, setIsTestAccount] = useState(false)
-  const [username, setUsername] = useState("くま");
+  const [username, setUsername] = useState('くま')
 
   useEffect(() => {
     setIsTestAccount(
@@ -26,7 +25,7 @@ function Signout() {
         process.env.NEXT_PUBLIC_FIREBASE_TEST_ACCOUNT_EMAIL,
     )
     if (isTestAccount) {
-      setUsername("くま")
+      setUsername('くま')
     } else if (auth?.currentUser?.displayName) {
       setUsername(auth?.currentUser.displayName)
     }

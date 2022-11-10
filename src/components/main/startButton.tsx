@@ -13,6 +13,7 @@ import { useEffect } from 'react'
 const StartButton = () => {
   const {
     setMode,
+    setTransitionMode,
     goal,
     setGoal,
     workTime,
@@ -23,6 +24,7 @@ const StartButton = () => {
   } = useSettingsStore(
     (state) => ({
       setMode: state.setMode,
+      setTransitionMode: state.setTransitionMode,
       goal: state.goal,
       setGoal: state.setGoal,
       workTime: state.workTime,
@@ -88,7 +90,7 @@ const StartButton = () => {
           size="xl"
           onClick={() => {
             setCountRemain(workTime * 60)
-            setMode('study')
+            setTransitionMode('study')
           }}
         >
           START
