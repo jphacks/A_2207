@@ -24,13 +24,23 @@ const modelNameToUrl = {
 export const AnimationNames = [
   'StandingGreeting',
   'AirSquatBentArms',
+  'ArmStretching',
   'idle',
   'SittingIdle',
   'Typing',
   'Waving',
+  'FemaleSittingPose',
+  'Thankful',
 ] as const
 const states = ['idle', 'SittingIdle', 'Typing']
-const emotes = ['StandingGreeting', 'AirSquatBentArms', 'Waving']
+const emotes = [
+  'StandingGreeting',
+  'AirSquatBentArms',
+  'Waving',
+  'ArmStretching',
+  'FemaleSittingPose',
+  'Thankful',
+]
 
 export const VRMAvatar = () => {
   const { gl, scene, camera } = useThree()
@@ -64,7 +74,7 @@ export const VRMAvatar = () => {
   useEffect(() => {
     setLoaded(false)
     gl.outputEncoding = THREE.sRGBEncoding
-    const light = new THREE.DirectionalLight(0xffffff)
+    light = new THREE.DirectionalLight(0xffffff)
     light.position.set(-1.0, 1.0, 1.0).normalize()
     light.castShadow = true
     scene.add(light)
@@ -135,7 +145,7 @@ export const VRMAvatar = () => {
     // createGUI()
 
     return () => {
-      scene.remove(light)
+      if (light) scene.remove(light)
     }
   }, [modelName, inputVrmModel])
 
@@ -147,22 +157,26 @@ export const VRMAvatar = () => {
       vrm.scene.position.setX(0)
       vrm.scene.position.setZ(0)
       vrm.lookAt!.target = null
+      light?.position.set(-1.0, 1.0, 1.0).normalize()
       if (['study'].includes(mode)) {
         vrm.scene.rotateY(0.5 * Math.PI)
         vrm.scene.position.setX(0.4)
         vrm.scene.position.setZ(1.1)
         setAnimation('Typing')
-      } else if (['initial'].includes(mode)) {
+      } else if (['initial', 'choice'].includes(mode)) {
         vrm.lookAt!.target = camera
         setAnimation('idle')
       } else if (['fitness'].includes(mode)) {
-        vrm.scene.rotateY(-0.2 * Math.PI)
+        light?.position.set(1.0, 1.0, 1.0).normalize()
+        vrm.lookAt!.target = camera
+        vrm.scene.rotateY(-0.18 * Math.PI)
         vrm.scene.position.setX(-0.6)
         vrm.scene.position.setZ(1)
         setAnimation('idle')
       } else if (['break'].includes(mode)) {
-        vrm.lookAt!.target = camera
-        setAnimation('idle')
+        vrm.scene.position.setX(0)
+        vrm.scene.position.setZ(-1.2)
+        setAnimation('SittingIdle')
       }
     }
   }, [mode, loaded])
@@ -195,6 +209,7 @@ export const VRMAvatar = () => {
 // https://threejs.org/examples/#webgl_animation_skinning_morph
 let vrm: THREE_VRM.VRM | undefined = undefined
 let mixer: THREE.AnimationMixer | undefined = undefined
+let light: THREE.DirectionalLight | undefined = undefined
 const actions: any = {}
 let activeAction: any, previousAction: any
 const clock = new THREE.Clock()

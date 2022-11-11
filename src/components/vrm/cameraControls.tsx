@@ -101,10 +101,9 @@ export const CameraControls = forwardRef<CameraControlsDefault, unknown>(
             cameraControls.current.dolly(3.6, true)
           }
         } else if (['break'].includes(mode)) {
+          cameraControls.current.enabled = true
           if (md) {
-            cameraControls.current.moveTo(0.2, 0.5, -3, true)
           } else {
-            cameraControls.current.moveTo(0, 0.5, -3, true)
           }
         }
       }

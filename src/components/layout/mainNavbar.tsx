@@ -23,6 +23,7 @@ import Signin from '../firebase/Signin'
 import SignOut from '../firebase/Signout'
 import { auth } from '../firebase/firebase'
 import { useAuthState } from 'react-firebase-hooks/auth'
+import Link from 'next/link'
 
 const useStyles = createStyles((theme) => ({
   link: {
@@ -94,9 +95,8 @@ function NavbarLink({
 }
 
 export function MainNavbar() {
-  const { setMode, setTransitionMode } = useSettingsStore(
+  const { setTransitionMode } = useSettingsStore(
     (state) => ({
-      setMode: state.setMode,
       setTransitionMode: state.setTransitionMode,
     }),
     shallow,
@@ -109,13 +109,15 @@ export function MainNavbar() {
   return (
     <Navbar width={{ base: 80 }} p="md">
       <Center>
-        <Image
-          radius="md"
-          src="/picture/VRooMIcon.png"
-          alt="Random unsplash image"
-          width="50px"
-          height="35px"
-        />
+        <Link href="/landingPage" passHref>
+          <Image
+            radius="md"
+            src="/picture/VRooMIcon.png"
+            alt="Random unsplash image"
+            width="50px"
+            height="35px"
+          />
+        </Link>
       </Center>
       <Navbar.Section grow mt={50}>
         <Stack justify="center" spacing={0}>
