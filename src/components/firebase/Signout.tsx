@@ -14,7 +14,7 @@ import UserAnalytics from './userAnalytics'
 import { useMediaQuery } from '@mantine/hooks'
 
 function Signout() {
-  const matches = useMediaQuery('(min-width: 576px)');
+  const matches = useMediaQuery('(min-width: 576px)')
   const [analyticsOpened, setAnalyticsOpened] = useState(false)
   const [isTestAccount, setIsTestAccount] = useState(false)
   const [username, setUsername] = useState('くま')
@@ -33,7 +33,7 @@ function Signout() {
 
   const Icon = (isTestAccount: boolean) => {
     return auth.currentUser ? (
-      <Center pb={10}>
+      <Center>
         <Avatar
           css={hover}
           radius="xl"
@@ -46,7 +46,7 @@ function Signout() {
         />
       </Center>
     ) : (
-      <Center pb={10}>
+      <Center>
         <Avatar css={hover} radius="xl" variant="outline" color="blue" />
       </Center>
     )
@@ -64,7 +64,12 @@ function Signout() {
         <UserAnalytics />
       </Modal>
 
-      <Popover width={180} position={matches ? "right" : "bottom-end"} withArrow shadow="md">
+      <Popover
+        width={180}
+        position={matches ? 'right' : 'bottom-end'}
+        withArrow
+        shadow="md"
+      >
         <Popover.Target>{Icon(isTestAccount)}</Popover.Target>
         <Popover.Dropdown>
           <Stack>

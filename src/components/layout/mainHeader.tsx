@@ -4,7 +4,7 @@ import SignOut from '../firebase/Signout'
 import { auth } from '../firebase/firebase'
 import { useAuthState } from 'react-firebase-hooks/auth'
 import { useState } from 'react'
-import { Group, Header, Title } from '@mantine/core'
+import { Header, Title, Flex } from '@mantine/core'
 import Link from 'next/link'
 
 export function MainHeader() {
@@ -12,18 +12,20 @@ export function MainHeader() {
   const [user] = useAuthState(auth as any)
 
   return (
-    <Header height={60} p="xs">
-      <Group position="apart">
+    <Header height={60} px="md">
+      <Flex justify="space-between" align="center" mih={60}>
         <IconConfig opened={configOpened} setOpened={setConfigOpened} />
-
         <Link href="/landingPage" passHref>
-          <Title variant="gradient" gradient={{ from: 'blue', to: 'cyan' }}>
+          <Title
+            variant="gradient"
+            order={2}
+            gradient={{ from: 'blue', to: 'cyan' }}
+          >
             VRooM
           </Title>
         </Link>
-
-        <div>{user ? <SignOut /> : <Signin />}</div>
-      </Group>
+        <>{user ? <SignOut /> : <Signin />}</>
+      </Flex>
     </Header>
   )
 }
