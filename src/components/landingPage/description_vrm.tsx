@@ -6,7 +6,7 @@ import {
   List,
   ThemeIcon,
 } from '@mantine/core'
-import { IconCircleCheck } from '@tabler/icons'
+import { IconCircle} from '@tabler/icons'
 import { Image } from '@mantine/core'
 
 const useStyles = createStyles((theme) => ({
@@ -19,7 +19,7 @@ const useStyles = createStyles((theme) => ({
 
   content: {
     maxWidth: 480,
-    marginRight: theme.spacing.xl * 3,
+    marginLeft: theme.spacing.xl * 2,
 
     [theme.fn.smallerThan('md')]: {
       maxWidth: '100%',
@@ -30,7 +30,7 @@ const useStyles = createStyles((theme) => ({
   title: {
     color: theme.colorScheme === 'dark' ? theme.white : theme.black,
     fontFamily: `Greycliff CF, ${theme.fontFamily}`,
-    fontSize: 60,
+    fontSize: 50,
     lineHeight: 1.2,
     fontWeight: 900,
 
@@ -64,12 +64,16 @@ const useStyles = createStyles((theme) => ({
   },
 }))
 
-export function Description() {
+export function Description_vrm() {
   const { classes } = useStyles()
   return (
     <div>
       <Container>
         <div className={classes.inner}>
+          <Image
+            src="/picture/LP_image_vrm.png"
+            className={classes.image}
+          />
           <div className={classes.content}>
             <Title className={classes.title}>
               <Text
@@ -78,41 +82,32 @@ export function Description() {
                 variant="gradient"
                 gradient={{ from: 'blue', to: 'cyan' }}
               >
-                VRooM
+                モデル
               </Text>
+              の追加
             </Title>
             <Text color="dimmed" mt="md">
-              一緒に作業してくれるパートナー
+              自由にモデルを変更可能
             </Text>
             <List
               mt={30}
               spacing="sm"
               size="sm"
+              type="ordered"
               icon={
-                <ThemeIcon color="blue" size={20} radius="xl">
-                  <IconCircleCheck size={16} />
+                <ThemeIcon color="blue" size={18} radius="xl">
+                  <IconCircle size={14} />
                 </ThemeIcon>
               }
             >
               <List.Item>
-                <b>VRMモデルと一緒に作業</b>{' '}
-                魅力的な3Dモデルがあなたの作業のパートナーになってくれます.
+                <b>VRMモデルをダウンロード</b>
               </List.Item>
               <List.Item>
-                <b>作業効率の最適化</b>{'　'}
-                作業に集中できるような機能が実装されています.
-              </List.Item>
-              <List.Item>
-                <b>簡単に利用可能</b>{'　'}
-                Webアプリのため簡単に利用できます. <br></br>{'　'}
-                スマートフォンからの利用も可能です.
+                <b>ファイルを画面にドラッグ<br></br>(または設定画面からアップロード)</b>
               </List.Item>
             </List>
           </div>
-          <Image
-            src="/picture/LP_image.png"
-            className={classes.image}
-          />
         </div>
       </Container>
     </div>
