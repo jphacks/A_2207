@@ -13,7 +13,7 @@ export function DropZone(props: Partial<DropzoneProps>) {
     shallow,
   )
   return (
-    <Dropzone
+    <Dropzone.FullScreen
       onDrop={(files) => {
         console.log('accepted files', files)
         setInputVrmModel(files[0])
@@ -57,6 +57,6 @@ export function DropZone(props: Partial<DropzoneProps>) {
           </Text>
         </div>
       </Group>
-    </Dropzone>
+    </Dropzone.FullScreen>
   )
 }

@@ -87,7 +87,7 @@ const SquatCounter = () => {
 
   useEffect(() => {
     const audio = new Audio('/voices/13.wav')
-    emoteStart('StandingGreeting')
+    emoteStart('ArmStretching')
     setTimeout(() => audio.play(), 500)
     return () => audio.pause()
   }, [])

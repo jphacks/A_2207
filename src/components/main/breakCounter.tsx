@@ -68,7 +68,7 @@ const BreakCounter = () => {
   useEffect(() => {
     start()
     const audio = new Audio('/voices/15.wav')
-    emoteStart('StandingGreeting')
+    emoteStart('FemaleSittingPose')
     setTimeout(() => {
       audio.play()
     }, 500)

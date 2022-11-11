@@ -6,14 +6,12 @@ import {
   Title,
   Stack,
   NumberInput,
-  Divider,
 } from '@mantine/core'
 import { IconSettings } from '@tabler/icons'
 import { Dispatch, SetStateAction } from 'react'
 import shallow from 'zustand/shallow'
 import { useVrmStore } from 'src/stores/vrmStore'
 import { useSettingsStore } from 'src/stores/settingsStore'
-import { DropZone } from './dropzone'
 
 interface IconConfigProps {
   opened: boolean
@@ -57,9 +55,7 @@ export function IconConfig({ opened, setOpened }: IconConfigProps) {
                 { value: 'Miraikomachi', label: 'ミライ小町' },
               ]}
             />
-            <DropZone />
           </Stack>
-          <Divider my="sm" size="sm" color={'black'} />
 
           <Title order={3}>詳細設定</Title>
           <NumberInput
@@ -70,7 +66,7 @@ export function IconConfig({ opened, setOpened }: IconConfigProps) {
           />
         </Stack>
       </Modal>
-      
+
       <Center>
         <ActionIcon variant="transparent">
           <IconSettings onClick={() => setOpened(true)} />
