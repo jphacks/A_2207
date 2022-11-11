@@ -22,7 +22,7 @@ export function MainHeader() {
           </Title>
         </Link>
 
-        <div>{user ? <SignOut /> : <Signin />}</div>
+        <div style={{transform: 'translate(-40px)'}}>{user ? <SignOut /> : <Signin />}</div>
       </Group>
     </Header>
   )
