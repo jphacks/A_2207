@@ -1,3 +1,4 @@
+import { Center } from '@mantine/core'
 import { Property } from 'csstype'
 
 export const OverlayWrapper = ({
@@ -14,18 +15,19 @@ export const OverlayWrapper = ({
   bottom?: Property.Bottom<string | number> | undefined
 }) => {
   return (
-    <div
-      style={{
-        position: 'absolute',
-        zIndex: 10,
-        top: top,
-        left: left,
-        right: right,
-        bottom: bottom,
-        transform: 'translate(-50%, -50%)',
-      }}
-    >
-      {children}
-    </div>
+    <Center>
+      <div
+        style={{
+          position: 'absolute',
+          zIndex: 10,
+          top: top,
+          left: left,
+          right: right,
+          bottom: bottom,
+        }}
+      >
+        {children}
+      </div>
+    </Center>
   )
 }

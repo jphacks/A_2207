@@ -9,10 +9,10 @@ import {
 import shallow from 'zustand/shallow'
 import { useSettingsStore } from 'src/stores/settingsStore'
 import { useEffect } from 'react'
+import ItemBox from './elements/itemBox'
 
 const StartButton = () => {
   const {
-    setMode,
     setTransitionMode,
     goal,
     setGoal,
@@ -23,7 +23,6 @@ const StartButton = () => {
     setCountRemain,
   } = useSettingsStore(
     (state) => ({
-      setMode: state.setMode,
       setTransitionMode: state.setTransitionMode,
       goal: state.goal,
       setGoal: state.setGoal,
@@ -40,17 +39,7 @@ const StartButton = () => {
     setGoal('')
   }, [])
   return (
-    <div
-      style={{
-        padding: '1em',
-        fontWeight: 'bold',
-        background: '#ffffffa0',
-        border: 'solid 3px #6091d3',
-        borderRadius: '10px',
-        position: 'relative',
-        minWidth: '300px',
-      }}
-    >
+    <ItemBox>
       <Stack sx={() => ({ backgroundColor: 'transparent' })}>
         <TextInput
           value={goal}
@@ -68,8 +57,8 @@ const StartButton = () => {
             step={5}
             min={1}
             onChange={(val) => {
-              setWorkTime(val!)
-              setCountRemain(val! * 60)
+              setWorkTime(val || 0)
+              setCountRemain((val || 0) * 60)
             }}
           />
           <NumberInput
@@ -79,7 +68,7 @@ const StartButton = () => {
             value={breakTime}
             step={1}
             min={1}
-            onChange={(val) => setBreakTime(val!)}
+            onChange={(val) => setBreakTime(val || 0)}
           />
         </SimpleGrid>
 
@@ -96,7 +85,7 @@ const StartButton = () => {
           START
         </Button>
       </Stack>
-    </div>
+    </ItemBox>
   )
 }
 

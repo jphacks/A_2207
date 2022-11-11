@@ -49,8 +49,15 @@ const Layout = ({ children }: { children: React.ReactNode }) => {
           )}
         </div>
       )}
-
-      {children}
+      <div
+        style={{
+          position: 'relative',
+          width: '100%',
+          height: '100%',
+        }}
+      >
+        {children}
+      </div>
     </AppShell>
   )
 }
