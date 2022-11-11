@@ -668,14 +668,14 @@
   resolved "https://registry.npmjs.org/@humanwhocodes/object-schema/-/object-schema-1.2.1.tgz"
   integrity sha512-ZnQMnLV4e7hDlUvw8H+U8ASL02SS2Gn6+9Ac3wGGLIe7+je2AeAOxPY+izIPJDfFDb7eDjev0Us8MO1iFRN8hA==
 
-"@mantine/core@^5.5.5":
-  version "5.5.6"
-  resolved "https://registry.yarnpkg.com/@mantine/core/-/core-5.5.6.tgz#cc2f3a36916ca8aa5763648d81ae9a074b43e35c"
-  integrity sha512-os8vh3zCp2tMtU8j2nBwn8ecLoU4dNe5LfI2aZ+xrl8nRKOz4HZy72EpbuSWHUvAtuTrOQdI4i5QtIdaTPl+lg==
+"@mantine/core@^5.7.1":
+  version "5.7.1"
+  resolved "https://registry.yarnpkg.com/@mantine/core/-/core-5.7.1.tgz#2fdbff0c0034a46d9f68bde560ce547e2f83e248"
+  integrity sha512-fGfEqz5TsJ28Ts1g+qkDgdWg7h+wolmBD8xRJVvIy8/W5cEjiCXVyIK5iEX76y15G2ALzneCc6J4V9yvioaXSA==
   dependencies:
     "@floating-ui/react-dom-interactions" "^0.10.1"
-    "@mantine/styles" "5.5.6"
-    "@mantine/utils" "5.5.6"
+    "@mantine/styles" "5.7.1"
+    "@mantine/utils" "5.7.1"
     "@radix-ui/react-scroll-area" "1.0.0"
     react-textarea-autosize "8.3.4"
 
@@ -731,10 +731,13 @@
     clsx "1.1.1"
     csstype "3.0.9"
 
-"@mantine/utils@5.5.6":
-  version "5.5.6"
-  resolved "https://registry.yarnpkg.com/@mantine/utils/-/utils-5.5.6.tgz#769fce79028ac6842b15753e0e9c16480be0b585"
-  integrity sha512-uEeMwTPmt7HMdtdbu7pZQ3en5F3Dj7cavhWGRcokj7PluuzNM+79iR/g4bJ3C4SKhj5LdHi7KjX8+zp6GKyrBg==
+"@mantine/styles@5.7.1":
+  version "5.7.1"
+  resolved "https://registry.yarnpkg.com/@mantine/styles/-/styles-5.7.1.tgz#b5901b60e27bf06f209e9dfbcef95273f4e2d17b"
+  integrity sha512-WVnbl7Zz6b0WWBqYBDV3P61icQ8RSBMR/cHu0YLOyYNpjnuNP4zF+mMgRK3jYsXi/h7++z3ReK7NagBI/iwTSg==
+  dependencies:
+    clsx "1.1.1"
+    csstype "3.0.9"
 
 "@mantine/utils@5.7.1":
   version "5.7.1"

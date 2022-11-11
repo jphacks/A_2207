@@ -15,7 +15,7 @@
   "dependencies": {
     "@emotion/css": "^11.10.0",
     "@emotion/react": "^11.10.4",
-    "@mantine/core": "^5.5.5",
+    "@mantine/core": "^5.7.1",
     "@mantine/dropzone": "^5.7.1",
     "@mantine/ds": "^5.7.1",
     "@mantine/hooks": "^5.5.5",

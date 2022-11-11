@@ -7,7 +7,7 @@ import { formatDate } from 'src/components/analytics/datagraph'
 import { useMediaQuery } from '@mantine/hooks'
 
 function Signin() {
-  const matches = useMediaQuery('(min-width: 576px)');
+  const matches = useMediaQuery('(min-width: 576px)')
   const userLoginUpdate = (uid: string) => {
     const docRef = db.collection('log').doc(uid)
     docRef
@@ -83,9 +83,9 @@ function Signin() {
   }
 
   return (
-    <Popover position={matches ? "right" : "bottom-end"} withArrow shadow="md">
+    <Popover position={matches ? 'right' : 'bottom-end'} withArrow shadow="md">
       <Popover.Target>
-        <Center pb={10}>
+        <Center>
           <Avatar
             css={hover}
             radius="xl"

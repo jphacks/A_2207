@@ -36,7 +36,7 @@ export function IconConfig({ opened, setOpened }: IconConfigProps) {
   )
 
   return (
-    <div>
+    <>
       <Modal
         size="lg"
         centered
@@ -74,6 +74,6 @@ export function IconConfig({ opened, setOpened }: IconConfigProps) {
           <IconSettings onClick={() => setOpened(true)} />
         </ActionIcon>
       </Center>
-    </div>
+    </>
   )
 }

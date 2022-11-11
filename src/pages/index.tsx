@@ -16,41 +16,42 @@ const Home: NextPage = () => {
 
   return (
     <Layout>
-      <div className="container">
-        <TransitionContainer modeName="initial" time={transitionTime}>
-          <OverlayWrapper
-            top={md ? '70%' : '70%'}
-            right={md ? '-5%' : undefined}
-            left={md ? undefined : '50%'}
-          >
-            <StartButton />
-          </OverlayWrapper>
-        </TransitionContainer>
+      <div style={{ position: 'relative', width: '100%', height: '100%' }}>
+        <div style={{ position: 'absolute', width: '100%', height: '100%' }}>
+          <TransitionContainer modeName="initial" time={transitionTime}>
+            <OverlayWrapper
+              top={md ? '70%' : '70%'}
+              right={md ? '-5%' : undefined}
+              left={md ? undefined : '50%'}
+            >
+              <StartButton />
+            </OverlayWrapper>
+          </TransitionContainer>
 
-        <TransitionContainer modeName="study" time={transitionTime}>
-          <OverlayWrapper top={md ? '50%' : '73%'} left={md ? '70%' : '50%'}>
-            <StudyCounter />
-          </OverlayWrapper>
-        </TransitionContainer>
+          <TransitionContainer modeName="study" time={transitionTime}>
+            <OverlayWrapper top={md ? '50%' : '70%'} left={md ? '70%' : '50%'}>
+              <StudyCounter />
+            </OverlayWrapper>
+          </TransitionContainer>
 
-        <TransitionContainer modeName="choice" time={transitionTime}>
-          <OverlayWrapper top="50%" left="70%">
-            <ChoiceButton />
-          </OverlayWrapper>
-        </TransitionContainer>
+          <TransitionContainer modeName="choice" time={transitionTime}>
+            <OverlayWrapper top="50%" left="70%">
+              <ChoiceButton />
+            </OverlayWrapper>
+          </TransitionContainer>
 
-        <TransitionContainer modeName="fitness" time={transitionTime}>
-          <OverlayWrapper top={md ? '50%' : '75%'} left={md ? '70%' : '50%'}>
-            <SquatCounter />
-          </OverlayWrapper>
-        </TransitionContainer>
+          <TransitionContainer modeName="fitness" time={transitionTime}>
+            <OverlayWrapper top={md ? '50%' : '70%'} left={md ? '70%' : '50%'}>
+              <SquatCounter />
+            </OverlayWrapper>
+          </TransitionContainer>
 
-        <TransitionContainer modeName="break" time={transitionTime}>
-          <OverlayWrapper top={md ? '50%' : '70%'} left={md ? '70%' : '50%'}>
-            <BreakCounter />
-          </OverlayWrapper>
-        </TransitionContainer>
-
+          <TransitionContainer modeName="break" time={transitionTime}>
+            <OverlayWrapper top={md ? '50%' : '70%'} left={md ? '70%' : '50%'}>
+              <BreakCounter />
+            </OverlayWrapper>
+          </TransitionContainer>
+        </div>
         <VRMCanvas />
       </div>
     </Layout>
