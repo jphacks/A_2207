@@ -1,20 +1,13 @@
-import {
-  Center,
-  Stack,
-  Title,
-} from '@mantine/core'
+import { Center, Stack, Title } from '@mantine/core'
 import { useCountdownTimer } from 'use-countdown-timer'
 import shallow from 'zustand/shallow'
 import { useSettingsStore } from 'src/stores/settingsStore'
-import { useEffect, useState } from 'react'
+import { useEffect } from 'react'
 import { db, auth } from 'src/components/firebase/firebase'
 import { formatDate } from '../analytics/datagraph'
-import { css } from '@emotion/react'
-import { IoPause, IoPlay } from 'react-icons/io5'
-
+import Counter from './elements/counter'
 
 const StudyCounter = () => {
-  let percentage = 0
   const {
     goal,
     setTransitionMode,
@@ -45,9 +38,6 @@ const StudyCounter = () => {
     setTimeout(() => audio.play(), 500)
     return () => audio.pause()
   }, [])
-
-  const [strokeDashoffset, setStrokeDashoffset] = useState(- length - length * countRemain / (workTime))
-  const [deg, setDeg] = useState(360)
 
   const handleClick = () => {
     if (isRunning) {
@@ -98,14 +88,7 @@ const StudyCounter = () => {
       }
     }
     setCountRemain(countdown / 1000)
-    percentage = (countdown * 100) / (timerSeconds * 1000)
-
-    const length = Math.PI * 2 * 100;
-    const offset = - length - length * percentage / 100
-    setStrokeDashoffset(offset)
-    setDeg(360 * percentage / 100)
   }, [isRunning, countdown])
-
 
   return (
     <div
@@ -123,120 +106,15 @@ const StudyCounter = () => {
         <Center>
           <Title color="blue">{goal}</Title>
         </Center>
-        <div css={style(strokeDashoffset, deg)} onClick={() => handleClick()}>
-          <div className="circle">
-            <svg width="300" viewBox="0 0 220 220" xmlns="http://www.w3.org/2000/svg">
-              <g transform="translate(110,110)">
-                <circle r="100" className="e-c-base"/>
-                <g transform="rotate(-90)">
-                  <circle r="100" className="e-c-progress" />
-                  <circle cx="100" cy="0" r="8" className="e-c-pointer" />
-                </g>
-              </g>
-            </svg>
-          </div>
-          <div className="controlls">
-            <div className="display-remain-time">
-              {new Date(countdown).toISOString().slice(14, 19)}
-            </div>
-            <div> 
-              {isRunning ?
-                <IoPause fontSize={60} color="#1C7ED6" />
-              :
-                <IoPlay fontSize={60} color="#1C7ED6" />
-              }
-            </div>
-          </div>
-        </div>
+        <Counter
+          timerSeconds={timerSeconds}
+          countdown={countdown}
+          isRunning={isRunning}
+          handleClick={handleClick}
+        />
       </Stack>
     </div>
   )
 }
-
-const style = (strokeDashoffset: number, deg: number) => css`
-  button[data-setter] {
-    outline: none;
-    background: transparent;
-    border: none;
-    font-family: 'Roboto';
-    font-weight: 300;
-    font-size: 18px;
-    width: 25px;
-    height: 30px;
-    color: #1C7ED6;
-    cursor: pointer;
-  }
-  button[data-setter]:hover { opacity: 0.5; }
-  .setters {
-    position: absolute;
-    left: 85px;
-    top: 75px;
-  }
-  .minutes-set {
-    float: left;
-    margin-right: 28px;
-  }
-  .seconds-set { float: right; }
-  .controlls {
-    position: absolute;
-    left: 75px;
-    top: 105px;
-    text-align: center;
-  }
-  .display-remain-time {
-    font-family: 'Roboto';
-    font-weight: 100;
-    font-size: 65px;
-    color: #1C7ED6;
-  }
-  #pause {
-    outline: none;
-    background: transparent;
-    border: none;
-    margin-top: 10px;
-    width: 50px;
-    height: 50px;
-    position: absolute;
-  }
-  .play::before {
-    content: "";
-    position: absolute;
-    border-top: 15px solid transparent;
-    border-bottom: 15px solid transparent;
-    border-left: 22px solid #1C7ED6;
-  }
-  .pause::after {
-    content: "";
-    position: absolute;
-    width: 15px;
-    height: 30px;
-    background-color: transparent;
-    border-radius: 1px;
-    border: 5px solid #1C7ED6;
-    border-top: none;
-    border-bottom: none;
-  }
-  #pause:hover { opacity: 0.8; }
-  .e-c-base {
-    fill: none;
-    stroke: #B6B6B6;
-    stroke-width: 4px
-  }
-  .e-c-progress {
-    fill: none;
-    stroke: #1C7ED6;
-    stroke-width: 4px;
-    transition: stroke-dashoffset 0.7s;
-    stroke-dasharray: ${Math.PI * 2 * 100};
-    stroke-dashoffset: ${strokeDashoffset};
-  }
-  .e-c-pointer {
-    fill: #FFF;
-    stroke: #1C7ED6;
-    stroke-width: 2px;
-    transition: transform 0.7s;
-    transform: rotate(${deg}deg);
-  }
-`
 
 export default StudyCounter

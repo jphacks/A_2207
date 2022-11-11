@@ -9,7 +9,6 @@ import Layout from 'src/components/layout/mainLayout'
 import { useMediaQuery } from '@mantine/hooks'
 import { TransitionContainer } from 'src/components/main/elements/transitionContainer'
 import { OverlayWrapper } from 'src/components/main/elements/overlayWrapper'
-import { DropZone } from 'src/components/layout/dropzone'
 
 const Home: NextPage = () => {
   const md = useMediaQuery('(min-width: 992px)')
@@ -52,7 +51,6 @@ const Home: NextPage = () => {
           </OverlayWrapper>
         </TransitionContainer>
 
-        <DropZone />
         <VRMCanvas />
       </div>
     </Layout>

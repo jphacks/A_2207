@@ -1,5 +1,6 @@
 import { css } from '@emotion/react'
 import { Center } from '@mantine/core'
+import { useMediaQuery } from '@mantine/hooks'
 import { useEffect, useState } from 'react'
 
 const WiperTransition = ({ time }: { time: number }) => {
@@ -9,49 +10,50 @@ const WiperTransition = ({ time }: { time: number }) => {
     setAnimState(true)
     setTimeout(() => setAnimState(false), time * 1000)
   }, [])
-
-  const transition = css`
-    @keyframes fade {
-      0% {
-        opacity: 0;
-      }
-      10% {
-        opacity: 1;
-      }
-      90% {
-        opacity: 1;
-      }
-      100% {
-        opacity: 0;
-      }
-    }
-    height: 100%;
-    width: 100%;
-    background: #ffffff;
-    animation: fade ${time}s linear forwards;
-  `
+  const md = useMediaQuery('(min-width: 992px)')
 
   return (
     <>
       {animState && (
         <Center
-          css={[transition]}
+          css={[transition(time)]}
           style={{
             position: 'absolute',
             zIndex: 11,
           }}
         >
-          <div className="loading-container" css={[loader]}>
+          <Center className="loading-container" css={[loader(md)]}>
             <div className="loading" />
             <div id="loading-text">loading</div>
-          </div>
+          </Center>
         </Center>
       )}
     </>
   )
 }
 
-const loader = css`
+const transition = (time: number) => css`
+  @keyframes fade {
+    0% {
+      opacity: 0;
+    }
+    10% {
+      opacity: 1;
+    }
+    90% {
+      opacity: 1;
+    }
+    100% {
+      opacity: 0;
+    }
+  }
+  height: 100%;
+  width: 100%;
+  background: #ffffff;
+  animation: fade ${time}s linear forwards;
+`
+
+const loader = (md: boolean) => css`
   @keyframes rotate-loading {
     0% {
       transform: rotate(0deg);
@@ -249,9 +251,9 @@ const loader = css`
   }
   .loading-container,
   .loading {
-    height: 150px;
+    height: ${md ? 200 : 150}px;
     position: relative;
-    width: 150px;
+    width: ${md ? 200 : 150}px;
     border-radius: 100%;
   }
 
@@ -260,7 +262,7 @@ const loader = css`
   }
 
   .loading {
-    border: 2px solid transparent;
+    border: ${md ? 3 : 2}px solid transparent;
     border-color: transparent #558bb4 transparent #558bb4;
     -moz-animation: rotate-loading 1.5s linear 0s infinite normal;
     -moz-transform-origin: 50% 50%;
@@ -278,14 +280,13 @@ const loader = css`
     -webkit-animation: loading-text-opacity 1.5s linear 0s infinite normal;
     animation: loading-text-opacity 1.5s linear 0s infinite normal;
     color: #558bb4;
-    font-size: 13px;
+    font-size: ${md ? 16 : 12}px;
     font-weight: bold;
     opacity: 0;
     position: absolute;
     text-align: center;
     text-transform: uppercase;
     width: 100px;
-    transform: translate(25px, -80px);
   }
 `
 

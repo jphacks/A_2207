@@ -1,6 +1,6 @@
 import shallow from 'zustand/shallow'
 import { useSettingsStore } from 'src/stores/settingsStore'
-import WiperTransition from 'src/components/transition/wiperTransition'
+import WiperTransition from 'src/components/main/elements/wiperTransition'
 import { useEffect } from 'react'
 
 export const TransitionContainer = ({

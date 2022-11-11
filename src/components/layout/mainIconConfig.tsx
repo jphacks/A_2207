@@ -12,6 +12,7 @@ import { Dispatch, SetStateAction } from 'react'
 import shallow from 'zustand/shallow'
 import { useVrmStore } from 'src/stores/vrmStore'
 import { useSettingsStore } from 'src/stores/settingsStore'
+import { DropZone } from './element/dropzone'
 
 interface IconConfigProps {
   opened: boolean
@@ -55,6 +56,7 @@ export function IconConfig({ opened, setOpened }: IconConfigProps) {
                 { value: 'Miraikomachi', label: 'ミライ小町' },
               ]}
             />
+            <DropZone />
           </Stack>
 
           <Title order={3}>詳細設定</Title>
