@@ -14,8 +14,8 @@ const Layout = ({ children }: { children: React.ReactNode }) => {
     <AppShell
       padding={0}
       navbar={sm ? <MainNavbar /> : <></>}
-      footer={(sm || expanded) ? <></> : <MainFooter />}
-      header={(sm || expanded) ? <></> : <MainHeader />}
+      footer={sm || expanded ? <></> : <MainFooter />}
+      header={sm || expanded ? <></> : <MainHeader />}
       styles={(theme) => ({
         main: {
           backgroundColor:
@@ -24,25 +24,32 @@ const Layout = ({ children }: { children: React.ReactNode }) => {
               : theme.colors.gray[0],
         },
       })}
+      style={{
+        position: 'fixed',
+        left: '0px',
+        right: '0px',
+        top: '0px',
+        bottom: '0px',
+      }}
     >
-      {!sm &&
+      {!sm && (
         <div
           style={{
             position: 'absolute',
             zIndex: 100,
-            top: '2.5%',
-            right: '2%',
+            top: '18px',
+            right: '16px',
           }}
           onClick={() => setExpanded(!expanded)}
         >
-          {expanded ?
-            <IconArrowsMinimize color='gray' />
-            :
-            <IconArrowsMaximize color='gray' />
-          }
+          {expanded ? (
+            <IconArrowsMinimize color="gray" />
+          ) : (
+            <IconArrowsMaximize color="gray" />
+          )}
         </div>
- 
-      }
+      )}
+
       {children}
     </AppShell>
   )

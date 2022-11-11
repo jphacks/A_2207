@@ -9,7 +9,7 @@ import { DropZoneFullScreen } from './element/dropZoneFullScreen'
 const VRMCanvas = () => {
   return (
     <>
-      <Canvas camera={{ fov: 20 }} shadows>
+      <Canvas camera={{ fov: 20 }} shadows flat style={{ height: '100%' }}>
         <VRMAvatar />
         <mesh position={[0, -0.94, 0.5]} scale={0.5} rotation-y={Math.PI}>
           <Room />
@@ -17,6 +17,7 @@ const VRMCanvas = () => {
         <CameraControls />
         <Environment background={false} preset={'dawn'} />
       </Canvas>
+
       <DropZoneFullScreen />
     </>
   )
