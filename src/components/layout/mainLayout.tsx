@@ -4,15 +4,18 @@ import { useMediaQuery } from '@mantine/hooks'
 import { MainNavbar } from './mainNavbar'
 import { MainFooter } from './mainFooter'
 import { MainHeader } from './mainHeader'
+import { IconArrowsMaximize, IconArrowsMinimize } from '@tabler/icons'
+import { useState } from 'react'
 
 const Layout = ({ children }: { children: React.ReactNode }) => {
-  const matches = useMediaQuery('(min-width: 576px)')
+  const sm = useMediaQuery('(min-width: 576px)')
+  const [expanded, setExpanded] = useState(false)
   return (
     <AppShell
       padding={0}
-      navbar={matches ? <MainNavbar /> : <></>}
-      footer={matches ? <></> : <MainFooter />}
-      header={matches ? <></> : <MainHeader />}
+      navbar={sm ? <MainNavbar /> : <></>}
+      footer={(sm || expanded) ? <></> : <MainFooter />}
+      header={(sm || expanded) ? <></> : <MainHeader />}
       styles={(theme) => ({
         main: {
           backgroundColor:
@@ -22,6 +25,24 @@ const Layout = ({ children }: { children: React.ReactNode }) => {
         },
       })}
     >
+      {!sm &&
+        <div
+          style={{
+            position: 'absolute',
+            zIndex: 100,
+            top: '2.5%',
+            right: '2%',
+          }}
+          onClick={() => setExpanded(!expanded)}
+        >
+          {expanded ?
+            <IconArrowsMinimize color='gray' />
+            :
+            <IconArrowsMaximize color='gray' />
+          }
+        </div>
+ 
+      }
       {children}
     </AppShell>
   )
