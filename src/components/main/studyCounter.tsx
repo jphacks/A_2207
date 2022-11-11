@@ -1,53 +1,20 @@
 import {
-  Button,
   Center,
   Stack,
   Title,
-  Text,
-  Group,
-  Progress,
-  Card,
-  createStyles,
-  RingProgress,
 } from '@mantine/core'
 import { useCountdownTimer } from 'use-countdown-timer'
 import shallow from 'zustand/shallow'
 import { useSettingsStore } from 'src/stores/settingsStore'
-import { useEffect, useRef, useState } from 'react'
+import { useEffect, useState } from 'react'
 import { db, auth } from 'src/components/firebase/firebase'
 import { formatDate } from '../analytics/datagraph'
+import { css } from '@emotion/react'
+import { IoPause, IoPlay } from 'react-icons/io5'
 
-const getRandomInt = (max: number) => {
-  return Math.floor(Math.random() * max)
-}
-
-const useStyles = createStyles((theme) => ({
-  card: {
-    backgroundColor: theme.fn.primaryColor(),
-    width: '100%',
-  },
-
-  title: {
-    color: theme.fn.rgba(theme.white, 0.65),
-  },
-
-  stats: {
-    color: theme.white,
-  },
-
-  progressBar: {
-    backgroundColor: theme.white,
-  },
-
-  progressTrack: {
-    backgroundColor: theme.fn.rgba(theme.white, 0.4),
-  },
-}))
 
 const StudyCounter = () => {
-  const { classes } = useStyles()
-  const percentage = useRef(0)
-  const [circle, setCircle] = useState(false)
+  let percentage = 0
   const {
     goal,
     setTransitionMode,
@@ -78,6 +45,17 @@ const StudyCounter = () => {
     setTimeout(() => audio.play(), 500)
     return () => audio.pause()
   }, [])
+
+  const [strokeDashoffset, setStrokeDashoffset] = useState(- length - length * countRemain / (workTime))
+  const [deg, setDeg] = useState(360)
+
+  const handleClick = () => {
+    if (isRunning) {
+      pause()
+    } else {
+      start()
+    }
+  }
 
   useEffect(() => {
     if (countdown === 0 && isRunning === true) {
@@ -120,17 +98,14 @@ const StudyCounter = () => {
       }
     }
     setCountRemain(countdown / 1000)
-    percentage.current = (countdown * 100) / (timerSeconds * 1000)
+    percentage = (countdown * 100) / (timerSeconds * 1000)
+
+    const length = Math.PI * 2 * 100;
+    const offset = - length - length * percentage / 100
+    setStrokeDashoffset(offset)
+    setDeg(360 * percentage / 100)
   }, [isRunning, countdown])
 
-  const timerClick = () => {
-    setCircle(!circle)
-    const fileNumbers = [2, 3]
-    const audio = new Audio(
-      `voices/${fileNumbers[getRandomInt(fileNumbers.length)]}.wav`,
-    )
-    audio.play()
-  }
 
   return (
     <div
@@ -148,68 +123,120 @@ const StudyCounter = () => {
         <Center>
           <Title color="blue">{goal}</Title>
         </Center>
-        <Center onClick={() => timerClick()}>
-          {circle ? (
-            <Card withBorder radius="md" p="xl" className={classes.card}>
-              <Text size="xs" weight={700} className={classes.title}>
-                REMAINING
-              </Text>
-              <Title weight={500} className={classes.stats}>
-                {new Date(countdown).toISOString().slice(14, 19)}
-              </Title>
-
-              <Progress
-                value={percentage.current}
-                mt="md"
-                size="lg"
-                radius="xl"
-                classNames={{
-                  root: classes.progressTrack,
-                  bar: classes.progressBar,
-                }}
-              />
-              <Group position="left">
-                <Text size="xs" color="white">
-                  あと {Math.trunc(percentage.current)}%
-                </Text>
-              </Group>
-            </Card>
-          ) : (
-            <RingProgress
-              label={
-                <div>
-                  <Text size="xs" weight={700} align="center">
-                    REMAINING
-                  </Text>
-                  <Title weight={500} align="center">
-                    {new Date(countdown).toISOString().slice(14, 19)}
-                  </Title>
-                  <Text size="xs" color="gray" align="center">
-                    あと {Math.trunc(percentage.current)}%
-                  </Text>
-                </div>
+        <div css={style(strokeDashoffset, deg)} onClick={() => handleClick()}>
+          <div className="circle">
+            <svg width="300" viewBox="0 0 220 220" xmlns="http://www.w3.org/2000/svg">
+              <g transform="translate(110,110)">
+                <circle r="100" className="e-c-base"/>
+                <g transform="rotate(-90)">
+                  <circle r="100" className="e-c-progress" />
+                  <circle cx="100" cy="0" r="8" className="e-c-pointer" />
+                </g>
+              </g>
+            </svg>
+          </div>
+          <div className="controlls">
+            <div className="display-remain-time">
+              {new Date(countdown).toISOString().slice(14, 19)}
+            </div>
+            <div> 
+              {isRunning ?
+                <IoPause fontSize={60} color="#1C7ED6" />
+              :
+                <IoPlay fontSize={60} color="#1C7ED6" />
               }
-              size={240}
-              thickness={16}
-              roundCaps
-              sections={[{ value: percentage.current, color: 'blue' }]}
-            />
-          )}
-        </Center>
-        <Center>
-          {isRunning ? (
-            <Button variant="filled" onClick={pause}>
-              一時停止
-            </Button>
-          ) : (
-            <Button variant="outline" onClick={start}>
-              再開
-            </Button>
-          )}
-        </Center>
+            </div>
+          </div>
+        </div>
       </Stack>
     </div>
   )
 }
+
+const style = (strokeDashoffset: number, deg: number) => css`
+  button[data-setter] {
+    outline: none;
+    background: transparent;
+    border: none;
+    font-family: 'Roboto';
+    font-weight: 300;
+    font-size: 18px;
+    width: 25px;
+    height: 30px;
+    color: #1C7ED6;
+    cursor: pointer;
+  }
+  button[data-setter]:hover { opacity: 0.5; }
+  .setters {
+    position: absolute;
+    left: 85px;
+    top: 75px;
+  }
+  .minutes-set {
+    float: left;
+    margin-right: 28px;
+  }
+  .seconds-set { float: right; }
+  .controlls {
+    position: absolute;
+    left: 75px;
+    top: 105px;
+    text-align: center;
+  }
+  .display-remain-time {
+    font-family: 'Roboto';
+    font-weight: 100;
+    font-size: 65px;
+    color: #1C7ED6;
+  }
+  #pause {
+    outline: none;
+    background: transparent;
+    border: none;
+    margin-top: 10px;
+    width: 50px;
+    height: 50px;
+    position: absolute;
+  }
+  .play::before {
+    content: "";
+    position: absolute;
+    border-top: 15px solid transparent;
+    border-bottom: 15px solid transparent;
+    border-left: 22px solid #1C7ED6;
+  }
+  .pause::after {
+    content: "";
+    position: absolute;
+    width: 15px;
+    height: 30px;
+    background-color: transparent;
+    border-radius: 1px;
+    border: 5px solid #1C7ED6;
+    border-top: none;
+    border-bottom: none;
+  }
+  #pause:hover { opacity: 0.8; }
+  .e-c-base {
+    fill: none;
+    stroke: #B6B6B6;
+    stroke-width: 4px
+  }
+  .e-c-progress {
+    fill: none;
+    stroke: #1C7ED6;
+    stroke-width: 4px;
+    transition: stroke-dashoffset 0.7s;
+    stroke-dasharray: ${Math.PI * 2 * 100};
+    stroke-dashoffset: ${strokeDashoffset};
+  }
+  .e-c-pointer {
+    fill: #FFF;
+    stroke: #1C7ED6;
+    stroke-width: 2px;
+    transition: transform 0.7s;
+    transform: rotate(${deg}deg);
+  }
+`
 
 export default StudyCounter

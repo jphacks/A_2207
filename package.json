@@ -38,6 +38,7 @@
     "react-chartjs-2": "^4.3.1",
     "react-dom": "18.2.0",
     "react-firebase-hooks": "^5.0.3",
+    "react-icons": "^4.6.0",
     "react-share": "^4.4.1",
     "react-three-fiber": "^6.0.13",
     "react-tooltip": "^4.4.2",
