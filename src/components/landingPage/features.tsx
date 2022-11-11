@@ -11,7 +11,7 @@ const useStyles = createStyles((theme) => ({
   overlay: {
     position: 'absolute',
     height: 100,
-    width: 160,
+    width: 340,
     top: 0,
     left: 0,
     backgroundColor: theme.fn.variant({
@@ -73,7 +73,7 @@ const mockdata = [
     icon: IconHeart,
     title: '作業モード',
     description:
-      '作業中は常にアバターが見守ってくれます. 作業を頑張っていれば応援してくれるかもしれません.',
+      'VRMモデルがあなたと一緒に作業をしてくれます. 作業を頑張っていれば応援してくれるかもしれません.',
   },
   {
     icon: IconRun,

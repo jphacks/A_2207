@@ -107,7 +107,7 @@ export function Description2() {
 
         <Container size={640}>
           <Text size="lg" className={classes.description}>
-            あなたの好きなタイミングでアバターが作業のお供をしてくれます. 友達が忙しくても大丈夫です. アバターの種類は自由に変えることができます.
+            あなたの好きなタイミングでVRMモデルが作業のお供をしてくれます. 友達が忙しくても大丈夫です. モデルの種類は自由に変えることができます.
           </Text>
         </Container>
       </div>

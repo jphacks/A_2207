@@ -2,20 +2,23 @@ import { Box } from '@mantine/core'
 import type { NextPage } from 'next'
 import { Description } from 'src/components/landingPage/description'
 import { Description2 } from 'src/components/landingPage/description2'
-import { Description_camera } from 'src/components/landingPage/description_camera'
+import { Description_mode } from 'src/components/landingPage/description_mode'
+import { Description_vrm } from 'src/components/landingPage/description_vrm'
 import { Features } from 'src/components/landingPage/features'
 
 const Home: NextPage = () => {
   return (
     <>
-      <Box py="100px">
+      <></>
+      <Box py="80px">
         <Description />
       </Box>
-      <Description2 />
-      <Box py="150px">
+      <Description_mode />
+      <Box py="100px">
         <Features />
       </Box>
-      <Description_camera />
+      <Description2 />
+      <Description_vrm />
     </>
   )
 }
