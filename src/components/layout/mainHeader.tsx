@@ -24,7 +24,10 @@ export function MainHeader() {
             VRooM
           </Title>
         </Link>
-        <>{user ? <SignOut /> : <Signin />}</>
+
+        <div style={{ transform: 'translate(-40px)' }}>
+          {user ? <SignOut /> : <Signin />}
+        </div>
       </Flex>
     </Header>
   )
