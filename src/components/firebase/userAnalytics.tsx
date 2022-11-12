@@ -11,11 +11,11 @@ import {
   LineShareButton,
   LineIcon,
   TwitterShareButton,
-  TwitterIcon
-} from "react-share";
+  TwitterIcon,
+} from 'react-share'
 import { formatDate } from 'src/components/analytics/datagraph'
 
-const shareUrl = "https://jphacks-2022-4839e.web.app/"
+const shareUrl = 'https://jphacks-2022-4839e.web.app/'
 
 const body = (hour: number) => {
   return `『VRooM』で今週は ${hour}分 作業しました！！`
@@ -36,7 +36,7 @@ const getTotalHour = (logs: Array<{ date: string; count: number }>) => {
 
 const UserAnalytics = () => {
   const [log, setLog] = useState<Array<{ date: string; count: number }>>()
-  const [totalHour, setTotalHour] = useState(0);
+  const [totalHour, setTotalHour] = useState(0)
 
   if (!auth.currentUser) {
     return null
@@ -63,57 +63,41 @@ const UserAnalytics = () => {
 
   return (
     <>
-      <Text size="xs" color="gray">{body(totalHour)}</Text>
-      <div>
-        <div style={{ marginTop: "10px"}}>
-            <EmailShareButton
-              url={shareUrl}
-              subject="VRooM"
-              body={body(totalHour)}
-            >
-              <EmailIcon size={32} round />
-            </EmailShareButton>
-            <FacebookShareButton
-              url={shareUrl}
-              quote={body(totalHour)}
-            >
-              <FacebookIcon size={32} round />
-            </FacebookShareButton>
+      <EmailShareButton url={shareUrl} subject="VRooM" body={body(totalHour)}>
+        <EmailIcon size={32} round />
+      </EmailShareButton>
+      <FacebookShareButton url={shareUrl} quote={body(totalHour)}>
+        <FacebookIcon size={32} round />
+      </FacebookShareButton>
 
-            <TwitterShareButton
-              url={shareUrl}
-              title={body(totalHour)}
-            >
-              <TwitterIcon size={32} round />
-            </TwitterShareButton>
+      <TwitterShareButton url={shareUrl} title={body(totalHour)}>
+        <TwitterIcon size={32} round />
+      </TwitterShareButton>
 
-            <LineShareButton
-              url={shareUrl}
-              title={body(totalHour)}
-            >
-              <LineIcon size={32} round />
-            </LineShareButton>
-        </div>
-        {log ? (
-          <SimpleGrid
-            py={60}
-            cols={2}
-            spacing="lg"
-            breakpoints={[{ maxWidth: 800, cols: 1, spacing: 'md' }]}
-          >
-            <div>
-              <HeatMap values={log} />
-            </div>
-            <div>
-              <DataGraph values={log} />
-            </div>
-          </SimpleGrid>
-        ) : (
-          <Text>表示する結果がまだありません</Text>
-        )}
-      </div>
+      <LineShareButton url={shareUrl} title={body(totalHour)}>
+        <LineIcon size={32} round />
+      </LineShareButton>
+      {/* <Text size="xs" color="gray" style={{ fontSize: 20 }}>
+        {body(totalHour)}
+      </Text> */}
+      {log ? (
+        <SimpleGrid
+          py={60}
+          cols={2}
+          spacing="lg"
+          breakpoints={[{ maxWidth: 992, cols: 1, spacing: 'md' }]}
+        >
+          <div style={{ maxWidth: 700 }}>
+            <HeatMap values={log} />
+          </div>
+          <div style={{ maxWidth: 700 }}>
+            <DataGraph values={log} />
+          </div>
+        </SimpleGrid>
+      ) : (
+        <Text>表示する結果がまだありません</Text>
+      )}
     </>
-
   )
 }
 

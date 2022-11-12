@@ -59,7 +59,7 @@ function Signout() {
         centered
         opened={analyticsOpened}
         onClose={() => setAnalyticsOpened(false)}
-        title={<Title>{username}さんの記録</Title>}
+        title={<Title css={userName}>{username}さんの記録</Title>}
       >
         <UserAnalytics />
       </Modal>
@@ -98,6 +98,19 @@ function Signout() {
 const hover = css`
   &:hover {
     cursor: pointer;
+  }
+`
+
+const userName = css`
+  border-bottom: solid 3px #cce4ff;
+  position: relative;
+  :after {
+    position: absolute;
+    content: ' ';
+    display: block;
+    border-bottom: solid 3px #5472cd;
+    bottom: -3px;
+    width: 20%;
   }
 `
 

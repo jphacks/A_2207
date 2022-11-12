@@ -210,6 +210,7 @@ export const VRMAvatar = () => {
   }
 
   useEffect(() => {
+    clearExpression()
     if (emote === 'StandingGreeting') {
       setExpression('happy', 1)
     }
