@@ -33,7 +33,7 @@ const StudyCounter = () => {
 
   const timerSeconds = workTime * 60
   const { countdown, start, pause, isRunning } = useCountdownTimer({
-    timer: 1000 * (countRemain !== 0 ? countRemain : workTime * 60),
+    timer: 1000 * (countRemain !== 0 ? 40 : workTime * 60),
   })
 
   useEffect(() => {

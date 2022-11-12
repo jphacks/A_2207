@@ -26,7 +26,7 @@ const BreakCounter = () => {
   const timerSeconds = breakTime * 60
 
   const { countdown, start, pause, isRunning } = useCountdownTimer({
-    timer: 1000 * timerSeconds,
+    timer: 1000 * 10,
   })
 
   useEffect(() => {

@@ -45,8 +45,8 @@ export const initialState: SettingsState = {
   studied: false,
   countRemain: 60 * 25,
   squatGoalCount: 15,
-  workTime: 25,
-  breakTime: 5,
+  workTime: 1,
+  breakTime: 1,
   environment: 'sunset',
 }
 
