@@ -1,5 +1,5 @@
 import { createStyles, Text, SimpleGrid, Container } from '@mantine/core'
-import { IconHeart, IconClock, IconRun, TablerIcon } from '@tabler/icons'
+import { IconHeart, IconClock, IconRun, TablerIcon, IconChartBar } from '@tabler/icons'
 
 const useStyles = createStyles((theme) => ({
   feature: {
@@ -11,7 +11,7 @@ const useStyles = createStyles((theme) => ({
   overlay: {
     position: 'absolute',
     height: 100,
-    width: 340,
+    width: 240,
     top: 0,
     left: 0,
     backgroundColor: theme.fn.variant({
@@ -77,15 +77,21 @@ const mockdata = [
   },
   {
     icon: IconRun,
-    title: '休憩用のスクワッドモード',
+    title: 'スクワッドモード',
     description:
-      '作業に一区切りがついたらスクワッドで気分転換しましょう. カメラによるAIポーズ認識によって, スクワッドの回数を自動計測してくれます.',
+      '作業が済んだらスクワッドで気分転換しましょう. カメラによるAIポーズ認識によって, スクワッドの回数を自動計測してくれます.',
   },
   {
     icon: IconClock,
     title: 'タイマー機能',
     description:
-      '作業と休憩の時間を管理することで適切なサイクルを実現できます. 時間設定はカスタマイズ可能です.',
+      '作業と休憩の時間を管理することで作業の集中に適切なサイクルを実現できます. 時間設定はカスタマイズ可能です.',
+  },
+  {
+    icon: IconChartBar,
+    title: '自動記録',
+    description:
+      'アカウント連携をすることで,作業時間を自動で記録できます.統計画面で過去の自分の頑張りを振り返ることが可能です.',
   },
 ]
 
@@ -95,7 +101,7 @@ export function Features() {
   return (
     <Container mt={30} mb={30} size="lg">
       <SimpleGrid
-        cols={3}
+        cols={4}
         breakpoints={[{ maxWidth: 'sm', cols: 1 }]}
         spacing={50}
       >
