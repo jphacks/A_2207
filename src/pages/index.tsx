@@ -30,7 +30,7 @@ const Home: NextPage = () => {
         <OverlayWrapper
           top={md ? '30%' : undefined}
           bottom={md ? undefined : sm ? '80px' : '140px'}
-          right={md ? '20%' : undefined}
+          right={sm ? '10%' : undefined}
         >
           <StudyCounter />
         </OverlayWrapper>
@@ -40,7 +40,7 @@ const Home: NextPage = () => {
         <OverlayWrapper
           top={md ? '30%' : undefined}
           bottom={md ? undefined : sm ? '80px' : '140px'}
-          right={md ? '20%' : undefined}
+          right={md ? '10%' : undefined}
         >
           <ChoiceButton />
         </OverlayWrapper>
@@ -60,7 +60,7 @@ const Home: NextPage = () => {
         <OverlayWrapper
           top={md ? '30%' : undefined}
           bottom={md ? undefined : sm ? '80px' : '140px'}
-          right={md ? '20%' : undefined}
+          right={sm ? '10%' : undefined}
         >
           <BreakCounter />
         </OverlayWrapper>

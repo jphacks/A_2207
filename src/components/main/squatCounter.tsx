@@ -5,7 +5,7 @@ import { Pose, Results } from '@mediapipe/pose'
 import { drawCanvas } from '../../utils/drawCanvas'
 import updateCounter from '../../utils/updateCounter'
 import { useTimer } from '../../hooks/useTimer'
-import { Title, Stack, Progress } from '@mantine/core'
+import { Title, Stack, Progress, Text } from '@mantine/core'
 import shallow from 'zustand/shallow'
 import { useSettingsStore } from 'src/stores/settingsStore'
 import { useVrmStore } from 'src/stores/vrmStore'
@@ -178,9 +178,9 @@ const SquatCounter = () => {
               display: 'flex',
               alignItems: 'center',
               justifyContent: 'center',
-              backgroundColor: '#ffffffa0',
-              border: 'solid 2px #ffffff',
+              background: '#ffffff99',
               borderRadius: '10px',
+              backdropFilter: 'blur(3px)',
               marginBottom: '5px',
             }}
           >
@@ -188,9 +188,13 @@ const SquatCounter = () => {
               value={(count / squatGoalCount) * 100}
               style={{ width: '70%' }}
             />
-            <Title color="blue" pl={20}>
-              : {count}
-            </Title>
+            <Text
+              color="black"
+              pl={20}
+              style={{ fontSize: 25, fontWeight: 'bold' }}
+            >
+              {count}
+            </Text>
           </div>
           <ItemBox>
             <div

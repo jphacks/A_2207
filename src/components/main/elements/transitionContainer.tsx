@@ -2,6 +2,7 @@ import shallow from 'zustand/shallow'
 import { useSettingsStore } from 'src/stores/settingsStore'
 import WiperTransition from 'src/components/main/elements/wiperTransition'
 import { useEffect } from 'react'
+import { useVrmStore } from 'src/stores/vrmStore'
 
 export const TransitionContainer = ({
   children,
@@ -20,9 +21,16 @@ export const TransitionContainer = ({
     }),
     shallow,
   )
+  const { emoteFinish } = useVrmStore(
+    (state) => ({
+      emoteFinish: state.emoteFinish,
+    }),
+    shallow,
+  )
   useEffect(() => {
     if (transitionMode === modeName) {
       const timeoutId = setTimeout(() => {
+        emoteFinish()
         setMode(transitionMode)
       }, (1000 * time) / 2)
       return () => {

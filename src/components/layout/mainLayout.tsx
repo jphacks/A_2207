@@ -1,15 +1,16 @@
 import React from 'react'
-import { AppShell } from '@mantine/core'
-import { useMediaQuery } from '@mantine/hooks'
+import { AppShell, ThemeIcon } from '@mantine/core'
+import { useFullscreen, useMediaQuery } from '@mantine/hooks'
 import { MainNavbar } from './mainNavbar'
 import { MainFooter } from './mainFooter'
 import { MainHeader } from './mainHeader'
-import { IconArrowsMaximize, IconArrowsMinimize } from '@tabler/icons'
+import { IconMaximize, IconMinimize } from '@tabler/icons'
 import { useState } from 'react'
 
 const Layout = ({ children }: { children: React.ReactNode }) => {
   const sm = useMediaQuery('(min-width: 576px)')
   const [expanded, setExpanded] = useState(false)
+  const { toggle } = useFullscreen()
   return (
     <AppShell
       padding={0}
@@ -37,16 +38,23 @@ const Layout = ({ children }: { children: React.ReactNode }) => {
           style={{
             position: 'absolute',
             zIndex: 100,
-            top: '18px',
-            right: '16px',
+            top: '10px',
+            right: '10px',
           }}
           onClick={() => setExpanded(!expanded)}
         >
-          {expanded ? (
-            <IconArrowsMinimize color="gray" />
-          ) : (
-            <IconArrowsMaximize color="gray" />
-          )}
+          <ThemeIcon
+            variant="light"
+            radius="xl"
+            size="xl"
+            style={{
+              backgroundColor: 'white',
+              border: expanded ? '2px solid #339af0' : undefined,
+            }}
+            onClick={toggle}
+          >
+            {expanded ? <IconMinimize /> : <IconMaximize />}
+          </ThemeIcon>
         </div>
       )}
       <div

@@ -6,11 +6,10 @@ const ItemBox = ({ children }: { children: React.ReactNode }) => {
       style={{
         padding: '1em',
         fontWeight: 'bold',
-        background: '#ffffffa0',
-        border: 'solid 2px #ffffff',
+        background: '#ffffff99',
         borderRadius: '10px',
         position: 'relative',
-        minWidth: '300px',
+        backdropFilter: 'blur(3px)',
       }}
     >
       {children}
