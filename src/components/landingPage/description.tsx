@@ -10,6 +10,7 @@ import {
 } from '@mantine/core'
 import { IconCircleCheck, IconExternalLink } from '@tabler/icons'
 import { Image } from '@mantine/core'
+import Link from 'next/link'
 
 const useStyles = createStyles((theme) => ({
   inner: {
@@ -101,25 +102,31 @@ export function Description() {
                 魅力的な3Dモデルがあなたの作業のパートナーになってくれます.
               </List.Item>
               <List.Item>
-                <b>作業効率の最適化</b>{'　'}
+                <b>作業効率の最適化</b>
+                {'　'}
                 作業に集中できるような機能が実装されています.
               </List.Item>
               <List.Item>
-                <b>簡単に利用可能</b>{'　'}
-                Webアプリのため簡単に利用できます. <br></br>{'　'}
+                <b>簡単に利用可能</b>
+                {'　'}
+                Webアプリのため簡単に利用できます. <br></br>
+                {'　'}
                 スマートフォンからの利用も可能です.
               </List.Item>
             </List>
             <Group mt={30}>
-              <Button component="a" href="https://jphacks-2022-4839e.web.app/" variant="outline" leftIcon={<IconExternalLink size={20} />}>
-                今すぐ VRooM をはじめる
-              </Button>
+              <Link href="/" passHref>
+                <Button
+                  component="a"
+                  variant="outline"
+                  leftIcon={<IconExternalLink size={20} />}
+                >
+                  今すぐ VRooM をはじめる
+                </Button>
+              </Link>
             </Group>
           </div>
-          <Image
-            src="/picture/LP_image.png"
-            className={classes.image}
-          />
+          <Image src="/picture/LP_image.png" className={classes.image} />
         </div>
       </Container>
     </div>

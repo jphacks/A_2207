@@ -75,12 +75,12 @@ const style = (
   .e-c-base {
     fill: none;
     stroke: #b6b6b6;
-    stroke-width: ${md ? '3' : '2'};
+    stroke-width: ${md ? '3' : '2.5'};
   }
   .e-c-progress {
     fill: none;
     stroke: #1c7ed6;
-    stroke-width: ${md ? '3' : '2'};
+    stroke-width: ${md ? '3' : '2.5'};
     transition: stroke-dashoffset 0.7s;
     stroke-dasharray: ${Math.PI * 2 * 100};
     stroke-dashoffset: ${strokeDashoffset};
@@ -88,7 +88,7 @@ const style = (
   .e-c-pointer {
     fill: #fff;
     stroke: #1c7ed6;
-    stroke-width: ${md ? '3' : '2'};
+    stroke-width: ${md ? '3' : '2.5'};
     transition: transform 0.7s;
     transform: rotate(${deg}deg);
   }
