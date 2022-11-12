@@ -1,6 +1,19 @@
 import create from 'zustand'
 import { devtools } from 'zustand/middleware'
 
+export type environmentType =
+  | 'sunset'
+  | 'dawn'
+  | 'night'
+  | 'warehouse'
+  | 'forest'
+  | 'apartment'
+  | 'studio'
+  | 'city'
+  | 'park'
+  | 'lobby'
+  | undefined
+
 type SettingsState = {
   transitionMode: string
   mode: string
@@ -10,6 +23,7 @@ type SettingsState = {
   squatGoalCount: number
   workTime: number
   breakTime: number
+  environment: string
 }
 type SettingsStoreState = {
   setDefaultState: () => void
@@ -21,6 +35,7 @@ type SettingsStoreState = {
   setSquatGoalCount: (squatGoalCount: number) => void
   setWorkTime: (time: number) => void
   setBreakTime: (time: number) => void
+  setEnvironment: (environment: string) => void
 } & SettingsState
 
 export const initialState: SettingsState = {
@@ -32,6 +47,7 @@ export const initialState: SettingsState = {
   squatGoalCount: 15,
   workTime: 25,
   breakTime: 5,
+  environment: 'sunset',
 }
 
 export const useSettingsStore = create<SettingsStoreState>()(
@@ -117,6 +133,15 @@ export const useSettingsStore = create<SettingsStoreState>()(
         }),
         false,
         'setBreakTime',
+      ),
+    setEnvironment: (environment) =>
+      set(
+        (state) => ({
+          ...state,
+          environment,
+        }),
+        false,
+        'setEnvironment',
       ),
   })),
 )

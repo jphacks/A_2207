@@ -6,9 +6,17 @@ import { Environment } from '@react-three/drei'
 import { Room } from './room'
 import { DropZoneFullScreen } from './element/dropZoneFullScreen'
 import { useEffect, useState } from 'react'
+import { environmentType, useSettingsStore } from 'src/stores/settingsStore'
+import shallow from 'zustand/shallow'
 
 const VRMCanvas = () => {
   const size = useWindowSize()
+  const { environment } = useSettingsStore(
+    (state) => ({
+      environment: state.environment,
+    }),
+    shallow,
+  )
   return (
     <>
       <Canvas camera={{ fov: 20 }} shadows flat style={{ height: size.height }}>
@@ -17,7 +25,10 @@ const VRMCanvas = () => {
           <Room />
         </mesh>
         <CameraControls />
-        <Environment background={false} preset={'dawn'} />
+        <Environment
+          background={false}
+          preset={environment as environmentType}
+        />
       </Canvas>
 
       <DropZoneFullScreen />

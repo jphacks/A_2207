@@ -116,6 +116,7 @@ export function MainNavbar() {
             alt="Random unsplash image"
             width="50px"
             height="35px"
+            style={{ cursor: 'pointer' }}
           />
         </Link>
       </Center>

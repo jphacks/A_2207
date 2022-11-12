@@ -27,13 +27,16 @@ export function IconConfig({ opened, setOpened }: IconConfigProps) {
     }),
     shallow,
   )
-  const { squatGoalCount, setSquatGoalCount } = useSettingsStore(
-    (state) => ({
-      squatGoalCount: state.squatGoalCount,
-      setSquatGoalCount: state.setSquatGoalCount,
-    }),
-    shallow,
-  )
+  const { squatGoalCount, environment, setSquatGoalCount, setEnvironment } =
+    useSettingsStore(
+      (state) => ({
+        environment: state.environment,
+        setEnvironment: state.setEnvironment,
+        squatGoalCount: state.squatGoalCount,
+        setSquatGoalCount: state.setSquatGoalCount,
+      }),
+      shallow,
+    )
 
   return (
     <>
@@ -45,19 +48,17 @@ export function IconConfig({ opened, setOpened }: IconConfigProps) {
       >
         <Stack spacing="xl">
           <Title order={3}>VRMモデルの選択</Title>
-          <Stack spacing="xl">
-            <Select
-              radius="md"
-              size="md"
-              value={modelName}
-              onChange={setModelName}
-              data={[
-                { value: 'AliciaSolid', label: 'アリシア・ソリッド' },
-                { value: 'Miraikomachi', label: 'ミライ小町' },
-              ]}
-            />
-            <DropZone />
-          </Stack>
+          <Select
+            radius="md"
+            size="md"
+            value={modelName}
+            onChange={setModelName}
+            data={[
+              { value: 'AliciaSolid', label: 'アリシア・ソリッド' },
+              { value: 'Miraikomachi', label: 'ミライ小町' },
+            ]}
+          />
+          <DropZone />
 
           <Title order={3}>詳細設定</Title>
           <NumberInput
@@ -65,6 +66,18 @@ export function IconConfig({ opened, setOpened }: IconConfigProps) {
             label="スクワットの回数"
             value={squatGoalCount}
             onChange={setSquatGoalCount}
+          />
+
+          <Title order={3}>時間帯</Title>
+          <Select
+            radius="md"
+            size="md"
+            value={environment}
+            onChange={setEnvironment}
+            data={[
+              { value: 'sunset', label: '日中' },
+              { value: 'dawn', label: '夕方' },
+            ]}
           />
         </Stack>
       </Modal>
