@@ -4,9 +4,11 @@ import {
   Title,
   Text,
   List,
+  Button,
+  Group,
   ThemeIcon,
 } from '@mantine/core'
-import { IconCircleCheck } from '@tabler/icons'
+import { IconCircleCheck, IconExternalLink } from '@tabler/icons'
 import { Image } from '@mantine/core'
 
 const useStyles = createStyles((theme) => ({
@@ -82,7 +84,7 @@ export function Description() {
               </Text>
             </Title>
             <Text color="dimmed" mt="md">
-              一緒に作業してくれるパートナー
+              作業を見守るパートナー
             </Text>
             <List
               mt={30}
@@ -108,6 +110,11 @@ export function Description() {
                 スマートフォンからの利用も可能です.
               </List.Item>
             </List>
+            <Group mt={30}>
+              <Button component="a" href="https://jphacks-2022-4839e.web.app/" variant="outline" leftIcon={<IconExternalLink size={20} />}>
+                今すぐ VRooM をはじめる
+              </Button>
+            </Group>
           </div>
           <Image
             src="/picture/LP_image.png"
