@@ -106,7 +106,10 @@ export const CameraControls = forwardRef<CameraControlsDefault, unknown>(
         } else if (['break'].includes(mode)) {
           cameraControls.current.enabled = true
           if (md) {
+            cameraControls.current.setPosition(-1, 1, 4, true)
+            cameraControls.current.setTarget(0.3, 0, 0, true)
           } else {
+            cameraControls.current.setPosition(0, 1.5, 4, true)
           }
         }
       }
