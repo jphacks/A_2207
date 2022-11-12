@@ -8,10 +8,11 @@ import {
   PointElement,
   LineElement,
   Legend,
-  Tooltip
+  Tooltip,
 } from 'chart.js'
 import { Chart } from 'react-chartjs-2'
-import { Container } from '@mantine/core'
+import { Center, Container, Flex, ThemeIcon, Title } from '@mantine/core'
+import { IconChartBar } from '@tabler/icons'
 
 ChartJS.register(
   LinearScale,
@@ -80,6 +81,19 @@ export const DataGraph = ({
 
   return (
     <Container>
+      <Center style={{ marginBottom: 20 }}>
+        <Flex
+          style={{
+            borderBottom: '2px solid #1c7ed6',
+            paddingBottom: '5px',
+          }}
+        >
+          <ThemeIcon color="blue" size={28} radius="xl" mr={10}>
+            <IconChartBar size={20} />
+          </ThemeIcon>
+          <Title order={3}>今週の作業記録</Title>
+        </Flex>
+      </Center>
       <Chart
         ref={chartRef}
         type="bar"
