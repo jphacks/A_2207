@@ -53,20 +53,6 @@ const BreakCounter = () => {
     }
   }
 
-  useEffect(() => {
-    const id = setInterval(() => {
-      const n = Math.random()
-      // if (n < 0.9) {
-      //   emoteStart('ArmStretching')
-      // } else if (n < 0.95) {
-      //   emoteStart('Thinking')
-      // } else {
-      //   emoteStart('Bored')
-      // }
-    }, 5000)
-    return () => clearInterval(id)
-  }, [])
-
   return (
     <ItemBox>
       <Counter

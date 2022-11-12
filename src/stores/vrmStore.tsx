@@ -4,11 +4,16 @@ import { devtools } from 'zustand/middleware'
 interface VrmState {
   modelName: string
   animation: string
-  expression: string
   inputVrmModel: File | null | undefined
   emote: string | undefined
+  expression:
+    | {
+        name: string
+        weight: number
+      }
+    | undefined
   setAnimation: (animation: string) => void
-  setExpression: (expression: string) => void
+  setExpression: (expression: { name: string; weight: number }) => void
   setModelName: (name: string) => void
   setInputVrmModel: (file: File | null | undefined) => void
   emoteStart: (emote: string) => void
@@ -19,9 +24,9 @@ export const useVrmStore = create<VrmState>()(
   devtools((set) => ({
     modelName: 'AliciaSolid',
     animation: 'idle',
-    expression: 'neutral',
     inputVrmModel: undefined,
     emote: undefined,
+    expression: undefined,
     setModelName: (name) =>
       set(
         (state) => ({
@@ -45,7 +50,7 @@ export const useVrmStore = create<VrmState>()(
       set(
         (state) => ({
           ...state,
-          expression,
+          expression: expression,
         }),
         false,
         'setExpression',

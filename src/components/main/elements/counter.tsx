@@ -27,21 +27,20 @@ const Counter = ({
       css={style(offset, deg, md, sm)}
       onClick={() => handleClick()}
     >
-      <div className="circle">
-        <svg
-          width={md ? '250' : sm ? '200' : '180'}
-          viewBox="0 0 220 220"
-          xmlns="http://www.w3.org/2000/svg"
-        >
-          <g transform="translate(110,110)">
-            <circle r="100" className="e-c-base" />
-            <g transform="rotate(-90)">
-              <circle r="100" className="e-c-progress" />
-              <circle cx="100" cy="0" r="6" className="e-c-pointer" />
-            </g>
+      <svg
+        width={md ? '250' : sm ? '220' : '160'}
+        height={md ? '250' : sm ? '220' : '160'}
+        viewBox="0 0 220 220"
+        xmlns="http://www.w3.org/2000/svg"
+      >
+        <g transform="translate(110,110)">
+          <circle r="100" className="e-c-base" />
+          <g transform="rotate(-90)">
+            <circle r="100" className="e-c-progress" />
+            <circle cx="100" cy="0" r="6" className="e-c-pointer" />
           </g>
-        </svg>
-      </div>
+        </g>
+      </svg>
       <div className="controlls">
         <div className="display-remain-time">
           {new Date(countdown).toISOString().slice(14, 19)}
@@ -69,19 +68,19 @@ const style = (
     text-align: center;
   }
   .display-remain-time {
-    font-weight: 400;
+    font-weight: ${md ? 400 : 200};
     font-size: ${md ? '50' : sm ? '40' : '35'}px;
     color: #1c7ed6;
   }
   .e-c-base {
     fill: none;
     stroke: #b6b6b6;
-    stroke-width: 3px;
+    stroke-width: ${md ? '3' : '2.5'};
   }
   .e-c-progress {
     fill: none;
     stroke: #1c7ed6;
-    stroke-width: 3px;
+    stroke-width: ${md ? '3' : '2.5'};
     transition: stroke-dashoffset 0.7s;
     stroke-dasharray: ${Math.PI * 2 * 100};
     stroke-dashoffset: ${strokeDashoffset};
@@ -89,7 +88,7 @@ const style = (
   .e-c-pointer {
     fill: #fff;
     stroke: #1c7ed6;
-    stroke-width: 3px;
+    stroke-width: ${md ? '3' : '2.5'};
     transition: transform 0.7s;
     transform: rotate(${deg}deg);
   }

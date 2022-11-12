@@ -30,14 +30,17 @@ export const AnimationNames = [
   'Waving',
   'FemaleSittingPose',
   'Thankful',
+  'Clapping',
+  'StandingGreeting',
 ] as const
-const states = ['idle', 'SittingIdle', 'Typing']
+const states = ['idle', 'SittingIdle', 'Typing', 'Clapping']
 const emotes = [
   'AirSquatBentArms',
   'Waving',
   'ArmStretching',
   'FemaleSittingPose',
   'Thankful',
+  'StandingGreeting',
 ]
 
 export const VRMAvatar = () => {
@@ -67,6 +70,16 @@ export const VRMAvatar = () => {
     shallow,
   )
   const [loaded, setLoaded] = useState(false)
+  const setExpression = (name: string, weight: number) => {
+    expression = { name, weight }
+    vrm?.expressionManager?.setValue(expression.name, expression.weight)
+  }
+  const clearExpression = () => {
+    if (expression) {
+      vrm?.expressionManager?.setValue(expression.name, 0)
+      expression = undefined
+    }
+  }
 
   /* ---------------------------------- 初期設定 ---------------------------------- */
   useEffect(() => {
@@ -161,7 +174,7 @@ export const VRMAvatar = () => {
         vrm.scene.position.setX(0.4)
         vrm.scene.position.setZ(1.1)
         setAnimation('Typing')
-      } else if (['initial', 'choice'].includes(mode)) {
+      } else if (['initial'].includes(mode)) {
         vrm.lookAt!.target = camera
         setAnimation('idle')
       } else if (['fitness'].includes(mode)) {
@@ -175,6 +188,9 @@ export const VRMAvatar = () => {
         vrm.scene.position.setX(0)
         vrm.scene.position.setZ(-1.2)
         setAnimation('SittingIdle')
+      } else if (['choice'].includes(mode)) {
+        vrm.lookAt!.target = camera
+        setAnimation('Clapping')
       }
     }
   }, [mode, loaded])
@@ -184,15 +200,19 @@ export const VRMAvatar = () => {
     if (states.includes(animation) && !emote) {
       fadeToAction(api.state, 0.5)
     }
-  }, [animation, emoteFinish, emote])
+  }, [animation, emote])
 
   /* --------------------------------- エモートの処理 -------------------------------- */
   const restoreState = () => {
     mixer?.removeEventListener('finished', restoreState)
     emoteFinish()
+    clearExpression()
   }
 
   useEffect(() => {
+    if (emote === 'StandingGreeting') {
+      setExpression('happy', 1)
+    }
     if (emote) {
       fadeToAction(emote, 0.2)
       mixer?.addEventListener('finished', restoreState)
@@ -207,6 +227,7 @@ export const VRMAvatar = () => {
 let vrm: THREE_VRM.VRM | undefined = undefined
 let mixer: THREE.AnimationMixer | undefined = undefined
 let light: THREE.DirectionalLight | undefined = undefined
+let expression: { name: string; weight: number } | undefined = undefined
 const actions: any = {}
 let activeAction: any, previousAction: any
 const clock = new THREE.Clock()

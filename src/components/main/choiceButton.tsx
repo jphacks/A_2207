@@ -2,7 +2,6 @@ import { Button, Center, Stack, Text } from '@mantine/core'
 import shallow from 'zustand/shallow'
 import { useSettingsStore } from 'src/stores/settingsStore'
 import { useEffect } from 'react'
-import { useVrmStore } from 'src/stores/vrmStore'
 
 const ChoiceButton = () => {
   const { setTransitionMode } = useSettingsStore(
@@ -13,16 +12,9 @@ const ChoiceButton = () => {
     }),
     shallow,
   )
-  const { emoteStart } = useVrmStore(
-    (state) => ({
-      emoteStart: state.emoteStart,
-    }),
-    shallow,
-  )
 
   useEffect(() => {
     const audio = new Audio('/voices/11.wav')
-    emoteStart('Thankful')
     audio.play()
   }, [])
 
