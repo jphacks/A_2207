@@ -4,6 +4,7 @@ import { useSettingsStore } from 'src/stores/settingsStore'
 import { useEffect } from 'react'
 import { useVrmStore } from 'src/stores/vrmStore'
 import Counter from './elements/counter'
+import ItemBox from './elements/itemBox'
 
 const BreakCounter = () => {
   const { setTransitionMode, setStudied, breakTime } = useSettingsStore(
@@ -67,24 +68,14 @@ const BreakCounter = () => {
   }, [])
 
   return (
-    <div
-      style={{
-        padding: '1em',
-        fontWeight: 'bold',
-        background: '#ffffffa0',
-        border: 'solid 3px #6091d3',
-        borderRadius: '10px',
-        position: 'relative',
-        minWidth: '300px',
-      }}
-    >
+    <ItemBox>
       <Counter
         timerSeconds={timerSeconds}
         countdown={countdown}
         isRunning={isRunning}
         handleClick={handleClick}
       />
-    </div>
+    </ItemBox>
   )
 }
 

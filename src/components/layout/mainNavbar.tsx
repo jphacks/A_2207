@@ -107,7 +107,7 @@ export function MainNavbar() {
   const [user] = useAuthState(auth as any)
 
   return (
-    <Navbar width={{ base: 80 }} p="md">
+    <Navbar width={{ base: 80 }} p="md" pt="25px">
       <Center>
         <Link href="/landingPage" passHref>
           <Image

@@ -6,6 +6,7 @@ import { useEffect } from 'react'
 import { db, auth } from 'src/components/firebase/firebase'
 import { formatDate } from '../analytics/datagraph'
 import Counter from './elements/counter'
+import ItemBox from './elements/itemBox'
 
 const StudyCounter = () => {
   const {
@@ -91,17 +92,7 @@ const StudyCounter = () => {
   }, [isRunning, countdown])
 
   return (
-    <div
-      style={{
-        padding: '1em',
-        fontWeight: 'bold',
-        background: '#ffffffa0',
-        border: 'solid 3px #6091d3',
-        borderRadius: '10px',
-        position: 'relative',
-        minWidth: '300px',
-      }}
-    >
+    <ItemBox>
       <Stack sx={() => ({ backgroundColor: 'transparent' })}>
         <Center>
           <Title color="blue">{goal}</Title>
@@ -113,7 +104,7 @@ const StudyCounter = () => {
           handleClick={handleClick}
         />
       </Stack>
-    </div>
+    </ItemBox>
   )
 }
 

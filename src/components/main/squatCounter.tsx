@@ -5,10 +5,11 @@ import { Pose, Results } from '@mediapipe/pose'
 import { drawCanvas } from '../../utils/drawCanvas'
 import updateCounter from '../../utils/updateCounter'
 import { useTimer } from '../../hooks/useTimer'
-import { Title, Stack, Progress } from '@mantine/core'
+import { Title, Stack, Progress, Text } from '@mantine/core'
 import shallow from 'zustand/shallow'
 import { useSettingsStore } from 'src/stores/settingsStore'
 import { useVrmStore } from 'src/stores/vrmStore'
+import ItemBox from './elements/itemBox'
 import { useMediaQuery } from '@mantine/hooks'
 
 const SquatCounter = () => {
@@ -26,7 +27,6 @@ const SquatCounter = () => {
     }),
     shallow,
   )
-  const matches = useMediaQuery('(min-width: 576px)')
   const webcamRef = useRef<Webcam>(null)
   const canvasRef = useRef<HTMLCanvasElement>(null)
   const resultsRef = useRef<any>(null)
@@ -35,6 +35,7 @@ const SquatCounter = () => {
   const prevStageRef = useRef('')
   const { time, isStart } = useTimer()
   const elbowRef = useRef([2 / 3, 2 / 3])
+  const sm = useMediaQuery('(min-width: 576px)')
 
   /**
    * 検出結果（フレーム毎に呼び出される）
@@ -160,71 +161,6 @@ const SquatCounter = () => {
 
   return (
     <>
-      <div style={{ width: '100%', height: '100%' }}>
-        <Stack sx={() => ({ backgroundColor: 'transparent', width: '100%' })}>
-          {/* output */}
-          <div style={{ position: 'relative', width: '100%' }}>
-            <div
-              style={{
-                display: 'flex',
-                alignItems: 'center',
-                justifyContent: 'center',
-                backgroundColor: '#ffffffa0',
-                borderRadius: '10px',
-                marginBottom: '5px',
-              }}
-            >
-              <Progress
-                value={(count / squatGoalCount) * 100}
-                style={{ width: '70%' }}
-              />
-              <Title color="blue" pl={20}>
-                : {count}
-              </Title>
-            </div>
-            <div
-              style={{
-                padding: '0.5em',
-                fontWeight: 'bold',
-                background: '#FFF',
-                border: 'solid 3px #6091d3',
-                borderRadius: '10px',
-                minWidth: matches ? '500px' : '90vw',
-                width: '100%',
-                position: 'relative',
-              }}
-            >
-              <div
-                style={{
-                  position: 'absolute',
-                  backgroundColor: 'white',
-                  borderBottomRightRadius: '10px',
-                }}
-              >
-                {time <= 9 && time >= 1 && (
-                  <Title p={10} color="blue" size="60px">
-                    {time}
-                  </Title>
-                )}
-                {time === 0 && (
-                  <Title p={10} color="blue" size="50px">
-                    START
-                  </Title>
-                )}
-              </div>
-              <canvas
-                style={{
-                  borderRadius: '5px',
-                  padding: '1px',
-                  height: '100%',
-                  width: '100%',
-                }}
-                ref={canvasRef}
-              />
-            </div>
-          </div>
-        </Stack>
-      </div>
       {/* capture */}
       <Webcam
         audio={false}
@@ -234,6 +170,63 @@ const SquatCounter = () => {
         ref={webcamRef}
         screenshotFormat="image/jpeg"
       />
+      <Stack sx={() => ({ backgroundColor: 'transparent' })}>
+        {/* output */}
+        <div style={{ minWidth: sm ? '500px' : '95vw' }}>
+          <div
+            style={{
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center',
+              background: '#ffffff99',
+              borderRadius: '10px',
+              backdropFilter: 'blur(3px)',
+              marginBottom: '5px',
+            }}
+          >
+            <Progress
+              value={(count / squatGoalCount) * 100}
+              style={{ width: '70%' }}
+            />
+            <Text
+              color="black"
+              pl={20}
+              style={{ fontSize: 25, fontWeight: 'bold' }}
+            >
+              {count}
+            </Text>
+          </div>
+          <ItemBox>
+            <div
+              style={{
+                position: 'absolute',
+                backgroundColor: 'white',
+                borderBottomRightRadius: '10px',
+              }}
+            >
+              {time <= 9 && time >= 1 && (
+                <Title p={10} color="blue" size="60px">
+                  {time}
+                </Title>
+              )}
+              {time === 0 && (
+                <Title p={10} color="blue" size="50px">
+                  START
+                </Title>
+              )}
+            </div>
+            <canvas
+              style={{
+                borderRadius: '5px',
+                padding: '1px',
+                height: '100%',
+                width: '100%',
+              }}
+              ref={canvasRef}
+            />
+          </ItemBox>
+        </div>
+      </Stack>
     </>
   )
 }

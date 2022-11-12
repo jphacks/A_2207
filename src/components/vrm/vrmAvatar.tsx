@@ -22,7 +22,6 @@ const modelNameToUrl = {
 } as modelNameToUrl
 
 export const AnimationNames = [
-  'StandingGreeting',
   'AirSquatBentArms',
   'ArmStretching',
   'idle',
@@ -34,7 +33,6 @@ export const AnimationNames = [
 ] as const
 const states = ['idle', 'SittingIdle', 'Typing']
 const emotes = [
-  'StandingGreeting',
   'AirSquatBentArms',
   'Waving',
   'ArmStretching',
@@ -195,7 +193,6 @@ export const VRMAvatar = () => {
   }
 
   useEffect(() => {
-    api.state = animation
     if (emote) {
       fadeToAction(emote, 0.2)
       mixer?.addEventListener('finished', restoreState)

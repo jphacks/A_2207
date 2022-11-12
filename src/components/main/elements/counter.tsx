@@ -1,6 +1,7 @@
 import { Center } from '@mantine/core'
 import { css } from '@emotion/react'
 import { IoPause, IoPlay } from 'react-icons/io5'
+import { useMediaQuery } from '@mantine/hooks'
 
 type CounterType = {
   timerSeconds: number
@@ -14,6 +15,8 @@ const Counter = ({
   isRunning,
   handleClick,
 }: CounterType) => {
+  const md = useMediaQuery('(min-width: 992px)')
+  const sm = useMediaQuery('(min-width: 576px)')
   const percentage = (countdown * 100) / (timerSeconds * 1000)
   const length = Math.PI * 2 * 100
   const offset = -length - (length * percentage) / 100
@@ -21,12 +24,12 @@ const Counter = ({
   return (
     <Center
       className="container"
-      css={style(offset, deg)}
+      css={style(offset, deg, md, sm)}
       onClick={() => handleClick()}
     >
       <div className="circle">
         <svg
-          width="250"
+          width={md ? '250' : sm ? '200' : '180'}
           viewBox="0 0 220 220"
           xmlns="http://www.w3.org/2000/svg"
         >
@@ -45,9 +48,9 @@ const Counter = ({
         </div>
         <div>
           {isRunning ? (
-            <IoPause fontSize={35} color="#1C7ED6" />
+            <IoPause fontSize={md ? 30 : 20} color="#1c7ed6" />
           ) : (
-            <IoPlay fontSize={35} color="#1C7ED6" />
+            <IoPlay fontSize={md ? 30 : 20} color="#1c7ed6" />
           )}
         </div>
       </div>
@@ -55,25 +58,30 @@ const Counter = ({
   )
 }
 
-const style = (strokeDashoffset: number, deg: number) => css`
+const style = (
+  strokeDashoffset: number,
+  deg: number,
+  md: boolean,
+  sm: boolean,
+) => css`
   .controlls {
     position: absolute;
     text-align: center;
   }
   .display-remain-time {
     font-weight: 400;
-    font-size: 50px;
+    font-size: ${md ? '50' : sm ? '40' : '35'}px;
     color: #1c7ed6;
   }
   .e-c-base {
     fill: none;
     stroke: #b6b6b6;
-    stroke-width: 4px;
+    stroke-width: 3px;
   }
   .e-c-progress {
     fill: none;
     stroke: #1c7ed6;
-    stroke-width: 4px;
+    stroke-width: 3px;
     transition: stroke-dashoffset 0.7s;
     stroke-dasharray: ${Math.PI * 2 * 100};
     stroke-dashoffset: ${strokeDashoffset};

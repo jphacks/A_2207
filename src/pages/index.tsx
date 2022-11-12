@@ -12,48 +12,60 @@ import { OverlayWrapper } from 'src/components/main/elements/overlayWrapper'
 
 const Home: NextPage = () => {
   const md = useMediaQuery('(min-width: 992px)')
+  const sm = useMediaQuery('(min-width: 576px)')
   const transitionTime = 1.5
 
   return (
     <Layout>
-      <div style={{ position: 'relative', width: '100%', height: '100%' }}>
-        <div style={{ position: 'absolute', width: '100%', height: '100%' }}>
-          <TransitionContainer modeName="initial" time={transitionTime}>
-            <OverlayWrapper
-              top={md ? '70%' : '70%'}
-              right={md ? '-5%' : undefined}
-              left={md ? undefined : '50%'}
-            >
-              <StartButton />
-            </OverlayWrapper>
-          </TransitionContainer>
+      <TransitionContainer modeName="initial" time={transitionTime}>
+        <OverlayWrapper
+          bottom={md ? '15%' : sm ? '80px' : '140px'}
+          right={md ? '5%' : undefined}
+        >
+          <StartButton />
+        </OverlayWrapper>
+      </TransitionContainer>
 
-          <TransitionContainer modeName="study" time={transitionTime}>
-            <OverlayWrapper top={md ? '50%' : '70%'} left={md ? '70%' : '50%'}>
-              <StudyCounter />
-            </OverlayWrapper>
-          </TransitionContainer>
+      <TransitionContainer modeName="study" time={transitionTime}>
+        <OverlayWrapper
+          top={md ? '30%' : undefined}
+          bottom={md ? undefined : sm ? '80px' : '140px'}
+          right={sm ? '10%' : undefined}
+        >
+          <StudyCounter />
+        </OverlayWrapper>
+      </TransitionContainer>
 
-          <TransitionContainer modeName="choice" time={transitionTime}>
-            <OverlayWrapper top="50%" left="70%">
-              <ChoiceButton />
-            </OverlayWrapper>
-          </TransitionContainer>
+      <TransitionContainer modeName="choice" time={transitionTime}>
+        <OverlayWrapper
+          top={md ? '30%' : undefined}
+          bottom={md ? undefined : sm ? '80px' : '140px'}
+          right={md ? '10%' : undefined}
+        >
+          <ChoiceButton />
+        </OverlayWrapper>
+      </TransitionContainer>
 
-          <TransitionContainer modeName="fitness" time={transitionTime}>
-            <OverlayWrapper top={md ? '50%' : '70%'} left={md ? '70%' : '50%'}>
-              <SquatCounter />
-            </OverlayWrapper>
-          </TransitionContainer>
+      <TransitionContainer modeName="fitness" time={transitionTime}>
+        <OverlayWrapper
+          top={md ? '30%' : undefined}
+          bottom={md ? undefined : sm ? '80px' : '140px'}
+          right={md ? '10%' : undefined}
+        >
+          <SquatCounter />
+        </OverlayWrapper>
+      </TransitionContainer>
 
-          <TransitionContainer modeName="break" time={transitionTime}>
-            <OverlayWrapper top={md ? '50%' : '70%'} left={md ? '70%' : '50%'}>
-              <BreakCounter />
-            </OverlayWrapper>
-          </TransitionContainer>
-        </div>
-        <VRMCanvas />
-      </div>
+      <TransitionContainer modeName="break" time={transitionTime}>
+        <OverlayWrapper
+          top={md ? '30%' : undefined}
+          bottom={md ? undefined : sm ? '80px' : '140px'}
+          right={sm ? '10%' : undefined}
+        >
+          <BreakCounter />
+        </OverlayWrapper>
+      </TransitionContainer>
+      <VRMCanvas />
     </Layout>
   )
 }
