@@ -30,14 +30,17 @@ export const AnimationNames = [
   'Waving',
   'FemaleSittingPose',
   'Thankful',
+  'Clapping',
+  'StandingGreeting',
 ] as const
-const states = ['idle', 'SittingIdle', 'Typing']
+const states = ['idle', 'SittingIdle', 'Typing', 'Clapping']
 const emotes = [
   'AirSquatBentArms',
   'Waving',
   'ArmStretching',
   'FemaleSittingPose',
   'Thankful',
+  'StandingGreeting',
 ]
 
 export const VRMAvatar = () => {
@@ -161,7 +164,7 @@ export const VRMAvatar = () => {
         vrm.scene.position.setX(0.4)
         vrm.scene.position.setZ(1.1)
         setAnimation('Typing')
-      } else if (['initial', 'choice'].includes(mode)) {
+      } else if (['initial'].includes(mode)) {
         vrm.lookAt!.target = camera
         setAnimation('idle')
       } else if (['fitness'].includes(mode)) {
@@ -175,6 +178,9 @@ export const VRMAvatar = () => {
         vrm.scene.position.setX(0)
         vrm.scene.position.setZ(-1.2)
         setAnimation('SittingIdle')
+      } else if (['choice'].includes(mode)) {
+        vrm.lookAt!.target = camera
+        setAnimation('Clapping')
       }
     }
   }, [mode, loaded])

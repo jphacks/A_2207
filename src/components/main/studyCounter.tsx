@@ -1,4 +1,4 @@
-import { Center, Stack, Title } from '@mantine/core'
+import { Flex, Text } from '@mantine/core'
 import { useCountdownTimer } from 'use-countdown-timer'
 import shallow from 'zustand/shallow'
 import { useSettingsStore } from 'src/stores/settingsStore'
@@ -7,6 +7,7 @@ import { db, auth } from 'src/components/firebase/firebase'
 import { formatDate } from '../analytics/datagraph'
 import Counter from './elements/counter'
 import ItemBox from './elements/itemBox'
+import { useMediaQuery } from '@mantine/hooks'
 
 const StudyCounter = () => {
   const {
@@ -27,6 +28,8 @@ const StudyCounter = () => {
     }),
     shallow,
   )
+
+  const sm = useMediaQuery('(min-width: 576px)')
 
   const timerSeconds = workTime * 60
   const { countdown, start, pause, isRunning } = useCountdownTimer({
@@ -93,17 +96,25 @@ const StudyCounter = () => {
 
   return (
     <ItemBox>
-      <Stack sx={() => ({ backgroundColor: 'transparent' })}>
-        <Center>
-          <Title color="blue">{goal}</Title>
-        </Center>
+      <Flex
+        gap="md"
+        justify="center"
+        align="center"
+        direction={sm ? 'column' : 'row'}
+        style={{ maxWidth: sm ? '500px' : '95vw' }}
+      >
+        {goal && (
+          <Text color="#1c7ed6" style={{ fontSize: 28 }}>
+            {goal}
+          </Text>
+        )}
         <Counter
           timerSeconds={timerSeconds}
           countdown={countdown}
           isRunning={isRunning}
           handleClick={handleClick}
         />
-      </Stack>
+      </Flex>
     </ItemBox>
   )
 }

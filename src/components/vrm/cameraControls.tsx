@@ -90,6 +90,9 @@ export const CameraControls = forwardRef<CameraControlsDefault, unknown>(
           }
         } else if (['initial'].includes(mode)) {
           cameraControls.current.enabled = true
+          cameraControls.current.setPosition(0, 1, 4.65, true)
+        } else if (['choice'].includes(mode)) {
+          cameraControls.current.setPosition(0, 1.8, 4.65, true)
         } else if (['fitness'].includes(mode)) {
           if (md) {
             cameraControls.current.setPosition(-6.32, 1.66, 8.84, true)

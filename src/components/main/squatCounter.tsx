@@ -186,12 +186,12 @@ const SquatCounter = () => {
           >
             <Progress
               value={(count / squatGoalCount) * 100}
-              style={{ width: '70%' }}
+              style={{ width: '80%' }}
             />
             <Text
-              color="black"
-              pl={20}
-              style={{ fontSize: 25, fontWeight: 'bold' }}
+              color="#1c7ed6"
+              px={'10px'}
+              style={{ fontSize: 28, fontWeight: 'bold' }}
             >
               {count}
             </Text>
